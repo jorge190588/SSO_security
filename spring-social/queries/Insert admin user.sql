@@ -1,12 +1,12 @@
 use securitydata;
 
 delete from rol_form_action;
-delete from rol;
 delete from form_action;
+delete from users;
+delete from rol;
 delete from form;
 delete from form_Group;
 delete from action;
-delete from users;
 delete from method;
 
 DBCC CHECKIDENT ('rol', RESEED, 0)

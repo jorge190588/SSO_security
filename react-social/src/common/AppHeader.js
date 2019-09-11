@@ -8,26 +8,26 @@ class AppHeader extends Component {
             <header className="app-header">
                 <div className="container">
                     <div className="app-branding">
-                        <Link to="/" className="app-title">Spring Social</Link>
+                        <Link to="/" className="app-title">Aplicación ejemplo</Link>
                     </div>
                     <div className="app-options">
                         <nav className="app-nav">
                                 { this.props.authenticated ? (
                                     <ul>
                                         <li>
-                                            <NavLink to="/profile">Profile</NavLink>
+                                            <NavLink to="/profile">Perfil</NavLink>
                                         </li>
                                         <li>
-                                            <a onClick={this.props.onLogout}>Logout</a>
+                                            <a onClick={this.props.onLogout}>Cerrar sesión</a>
                                         </li>
                                     </ul>
                                 ): (
                                     <ul>
                                         <li>
-                                            <NavLink to="/login">Login</NavLink>        
+                                            <NavLink to="/login">Iniciar sesión</NavLink>        
                                         </li>
                                         <li>
-                                            <NavLink to="/signup">Signup</NavLink>        
+                                            <NavLink to="/signup">Registro</NavLink>        
                                         </li>
                                     </ul>
                                 )}

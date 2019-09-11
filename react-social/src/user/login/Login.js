@@ -37,13 +37,13 @@ class Login extends Component {
         return (
             <div className="login-container">
                 <div className="login-content">
-                    <h1 className="login-title">Login to SpringSocial</h1>
+                    <h1 className="login-title">Iniciar sesión</h1>
                     <SocialLogin />
                     <div className="or-separator">
-                        <span className="or-text">OR</span>
+                        <span className="or-text">o</span>
                     </div>
                     <LoginForm {...this.props} />
-                    <span className="signup-link">New user? <Link to="/signup">Sign up!</Link></span>
+                    <span className="signup-link">Nuevo usuario ?  <Link to="/signup">Registrarse</Link></span>
                 </div>
             </div>
         );
@@ -55,11 +55,11 @@ class SocialLogin extends Component {
         return (
             <div className="social-login">
                 <a className="btn btn-block social-btn google" href={GOOGLE_AUTH_URL}>
-                    <img src={googleLogo} alt="Google" /> Log in with Google</a>
+                    <img src={googleLogo} alt="Google" /> Registro con Google</a>
                 <a className="btn btn-block social-btn facebook" href={FACEBOOK_AUTH_URL}>
-                    <img src={fbLogo} alt="Facebook" /> Log in with Facebook</a>
+                    <img src={fbLogo} alt="Facebook" /> Registro con Facebook</a>
                 <a className="btn btn-block social-btn github" href={GITHUB_AUTH_URL}>
-                    <img src={githubLogo} alt="Github" /> Log in with Github</a>
+                    <img src={githubLogo} alt="Github" /> Registro con Github</a>
             </div>
         );
     }
@@ -71,7 +71,8 @@ class LoginForm extends Component {
         super(props);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            repassword:''
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -91,7 +92,7 @@ class LoginForm extends Component {
         event.preventDefault();   
 
         const loginRequest = Object.assign({}, this.state);
-
+        
         login(loginRequest)
         .then(response => {
             localStorage.setItem(ACCESS_TOKEN, response.accessToken);
@@ -107,16 +108,17 @@ class LoginForm extends Component {
             <form onSubmit={this.handleSubmit}>
                 <div className="form-item">
                     <input type="email" name="email" 
-                        className="form-control" placeholder="Email"
+                        className="form-control" placeholder="Ingrese su correo electrónico"
                         value={this.state.email} onChange={this.handleInputChange} required/>
                 </div>
                 <div className="form-item">
                     <input type="password" name="password" 
-                        className="form-control" placeholder="Password"
-                        value={this.state.password} onChange={this.handleInputChange} required/>
+                        className="form-control" placeholder="Ingrese su clave"
+                        value={this.state.password} onChange={this.handleInputChange} required/>  
                 </div>
+                
                 <div className="form-item">
-                    <button type="submit" className="btn btn-block btn-primary">Login</button>
+                    <button type="submit" className="btn btn-block btn-primary">Registrar</button>
                 </div>
             </form>                    
         );

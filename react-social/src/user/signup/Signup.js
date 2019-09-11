@@ -21,13 +21,13 @@ class Signup extends Component {
         return (
             <div className="signup-container">
                 <div className="signup-content">
-                    <h1 className="signup-title">Signup with SpringSocial</h1>
+                    <h1 className="signup-title">Crear usuario</h1>
                     <SocialSignup />
                     <div className="or-separator">
-                        <span className="or-text">OR</span>
+                        <span className="or-text">O</span>
                     </div>
                     <SignupForm {...this.props} />
-                    <span className="login-link">Already have an account? <Link to="/login">Login!</Link></span>
+                    <span className="login-link">Tienes una cuenta ? <Link to="/login">Iniciar sesión!</Link></span>
                 </div>
             </div>
         );
@@ -40,11 +40,11 @@ class SocialSignup extends Component {
         return (
             <div className="social-signup">
                 <a className="btn btn-block social-btn google" href={GOOGLE_AUTH_URL}>
-                    <img src={googleLogo} alt="Google" /> Sign up with Google</a>
+                    <img src={googleLogo} alt="Google" /> Registro con Google</a>
                 <a className="btn btn-block social-btn facebook" href={FACEBOOK_AUTH_URL}>
-                    <img src={fbLogo} alt="Facebook" /> Sign up with Facebook</a>
+                    <img src={fbLogo} alt="Facebook" /> Registro con Facebook</a>
                 <a className="btn btn-block social-btn github" href={GITHUB_AUTH_URL}>
-                    <img src={githubLogo} alt="Github" /> Sign up with Github</a>
+                    <img src={githubLogo} alt="Github" /> Registro con Github</a>
             </div>
         );
     }
@@ -56,7 +56,8 @@ class SignupForm extends Component {
         this.state = {
             name: '',
             email: '',
-            password: ''
+            password: '',
+            repassword:''
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -76,7 +77,10 @@ class SignupForm extends Component {
         event.preventDefault();   
 
         const signUpRequest = Object.assign({}, this.state);
-
+        if (this.state.password!=this.state.repassword) {
+            Alert.error("La clave y confirmación deben ser iguales" || 'Oops! Something went wrong. Please try again!');
+            return;
+        }
         signup(signUpRequest)
         .then(response => {
             Alert.success("You're successfully registered. Please login to continue!");
@@ -91,21 +95,26 @@ class SignupForm extends Component {
             <form onSubmit={this.handleSubmit}>
                 <div className="form-item">
                     <input type="text" name="name" 
-                        className="form-control" placeholder="Name"
+                        className="form-control" placeholder="Ingrese su nombre de usuario"
                         value={this.state.name} onChange={this.handleInputChange} required/>
                 </div>
                 <div className="form-item">
                     <input type="email" name="email" 
-                        className="form-control" placeholder="Email"
+                        className="form-control" placeholder="Ingrese su correo electrónico"
                         value={this.state.email} onChange={this.handleInputChange} required/>
                 </div>
                 <div className="form-item">
                     <input type="password" name="password" 
-                        className="form-control" placeholder="Password"
+                        className="form-control" placeholder="Ingrese su clave"
                         value={this.state.password} onChange={this.handleInputChange} required/>
                 </div>
                 <div className="form-item">
-                    <button type="submit" className="btn btn-block btn-primary" >Sign Up</button>
+                    <input type="password" name="repassword" 
+                        className="form-control" placeholder="Confirme su clave"
+                        value={this.state.repassword} onChange={this.handleInputChange} required/>
+                </div>
+                <div className="form-item">
+                    <button type="submit" className="btn btn-block btn-primary" >Crear cuenta</button>
                 </div>
             </form>                    
 

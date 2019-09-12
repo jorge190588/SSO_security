@@ -46,7 +46,7 @@ public class UserController {
     @PreAuthorize("hasRole('USER')")
     public RestResponse userView(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request) {
     	response= new RestResponse();
-    	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI(),userPrincipal.getRol_id() )){
+    	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
     		logger.info("user doesnt has access to "+request.getRequestURI());
     		response.setError(new CustomException("Usuario no encontrado",ErrorCode.REST_FIND, this.getClass().getSimpleName(),0));
     		return response;
@@ -57,4 +57,6 @@ public class UserController {
     	else response.setError(new CustomException("Usuario no encontrado",ErrorCode.REST_FIND, this.getClass().getSimpleName(),0));    
         return response;
     }
+    
+ 
 }

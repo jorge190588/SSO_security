@@ -58,9 +58,9 @@ public class UserPrincipal implements OAuth2User, UserDetails {
 	}
     
     @SuppressWarnings({"unchecked"})
-    public boolean hasPermissionToRoute(Object rolFormActionRepository, String uri, Long rol_id) {
+    public boolean hasPermissionToRoute(Object rolFormActionRepository, String uri) {
     	String 	[]parts =  uri.split("/");
-    	String 	rolFilter ="{\"id\":\"rol_id\",\"option\":\"Igual\",\"value\":\""+ rol_id + "\"}",
+    	String 	rolFilter ="{\"id\":\"rol_id\",\"option\":\"Igual\",\"value\":\""+ this.rol_id + "\"}",
     			formFilter = "{\"id\":\"formAction.form.path\",\"option\":\"Igual\",\"value\":\""+ parts[1] + "\"}",
         		actionFilter = "{\"id\":\"formAction.action.path\",\"option\":\"Igual\",\"value\":\""+ parts[2] + "\"}";
          
@@ -73,7 +73,7 @@ public class UserPrincipal implements OAuth2User, UserDetails {
   		if (rolActionAcces.size()==0) return false;
         else return true;
     }
-
+    
     public Long getId() {
         return id;
     }

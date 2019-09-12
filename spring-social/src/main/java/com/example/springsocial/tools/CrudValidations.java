@@ -182,8 +182,9 @@ public class CrudValidations<T>   {
 		GenericClass genericClass;
 		JSONArray searchCriteriaArray=null, orderCriteriaArray=null;
 		try{
-			if (!searchCriteria.isEmpty())	searchCriteriaArray = new JSONArray(searchCriteria.get());
-			if (!orderCriteria.isEmpty())	orderCriteriaArray = new JSONArray(orderCriteria.get());
+			logger.info(String.valueOf(searchCriteria.isPresent()));
+			if (searchCriteria.isPresent())	searchCriteriaArray = new JSONArray(searchCriteria.get());
+			if (orderCriteria.isPresent())	orderCriteriaArray = new JSONArray(orderCriteria.get());
 			genericClass = new GenericClass(model,"findAll",jpacustomSpecification.getSpecification(searchCriteriaArray,orderCriteriaArray ));
 			genericClass.executeMethod();
 			if (genericClass.getIsError()==true) throw new Exception(genericClass.getErrorMessage());			
@@ -202,8 +203,8 @@ public class CrudValidations<T>   {
 		GenericClass genericClass;
 		JSONArray searchCriteriaArray=null, orderCriteriaArray=null;
 		try{
-			if (!searchCriteria.isEmpty())	searchCriteriaArray = new JSONArray(searchCriteria.get());
-			if (!orderCriteria.isEmpty())	orderCriteriaArray = new JSONArray(orderCriteria.get());
+			if (searchCriteria.empty()!=null)	searchCriteriaArray = new JSONArray(searchCriteria.get());
+			if (orderCriteria.empty()!=null)	orderCriteriaArray = new JSONArray(orderCriteria.get());
 			genericClass = new GenericClass(model,"findAll",new Object []{jpacustomSpecification.getSpecification(searchCriteriaArray,orderCriteriaArray ),PageRequest.of(pageNumber, pageSize)});
 			genericClass.executeMethod();
 			if (genericClass.getIsError()==true) throw new Exception(genericClass.getErrorMessage());			

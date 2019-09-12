@@ -19,24 +19,16 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@SuppressWarnings("rawtypes")
 @RestController
 public class UserController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	 
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
-    private RolFormActionRepository rolFormActionRepository;
-    
-    private CrudValidations crud = null;
-    
-    private void instanceCrud() {
-		if (crud==null) crud = new CrudValidations(rolFormActionRepository,"RolFormAction",null );
-	}
-    private Optional<String> searchCriteria;
-    private Optional<String> orderCriteria;
-    
+    private RolFormActionRepository rolFormActionRepository;    
+    private RestResponse response=null;
+        
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('USER')")
     public User getCurrentUser(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request) {
@@ -49,31 +41,20 @@ public class UserController {
         return user;
     }
    
-    @SuppressWarnings({"rawtypes","unchecked"})
+    @SuppressWarnings({"unchecked"})
 	@GetMapping("/user/view")
     @PreAuthorize("hasRole('USER')")
     public RestResponse userView(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request) {
-    	RestResponse response=new RestResponse();
-    	CustomException exception =null;
-    	User user = userRepository.findById(userPrincipal.getId());
-    	if (user!=null) {
-    		response.setData(user);
-    		response.setError(null);
-    	}else {
-    		exception = new CustomException("Usuario no encontrado",ErrorCode.REST_FIND, this.getClass().getSimpleName(),0);
-    		response.setData(null);
-    		response.setError(exception);
-    	}
-    	
-    	if (userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI(), user.getRol_id()))
-    		logger.info("user has access");
-    	else {
-    		exception = new CustomException("Usuario no encontrado",ErrorCode.REST_FIND, this.getClass().getSimpleName(),0);
-    		response.setData(null);
-    		response.setError(exception);
+    	response= new RestResponse();
+    	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI(),userPrincipal.getRol_id() )){
+    		logger.info("user doesnt has access to "+request.getRequestURI());
+    		response.setError(new CustomException("Usuario no encontrado",ErrorCode.REST_FIND, this.getClass().getSimpleName(),0));
     		return response;
     	}
-        
+    		
+    	User user = userRepository.findById(userPrincipal.getId());
+    	if (user!=null) response.setData(user);
+    	else response.setError(new CustomException("Usuario no encontrado",ErrorCode.REST_FIND, this.getClass().getSimpleName(),0));    
         return response;
     }
 }

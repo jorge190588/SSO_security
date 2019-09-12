@@ -55,7 +55,7 @@ select * from rol
 
 
 
-select rolformact0_.id as id1_6_, rolformact0_.form_action_id as form_act2_6_, rolformact0_.rol_id as rol_id3_6_ , action2_.path
+select rolformact0_.id as id1_6_, rolformact0_.form_action_id as form_act2_6_, rolformact0_.rol_id as rol_id3_6_ , action2_.path, formaction1_.*
 from rol_form_action rolformact0_ 
 cross join form_action formaction1_ 
 cross join action action2_ 

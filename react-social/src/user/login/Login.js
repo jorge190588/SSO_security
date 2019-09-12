@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Login.css';
-import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN } from '../../constants';
-import { login } from '../../util/APIUtils';
+import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN, MENU } from '../../constants';
+import { login, getUserMenu, getUserProfile } from '../../util/APIUtils';
 import { Link, Redirect } from 'react-router-dom'
 import fbLogo from '../../img/fb-logo.png';
 import googleLogo from '../../img/google-logo.png';
@@ -88,6 +88,16 @@ class LoginForm extends Component {
         });        
     }
 
+    getMenu(){
+        getUserMenu()
+        .then(response => {
+            console.log(response);
+            localStorage.setItem(MENU, response.data);
+        }).catch(error => {
+            console.log(error);
+        });
+    }
+
     handleSubmit(event) {
         event.preventDefault();   
 
@@ -97,6 +107,7 @@ class LoginForm extends Component {
         .then(response => {
             localStorage.setItem(ACCESS_TOKEN, response.accessToken);
             Alert.success("You're successfully logged in!");
+            this.getMenu();
             this.props.history.push("/");
         }).catch(error => {
             Alert.error((error && error.message) || 'Oops! Something went wrong. Please try again!');

@@ -11,16 +11,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.springsocial.tools.CrudValidations;
+
 import com.example.springsocial.model.RolFormAction;
-import com.example.springsocial.tools.RestResponse;
 import com.example.springsocial.repository.RolFormActionRepository;
-import com.example.springsocial.repository.UserRepository;
+import com.example.springsocial.tools.CrudValidations;
+import com.example.springsocial.tools.RestResponse;
 
 @SuppressWarnings({"rawtypes","unchecked"})
 @RestController
+@RequestMapping("rolFormAction")
 public class RolFormActionController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -28,9 +30,6 @@ public class RolFormActionController {
 	private String moduleName="RolFormAction";
 	
 	@Autowired
-    private UserRepository userRepository;
-    
-    @Autowired
     private RolFormActionRepository repository;
     
     private void instanceCrud() {

@@ -17,10 +17,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings({"unchecked","rawtypes"})
 @RestController
+@RequestMapping("user")
 public class UserController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
@@ -29,7 +31,7 @@ public class UserController {
     private RolFormActionRepository rolFormActionRepository;    
     private RestResponse response=null;
         
-    @GetMapping("/user/me")
+    @GetMapping("/me")
     @PreAuthorize("hasRole('USER')")
     public User getCurrentUser(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request) {
     	User user;
@@ -41,8 +43,7 @@ public class UserController {
         return user;
     }
    
-    @SuppressWarnings({"unchecked"})
-	@GetMapping("/user/view")
+	@GetMapping("/view")
     @PreAuthorize("hasRole('USER')")
     public RestResponse userView(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request) {
     	response= new RestResponse();
@@ -58,5 +59,16 @@ public class UserController {
         return response;
     }
     
- 
+	@GetMapping("/menu")
+    @PreAuthorize("hasRole('USER')")
+    public RestResponse userMenu(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request) {
+    	response= new RestResponse();
+    	/*if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI(),userPrincipal.getRol_id() )){
+    		logger.info("user doesnt has access to "+request.getRequestURI());
+    		response.setError(new CustomException("Usuario no encontrado",ErrorCode.REST_FIND, this.getClass().getSimpleName(),0));
+    		return response;
+    	}*/
+    		
+    	return userPrincipal.menu(rolFormActionRepository);
+    }
 }

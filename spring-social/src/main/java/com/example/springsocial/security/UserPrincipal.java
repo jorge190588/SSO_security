@@ -14,7 +14,7 @@ import com.example.springsocial.model.User;
 import com.example.springsocial.tools.CrudValidations;
 import com.example.springsocial.tools.RestResponse;
 
-@SuppressWarnings({"serial","rawtypes"})
+@SuppressWarnings({"serial","rawtypes","unchecked"})
 public class UserPrincipal implements OAuth2User, UserDetails {
     private Long id;
     private String email;
@@ -57,7 +57,6 @@ public class UserPrincipal implements OAuth2User, UserDetails {
 		if (crud==null) crud = new CrudValidations(rolFormActionRepository,"RolFormAction",null );
 	}
     
-    @SuppressWarnings({"unchecked"})
     public boolean hasPermissionToRoute(Object rolFormActionRepository, String uri) {
     	String 	[]parts =  uri.split("/");
     	String 	rolFilter ="{\"id\":\"rol_id\",\"option\":\"Igual\",\"value\":\""+ this.rol_id + "\"}",
@@ -74,6 +73,14 @@ public class UserPrincipal implements OAuth2User, UserDetails {
         else return true;
     }
     
+	public RestResponse menu(Object rolFormActionRepository) {
+    	String 	rolFilter ="{\"id\":\"rol_id\",\"option\":\"Igual\",\"value\":\""+ this.rol_id + "\"}";
+    	searchCriteria =  Optional.of("[" + rolFilter +"]");
+        orderCriteria =  Optional.empty();
+        instanceCrud(rolFormActionRepository);
+ 		return crud.findAll(searchCriteria, orderCriteria);
+    }
+
     public Long getId() {
         return id;
     }

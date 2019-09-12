@@ -1,6 +1,14 @@
 package com.example.springsocial.security;
 
+import com.example.springsocial.error.CustomException;
+import com.example.springsocial.error.ErrorCode;
+import com.example.springsocial.model.RolFormAction;
 import com.example.springsocial.model.User;
+import com.example.springsocial.repository.RolFormActionRepository;
+import com.example.springsocial.tools.CrudValidations;
+import com.example.springsocial.tools.RestResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +18,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class UserPrincipal implements OAuth2User, UserDetails {
     private Long id;
@@ -17,7 +26,11 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
     private Map<String, Object> attributes;
-
+    private CrudValidations crud = null;
+    private Optional<String> searchCriteria;
+    private Optional<String> orderCriteria;
+    private Long rol_id;
+    
     public UserPrincipal(Long id, String email, String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.email = email;
@@ -41,6 +54,31 @@ public class UserPrincipal implements OAuth2User, UserDetails {
         UserPrincipal userPrincipal = UserPrincipal.create(user);
         userPrincipal.setAttributes(attributes);
         return userPrincipal;
+    }
+    
+    private void instanceCrud(Object rolFormActionRepository) {
+		if (crud==null) crud = new CrudValidations(rolFormActionRepository,"RolFormAction",null );
+	}
+    
+    @SuppressWarnings({"rawtypes","unchecked"})
+    public boolean hasPermissionToRoute(Object rolFormActionRepository, String uri, Long rol_id) {
+    	 
+    	String []parts =  uri.split("/");
+    	String rolFilter ="{\"id\":\"rol_id\",\"option\":\"Igual\",\"value\":\""+ rol_id + "\"}";
+        String formFilter = "{\"id\":\"formAction.form.path\",\"option\":\"Igual\",\"value\":\""+ parts[1] + "\"}";
+        String actionFilter = "{\"id\":\"formAction.action.path\",\"option\":\"Igual\",\"value\":\""+ parts[2] + "\"}";
+         
+        searchCriteria =  Optional.of("[" + rolFilter +","+formFilter+"," + actionFilter +"]");
+        orderCriteria =  Optional.empty();
+        instanceCrud(rolFormActionRepository);
+          
+		RestResponse response= crud.findAll(searchCriteria, orderCriteria);
+  		if (response.getError()!=null) return false;
+  		
+  		List<RolFormAction> rolActionAcces =  (List<RolFormAction>) response.getData();
+        
+  		if (rolActionAcces.size()==0) return false;
+        else return true;
     }
 
     public Long getId() {
@@ -99,4 +137,12 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     public String getName() {
         return String.valueOf(id);
     }
+
+	public Long getRol_id() {
+		return rol_id;
+	}
+
+	public void setRol_id(Long rol_id) {
+		this.rol_id = rol_id;
+	}
 }

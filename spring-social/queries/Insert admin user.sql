@@ -23,7 +23,7 @@ insert into method (name) values ('GET'),('POST'),('PUT'),('DEL'),('PATH'),('OPT
 
 insert into rol (name) values ('admin')
 
-insert into form_Group (name,item_order,show_in_menu) values ('Inicio',1,1)
+insert into form_Group (name,item_order,show_in_menu,is_group_of_pages) values ('Inicio',1,1,0),('Perfil',2,1,1)
 
 insert into form (name,form_group_id, path, show_in_menu) 
 values ('Inicio',1,'inicio',1) ;

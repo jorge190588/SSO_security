@@ -71,6 +71,20 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- JSON ARRAY AND OBJECT -->
+		<dependency>
+      		<groupId>org.codehaus.jettison</groupId>
+      		<artifactId>jettison</artifactId>
+      		<version>1.1</version>
+    	</dependency>
+    	
+		<dependency>
+		    <groupId>commons-beanutils</groupId>
+		    <artifactId>commons-beanutils</artifactId>
+		    <version>1.8.3</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

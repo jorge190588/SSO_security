@@ -24,6 +24,16 @@ public class FormGroup {
 	
 	private Boolean showInMenu;
 	
+	private Boolean isGroupOfPages;
+	
+	public Boolean getIsGroupOfPages() {
+		return isGroupOfPages;
+	}
+
+	public void setIsGroupOfPages(Boolean isGroupOfPages) {
+		this.isGroupOfPages = isGroupOfPages;
+	}
+
 	public Long getId() {
 		return id;
 	}

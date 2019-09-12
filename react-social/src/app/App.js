@@ -11,7 +11,7 @@ import Profile from '../user/profile/Profile';
 import OAuth2RedirectHandler from '../user/oauth2/OAuth2RedirectHandler';
 import NotFound from '../common/NotFound';
 import LoadingIndicator from '../common/LoadingIndicator';
-import { getCurrentUser } from '../util/APIUtils';
+import { getCurrentUser, getUserProfile } from '../util/APIUtils';
 import { ACCESS_TOKEN } from '../constants';
 import PrivateRoute from '../common/PrivateRoute';
 import Alert from 'react-s-alert';
@@ -35,6 +35,14 @@ class App extends Component {
   loadCurrentlyLoggedInUser() {
     this.setState({
       loading: true
+    });
+
+    getUserProfile()
+    .then(response=>{
+      console.log(response);
+    })
+    .catch(error=>{
+      console.log(error);
     });
 
     getCurrentUser()

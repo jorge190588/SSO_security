@@ -11,7 +11,8 @@ public enum ErrorCode {
 	REST_CREATE(301,"Create a registrer"),
 	REST_UPDATE(302,"Update a registrer"),
 	REST_DELETE(303,"Delete a registrer"),
-	REST_VALIDATIONS(304,"Validations");
+	REST_VALIDATIONS(304,"Validations"),
+	ACCESS_DENIED(400,"Access denied");
 	
 	
 	

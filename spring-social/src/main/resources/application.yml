@@ -1,15 +1,15 @@
 spring:
     datasource:
-        #url: jdbc:mysql://localhost:3306/spring_social?useSSL=false
-        url: jdbc:sqlserver://localhost;databaseName=users
+        url: jdbc:sqlserver://localhost;databaseName=securitydata
         username: sa
-        password: 12345
+        password: Web45666
+        driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
     jpa:
         show-sql: true
         hibernate:
-            ddl-auto: create
-            #naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+            ddl-auto: update
+            naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.SQLServer2012Dialect

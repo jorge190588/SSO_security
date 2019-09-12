@@ -1,5 +1,6 @@
 package com.example.springsocial.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -35,7 +36,31 @@ public class User {
 
     private String providerId;
 
-    public Long getId() {
+    @ManyToOne
+    @JoinColumn(name="rol_id", insertable=false, updatable=false)
+    private Rol rol; 
+    
+	@Column(name = "rol_id")
+    @JsonProperty("rol_id")
+    private Long rol_id;
+	
+    public Rol getRol() {
+		return rol;
+	}
+
+	public void setRol(Rol rol) {
+		this.rol = rol;
+	}
+
+	public Long getRol_id() {
+		return rol_id;
+	}
+
+	public void setRol_id(Long rol_id) {
+		this.rol_id = rol_id;
+	}
+
+	public Long getId() {
         return id;
     }
 

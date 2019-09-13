@@ -77,7 +77,7 @@ class SignupForm extends Component {
         event.preventDefault();   
 
         const signUpRequest = Object.assign({}, this.state);
-        if (this.state.password!=this.state.repassword) {
+        if (this.state.password!==this.state.repassword) {
             Alert.error("La clave y confirmación deben ser iguales" || 'Oops! Something went wrong. Please try again!');
             return;
         }

@@ -21,7 +21,8 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
     private Map<String, Object> attributes;
-    private CrudValidations crud = null;
+    private CrudValidations crudForm = null;
+    private CrudValidations crudRolFormAction=null;
     private Optional<String> searchCriteria;
     private Optional<String> orderCriteria;
     private Long rol_id;
@@ -53,8 +54,12 @@ public class UserPrincipal implements OAuth2User, UserDetails {
         return userPrincipal;
     }
     
-    private void instanceCrud(Object rolFormActionRepository) {
-		if (crud==null) crud = new CrudValidations(rolFormActionRepository,"RolFormAction",null );
+    private void instanceCrudForm(Object formRepository) {
+		if (crudForm==null) crudForm= new CrudValidations(formRepository,"Form",null );
+	}
+    
+    private void instanceCrudRolFormAction(Object rolFormActionRepository) {
+		if (crudRolFormAction==null) crudRolFormAction= new CrudValidations(rolFormActionRepository,"RolFormAction",null );
 	}
     
     public boolean hasPermissionToRoute(Object rolFormActionRepository, String uri) {
@@ -65,20 +70,20 @@ public class UserPrincipal implements OAuth2User, UserDetails {
          
         searchCriteria =  Optional.of("[" + rolFilter +","+formFilter+"," + actionFilter +"]");
         orderCriteria =  Optional.empty();
-        instanceCrud(rolFormActionRepository);
-		RestResponse response= crud.findAll(searchCriteria, orderCriteria);
+        instanceCrudRolFormAction(rolFormActionRepository);
+		RestResponse response= crudRolFormAction.findAll(searchCriteria, orderCriteria);
   		if (response.getError()!=null) return false;
   		List<RolFormAction> rolActionAcces =  (List<RolFormAction>) response.getData();
   		if (rolActionAcces.size()==0) return false;
         else return true;
     }
     
-	public RestResponse menu(Object rolFormActionRepository) {
+	public RestResponse menu(Object formRepository) {
     	String 	rolFilter ="{\"id\":\"rol_id\",\"option\":\"Igual\",\"value\":\""+ this.rol_id + "\"}";
     	searchCriteria =  Optional.of("[" + rolFilter +"]");
         orderCriteria =  Optional.empty();
-        instanceCrud(rolFormActionRepository);
- 		return crud.findAll(searchCriteria, orderCriteria);
+        instanceCrudForm(formRepository);
+ 		return crudForm.custom("findFormByRolIdParamsNative", this.rol_id);
     }
 
     public Long getId() {

@@ -1,4 +1,4 @@
-import { API_BASE_URL, ACCESS_TOKEN } from '../constants';
+import { API_BASE_URL, ACCESS_TOKEN, MENU } from '../constants';
 
 const request = (options) => {
     const headers = new Headers({
@@ -34,15 +34,33 @@ export function getUserProfile() {
     });
 }
 
-export function getUserMenu() {
+export function getUserMenu(callback) {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
     }
 
-    return request({
+    request({
         url: API_BASE_URL + "/user/menu",
         method: 'GET'
-    });
+    }).then(response => {
+        var res = response.data.reduce((res, { formGroup, id,name, path, showInMenu  }) => {
+            if (formGroup.showInMenu){
+                if (!res[formGroup.name]){
+                    res[formGroup.name]=[];
+                    res[formGroup.name].push({id: 0, name: formGroup.name, path:path});
+                }
+                if (showInMenu)
+                    res[formGroup.name].push({id:id, name:name, path: path});
+            }
+            return res;
+        }, {});
+
+        localStorage.setItem(MENU, res);
+        callback(res);
+    }).catch(error => {
+        localStorage.setItem(MENU, '');
+        callback({});
+    });;
 }
 
 export function getCurrentUser() {

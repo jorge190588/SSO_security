@@ -89,13 +89,9 @@ class LoginForm extends Component {
     }
 
     getMenu(){
-        getUserMenu()
-        .then(response => {
-            console.log(response);
-            localStorage.setItem(MENU, response.data);
-        }).catch(error => {
-            console.log(error);
-        });
+        getUserMenu(function(menu){
+            console.log(menu);
+        })
     }
 
     handleSubmit(event) {

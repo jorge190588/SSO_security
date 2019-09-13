@@ -198,6 +198,23 @@ public class CrudValidations<T>   {
 		return response;
 	}
 	
+	public RestResponse custom(String methodName,T params) {
+		RestResponse response = new RestResponse();
+		GenericClass genericClass;
+		try{
+			genericClass = new GenericClass(model,methodName,params);
+			genericClass.executeMethod();
+			if (genericClass.getIsError()==true) throw new Exception(genericClass.getErrorMessage());			
+			response.setData(genericClass.getResult());
+		}catch(Throwable exception){
+			logger.error(exception.getMessage());
+			CustomException ex=  new CustomException(exception.getMessage(),exception,ErrorCode.REST_FIND,this.getClass().getSimpleName());
+			ErrorFormat _errorFormat = new ErrorFormat(ex);
+			response.setError(_errorFormat.get_errorResponse());
+		} 
+		return response;
+	}
+	
 	public RestResponse getPage(Optional<String> searchCriteria, Optional<String> orderCriteria, int pageNumber, int pageSize) {
 		RestResponse response = new RestResponse();
 		GenericClass genericClass;

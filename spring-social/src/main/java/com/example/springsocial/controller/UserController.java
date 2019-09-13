@@ -4,6 +4,7 @@ import com.example.springsocial.error.CustomException;
 import com.example.springsocial.error.ErrorCode;
 import com.example.springsocial.exception.ResourceNotFoundException;
 import com.example.springsocial.model.User;
+import com.example.springsocial.repository.FormRepository;
 import com.example.springsocial.repository.RolFormActionRepository;
 import com.example.springsocial.repository.UserRepository;
 import com.example.springsocial.security.CurrentUser;
@@ -28,7 +29,10 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private RolFormActionRepository rolFormActionRepository;    
+    private RolFormActionRepository rolFormActionRepository;
+    @Autowired
+    private FormRepository formRepository;
+    
     private RestResponse response=null;
         
     @GetMapping("/me")
@@ -69,6 +73,6 @@ public class UserController {
     		return response;
     	}*/
     		
-    	return userPrincipal.menu(rolFormActionRepository);
+    	return userPrincipal.menu(formRepository);
     }
 }

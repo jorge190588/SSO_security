@@ -61,4 +61,11 @@ cross join form_action formaction1_
 cross join action action2_ 
 where rolformact0_.form_action_id=formaction1_.id 
 and formaction1_.action_id=action2_.id and rolformact0_.rol_id=1 
-and action2_.path='view'
+
+
+select * from rol_form_action
+
+formGroup form accion rol_rol_action
+
+
+select * from form_group 

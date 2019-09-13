@@ -1,4 +1,4 @@
-import { API_BASE_URL, ACCESS_TOKEN, MENU } from '../constants';
+import { API_BASE_URL, ACCESS_TOKEN, PRINCIPAL_MENU } from '../constants';
 
 const request = (options) => {
     const headers = new Headers({
@@ -43,24 +43,22 @@ export function getUserMenu(callback) {
         url: API_BASE_URL + "/user/menu",
         method: 'GET'
     }).then(response => {
-        var res = response.data.reduce((res, { formGroup, id,name, path, showInMenu  }) => {
+        var principalMenu = response.data.reduce((principalMenu, { formGroup, id,name, path, showInMenu  }) => {
             if (formGroup.showInMenu){
-                if (!res[formGroup.name]){
-                    res[formGroup.name]=[];
-                    res[formGroup.name].push({id: 0, name: formGroup.name, path:path});
+                if (!principalMenu[formGroup.name]){
+                    principalMenu[formGroup.name]=[];
+                    principalMenu[formGroup.name].push({id: 0, name: formGroup.name, path:path});
                 }
-                if (showInMenu)
-                    res[formGroup.name].push({id:id, name:name, path: path});
+                if (showInMenu) principalMenu[formGroup.name].push({id:id, name:name, path: path});
             }
-            return res;
+            return principalMenu;
         }, {});
-
-        localStorage.setItem(MENU, res);
-        callback(res);
+        localStorage.setItem(PRINCIPAL_MENU, JSON.stringify(principalMenu));
+        callback(principalMenu);
     }).catch(error => {
-        localStorage.setItem(MENU, '');
+        localStorage.setItem(PRINCIPAL_MENU, {});
         callback({});
-    });;
+    });
 }
 
 export function getCurrentUser() {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Login.css';
 import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN, MENU } from '../../constants';
-import { login, getUserMenu, getUserProfile } from '../../util/APIUtils';
+import { login, getUserMenu } from '../../util/APIUtils';
 import { Link, Redirect } from 'react-router-dom'
 import fbLogo from '../../img/fb-logo.png';
 import googleLogo from '../../img/google-logo.png';
@@ -26,12 +26,12 @@ class Login extends Component {
     }
     
     render() {
-        if(this.props.authenticated) {
+        if(this.props.authenticated) { 
             return <Redirect
                 to={{
                 pathname: "/",
                 state: { from: this.props.location }
-            }}/>;            
+            }}/>;           
         }
 
         return (
@@ -65,7 +65,6 @@ class SocialLogin extends Component {
     }
 }
 
-
 class LoginForm extends Component {
     constructor(props) {
         super(props);
@@ -76,6 +75,8 @@ class LoginForm extends Component {
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.getMenu = this.getMenu.bind(this);
+        this.redirect = this.redirect.bind(this);
     }
 
     handleInputChange(event) {
@@ -89,9 +90,13 @@ class LoginForm extends Component {
     }
 
     getMenu(){
-        getUserMenu(function(menu){
-            console.log(menu);
-        })
+        return new Promise(function(resolve) {
+            getUserMenu(function(){     resolve();  }) 
+        });
+    }
+
+    redirect(){
+        this.props.history.push("/");
     }
 
     handleSubmit(event) {
@@ -102,9 +107,11 @@ class LoginForm extends Component {
         login(loginRequest)
         .then(response => {
             localStorage.setItem(ACCESS_TOKEN, response.accessToken);
-            Alert.success("You're successfully logged in!");
-            this.getMenu();
-            this.props.history.push("/");
+            Alert.success("Registro exitoso!");
+            this.getMenu().then(()=>{
+                this.redirect();
+            }).catch();                
+
         }).catch(error => {
             Alert.error((error && error.message) || 'Oops! Something went wrong. Please try again!');
         });

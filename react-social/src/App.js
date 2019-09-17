@@ -56,12 +56,11 @@ class App extends Component {
       authenticated: false,
       currentUser: null
     });
-    Alert.success("You're safely logged out!");
+    Alert.success("Sesión cerrada!");
   }
 
   handleLogin(){
-    console.log('login in app');
-    //this.loadCurrentlyLoggedInUser();
+    this.loadCurrentlyLoggedInUser();
   }
 
   componentDidMount() {

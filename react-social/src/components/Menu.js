@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React from 'react';
 import {
   Route,
   Switch,
@@ -12,9 +12,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
 
+import { Button, Divider } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -98,10 +97,10 @@ const useStyles = makeStyles(theme => ({
 export default function Menu(props) {
   const classes = useStyles();
   const theme = useTheme();
+  var onLogin = props.onLogin;
+  var authenticated =props.authenticated;
   const [open, setOpen] = React.useState(false);
-  const [authenticated, setAuthenticated] = useState(props.authenticated);
-   
-
+  
   function handleDrawerOpen() {
     setOpen(true);
   }
@@ -109,9 +108,9 @@ export default function Menu(props) {
   function handleDrawerClose() {
     setOpen(false);
   }
-
-
+    
   return (
+
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
@@ -181,7 +180,7 @@ export default function Menu(props) {
             <PrivateRoute path="/profile" authenticated={authenticated} currentUser={props.currentUser}
               component={Profile}></PrivateRoute>
             <Route path="/login"
-              render={(props) => <Login authenticated={authenticated} {...props} />}></Route>
+              render={(props) => <Login authenticated={authenticated} onLogin={onLogin} {...props} />}></Route>
             <Route path="/signup"
               render={(props) => <Signup authenticated={authenticated} {...props} />}></Route>
         </Switch>

@@ -11,12 +11,7 @@ import Alert from 'react-s-alert';
 class Login extends Component {
     constructor(props) {
         super(props);
-       
-        //this.redirectCallback = this.redirectCallback.bind(this);
-        this.state = {  redirect:false ,
-                        authenticated: props.authenticated};
-        
-        
+        this.state = {  redirect:false ,    authenticated: props.authenticated};        
     }
  
     componentDidMount() {
@@ -34,23 +29,8 @@ class Login extends Component {
             }, 100);
         }
     }
-
      
-
-    /*redirectCallback (){
-        this.setState({redirect:true});
-    }*/
-    
     render() {
-        
-        /*const redirect = (this.state) ? ((this.state.redirect)? true:false) : false;; 
-
-        if( redirect ) {
-            return <Redirect    to={{
-                                pathname: "/",
-                                state: { from: this.props.location }
-                            }}/>; 
-        }*/
         
         if(this.state.authenticated) { 
             return <Redirect
@@ -68,7 +48,7 @@ class Login extends Component {
                     <div className="or-separator">
                         <span className="or-text">o</span>
                     </div>
-                    <LoginForm {...this.props} /*redirectEvent={this.redirectCallback}*//>
+                    <LoginForm {...this.props} onLogin={this.props.onLogin}/>
                     <span className="signup-link">Nuevo usuario ?  <Link to="/signup">Registrarse</Link></span>
                 </div>
             </div>
@@ -103,8 +83,7 @@ class LoginForm extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.getMenu = this.getMenu.bind(this);
-        //this.redirectForm = this.redirectForm.bind(this);
-        //this.redirect = props.redirectEvent;
+        this.onLogin = props.onLogin;
     }
 
     handleInputChange(event) {
@@ -122,11 +101,7 @@ class LoginForm extends Component {
             getUserMenu(function(){     resolve();  }) 
         });
     }
-
-    /*redirectForm(){
-        this.redirect();
-    }*/
-
+ 
     handleSubmit(event) {
         event.preventDefault();   
 
@@ -137,12 +112,11 @@ class LoginForm extends Component {
             localStorage.setItem(ACCESS_TOKEN, response.accessToken);
             Alert.success("Registro exitoso!");
             this.getMenu().then(()=>{
-                this.setState({authenticated:true});
-                //this.redirectForm();
+                this.onLogin();
             }).catch();                
 
         }).catch(error => {
-            Alert.error((error && error.message) || 'Oops! Something went wrong. Please try again!');
+            Alert.error((error && error.message) || 'Oops! algo esta mal. Por favor intenta de nuevo!');
         });
     }
     

@@ -76,7 +76,7 @@ class App extends Component {
     <div>
       <Menu authenticated={this.state.authenticated}  onLogout={this.handleLogout} onLogin={this.handleLogin}
             ></Menu>
-      <Alert stack={{limit: 3}} 
+      <Alert stack={{limit: 1}} 
           timeout = {3000}
           position='top-right' effect='slide' offset={65} />
     </div>

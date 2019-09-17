@@ -133,7 +133,9 @@ export default function Menu(props) {
             <Link to="/" className="app-title">Sistema</Link>
           </Typography> 
           { props.authenticated ? (
-            <Button color="inherit" variant="outlined"  onClick={props.onLogout} >Cerrar sesión</Button>
+            <div>
+              <Button className={classes.button} color="inherit" variant="outlined"  onClick={props.onLogout} >Cerrar sesión</Button>
+            </div>
           ):(
             <div>
             <Button className={classes.button} color="inherit" variant="outlined" to='/login' component={Link}>Iniciar sesión </Button>
@@ -166,7 +168,22 @@ export default function Menu(props) {
           ))}
         </List>
         <Divider />
-         
+        <List>
+          {['Mi perfil', 'Cambiar clave'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        {['Preguntas frecuentes', 'Ayuda','Contacto','Sistema'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        <Divider />
       </Drawer>
       <main
         className={clsx(classes.content, {

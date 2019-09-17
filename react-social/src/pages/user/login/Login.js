@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
 import './Login.css';
-import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN } from '../../constants';
-import { login, getUserMenu } from '../../util/APIUtils';
+import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN } from '../../../constants';
+import { login, getUserMenu } from '../../../util/APIUtils';
 import { Link, Redirect } from 'react-router-dom'
-import fbLogo from '../../img/fb-logo.png';
-import googleLogo from '../../img/google-logo.png';
-import githubLogo from '../../img/github-logo.png';
+import fbLogo from '../../../img/fb-logo.png';
+import googleLogo from '../../../img/google-logo.png';
+import githubLogo from '../../../img/github-logo.png';
 import Alert from 'react-s-alert';
 
 class Login extends Component {
+    constructor(props) {
+        super(props);
+       
+        //this.redirectCallback = this.redirectCallback.bind(this);
+        this.state = {  redirect:false ,
+                        authenticated: props.authenticated};
+        
+        
+    }
+ 
     componentDidMount() {
         // If the OAuth2 login encounters an error, the user is redirected to the /login page with an error.
         // Here we display the error and then remove the error query parameter from the location.
@@ -24,9 +34,25 @@ class Login extends Component {
             }, 100);
         }
     }
+
+     
+
+    /*redirectCallback (){
+        this.setState({redirect:true});
+    }*/
     
     render() {
-        if(this.props.authenticated) { 
+        
+        /*const redirect = (this.state) ? ((this.state.redirect)? true:false) : false;; 
+
+        if( redirect ) {
+            return <Redirect    to={{
+                                pathname: "/",
+                                state: { from: this.props.location }
+                            }}/>; 
+        }*/
+        
+        if(this.state.authenticated) { 
             return <Redirect
                 to={{
                 pathname: "/",
@@ -42,7 +68,7 @@ class Login extends Component {
                     <div className="or-separator">
                         <span className="or-text">o</span>
                     </div>
-                    <LoginForm {...this.props} />
+                    <LoginForm {...this.props} /*redirectEvent={this.redirectCallback}*//>
                     <span className="signup-link">Nuevo usuario ?  <Link to="/signup">Registrarse</Link></span>
                 </div>
             </div>
@@ -71,12 +97,14 @@ class LoginForm extends Component {
         this.state = {
             email: '',
             password: '',
-            repassword:''
+            repassword:'',
+            authenticated: props.authenticated,
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.getMenu = this.getMenu.bind(this);
-        this.redirect = this.redirect.bind(this);
+        //this.redirectForm = this.redirectForm.bind(this);
+        //this.redirect = props.redirectEvent;
     }
 
     handleInputChange(event) {
@@ -95,9 +123,9 @@ class LoginForm extends Component {
         });
     }
 
-    redirect(){
-        this.props.history.push("/");
-    }
+    /*redirectForm(){
+        this.redirect();
+    }*/
 
     handleSubmit(event) {
         event.preventDefault();   
@@ -109,7 +137,8 @@ class LoginForm extends Component {
             localStorage.setItem(ACCESS_TOKEN, response.accessToken);
             Alert.success("Registro exitoso!");
             this.getMenu().then(()=>{
-                this.redirect();
+                this.setState({authenticated:true});
+                //this.redirectForm();
             }).catch();                
 
         }).catch(error => {
@@ -118,6 +147,14 @@ class LoginForm extends Component {
     }
     
     render() {
+        if(this.state.authenticated) { 
+            return <Redirect
+                to={{
+                pathname: "/",
+                state: { from: this.props.location }
+            }}/>;           
+        }
+
         return (
             <form onSubmit={this.handleSubmit}>
                 <div className="form-item">

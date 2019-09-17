@@ -44,6 +44,14 @@ body {
   }
 }
 
+
+.app-title {
+  color: #fff;
+  line-height: 60px;
+  vertical-align: middle;
+  font-size: 1.35em;
+}
+
 /**
   Link
 **/

@@ -12,10 +12,11 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
 import PrivateRoute from '../../common/PrivateRoute';
-import Home from '../../pages/home/';
-import Login from '../../pages/user/login/Login';
-import Signup from '../../pages/user/signup/Signup';
-import Profile from '../../pages/user/profile/Profile';
+import Home from '../../pages/Home/';
+import Login from '../../pages/user/Login/';
+import Signup from '../../pages/user/Signup/';
+import Profile from '../../pages/user/Profile';
+//import {Home, Login,Signup, Profile } from 'pages';
 import {useStyles} from './Style';
 
 

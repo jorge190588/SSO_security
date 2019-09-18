@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Login.css';
+import './style.css';
 import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN } from '../../../constants';
 import { login, getUserMenu } from '../../../util/APIUtils';
 import { Link, Redirect } from 'react-router-dom'

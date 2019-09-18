@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route,  Switch, Link } from 'react-router-dom';
 import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {  useTheme } from '@material-ui/core/styles';
 import {ListItem, ListItemIcon, ListItemText, IconButton, Drawer, CssBaseline, AppBar , 
         Toolbar, List, Typography, Button, Divider } from '@material-ui/core';
  
@@ -16,70 +16,8 @@ import Home from '../pages/home/Home';
 import Login from '../pages/user/login/Login';
 import Signup from '../pages/user/signup/Signup';
 import Profile from '../pages/user/profile/Profile';
+import { useStyles} from './Menu/Style';
 
-const drawerWidth = 240;
-
-const useStyles = makeStyles(theme => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-  root: {
-    display: 'flex',
-  },
-  title: {
-    flexGrow: 1,
-  },
-  appBar: {
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  hide: {
-    display: 'none',
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -drawerWidth,
-  },
-  contentShift: {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  },
-}));
 
 export default function Menu(props) {
   const classes = useStyles();

@@ -1,12 +1,27 @@
 import React, { Component } from 'react';
 import './style.css';
-
+import LoadingIndicator  from '../../common/LoadingIndicator';
 
 class Home extends Component {
-    
-    componentDidMount() {}
+    constructor(props) {
+        super(props);
+        this.state = {
+          loading: false
+        }
+    }
+  
+    componentDidMount() {
+        this.setState({loading: true });
+        setTimeout(function(){ 
+            this.setState({loading: false });
+         }.bind(this), 3000);
+    }
     
     render() {
+        if (this.state.loading){
+            return <LoadingIndicator></LoadingIndicator>
+        }
+
         return (
             <div className="home-container">
                 <div className="container">

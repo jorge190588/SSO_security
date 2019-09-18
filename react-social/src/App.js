@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import LoadingIndicator from './common/LoadingIndicator';
 import { getCurrentUser, getUserProfile } from './util/APIUtils';
 import { ACCESS_TOKEN } from './constants';
 import Alert from 'react-s-alert';
@@ -13,8 +12,7 @@ class App extends Component {
     super(props);
     this.state = {
       authenticated: false,
-      currentUser: null,
-      loading: false
+      currentUser: null
     }
 
     this.loadCurrentlyLoggedInUser = this.loadCurrentlyLoggedInUser.bind(this);
@@ -23,10 +21,7 @@ class App extends Component {
   }
 
   loadCurrentlyLoggedInUser() {
-    this.setState({
-      loading: true
-    });
-
+    
     getUserProfile()
     .then(response=>{
       console.log(response);
@@ -39,13 +34,11 @@ class App extends Component {
     .then(response => {
       this.setState({
         currentUser: response,
-        authenticated: true,
-        loading: false
+        authenticated: true
       });
     }).catch(error => {
       this.setState({
-        loading: false
-      });  
+      });
     });    
   }
 
@@ -67,10 +60,6 @@ class App extends Component {
   }
 
   render() {
-    if(this.state.loading) {
-      return <LoadingIndicator />
-    }
-
     return (
     <div>
       <Menu authenticated={this.state.authenticated}  onLogout={this.handleLogout} onLogin={this.handleLogin}

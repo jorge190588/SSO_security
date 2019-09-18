@@ -11,7 +11,6 @@ import Alert from 'react-s-alert';
 class Login extends Component {
     constructor(props) {
         super(props);
-        this.state = {  redirect:false ,    authenticated: props.authenticated};        
     }
  
     componentDidMount() {
@@ -32,7 +31,7 @@ class Login extends Component {
      
     render() {
         
-        if(this.state.authenticated) { 
+        if(this.props.authenticated) { 
             return <Redirect
                 to={{
                 pathname: "/",

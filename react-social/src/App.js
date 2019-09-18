@@ -6,8 +6,7 @@ import Alert from 'react-s-alert';
 import './App.css';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/slide.css';
-
-import Menu from './components/Menu';
+import {Menu} from 'components';
 
 class App extends Component {
   constructor(props) {

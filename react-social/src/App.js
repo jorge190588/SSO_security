@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getCurrentUser, getUserProfile } from './util/Api';
+import { getCurrentUser, getUserProfile } from 'services/Api';
 import { ACCESS_TOKEN } from './constants';
 import Alert from 'react-s-alert';
 import './App.css';

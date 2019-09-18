@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './style.css';
 import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN } from '../../../constants';
-import { login, getUserMenu } from '../../../util/Api';
+import { login, getUserMenu } from 'services/Api';
 import { Link, Redirect } from 'react-router-dom'
 import fbLogo from '../../../img/fb-logo.png';
 import googleLogo from '../../../img/google-logo.png';

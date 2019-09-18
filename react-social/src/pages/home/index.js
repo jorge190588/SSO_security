@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './style.css';
-import LoadingIndicator  from '../../common/LoadingIndicator';
+import LoadingIndicator  from 'commons/LoadingIndicator';
 
 class Home extends Component {
     constructor(props) {

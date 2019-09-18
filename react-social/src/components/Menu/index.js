@@ -11,7 +11,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
-import PrivateRoute from '../../common/PrivateRoute';
+import PrivateRoute from 'commons/PrivateRoute';
 import Home from 'pages/Home/';
 import Login from 'pages/user/Login/';
 import Signup from 'pages/user/Signup/';

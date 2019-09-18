@@ -17,7 +17,7 @@ import Login from 'pages/user/Login/';
 import Signup from 'pages/user/Signup/';
 import Profile from 'pages/user/Profile/';
 import {useStyles} from './Style';
-
+import ListMenu from 'components/ListMenu';
 
 export default function Menu(props) {
   const classes = useStyles();
@@ -109,6 +109,10 @@ export default function Menu(props) {
             </ListItem>
           ))}
         <Divider />
+       
+          <ListMenu></ListMenu>
+
+
       </Drawer>
       <main
         className={clsx(classes.content, {

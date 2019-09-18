@@ -12,7 +12,8 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
 import PrivateRoute from '../../common/PrivateRoute';
-import Home from '../../pages/Home/';
+import Home from 'pages/Home/';
+//import Home from '../../pages/Home/';
 import Login from '../../pages/user/Login/';
 import Signup from '../../pages/user/Signup/';
 import Profile from '../../pages/user/Profile';

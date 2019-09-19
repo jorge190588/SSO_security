@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './style.css';
 import { Link, Redirect } from 'react-router-dom'
 import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL } from '../../../constants';
-import { signup } from 'services/Api';
+import { signup } from 'services/User';
 import fbLogo from '../../../img/fb-logo.png';
 import googleLogo from '../../../img/google-logo.png';
 import githubLogo from '../../../img/github-logo.png';

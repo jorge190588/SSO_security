@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getCurrentUser, getUserProfile } from 'services/Api';
+import { getCurrentUser, getUserProfile } from 'services/User';
 import { ACCESS_TOKEN } from './constants';
 import Alert from 'react-s-alert';
 import './App.css';
@@ -37,8 +37,7 @@ class App extends Component {
         authenticated: true
       });
     }).catch(error => {
-      this.setState({
-      });
+      this.setState({});
     });    
   }
 

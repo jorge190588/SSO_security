@@ -1,6 +1,17 @@
-import { API_BASE_URL, ACCESS_TOKEN, PRINCIPAL_MENU } from '../constants';
+import { ACCESS_TOKEN, API_BASE_URL_SECURITY } from '../constants';
 
-const request = (options) => {
+export const request_data = (options) => {
+    options.url= API_BASE_URL_SECURITY+ options.url;
+    return getRequest(options);
+};
+
+export const request_security = (options) => {
+    options.url= API_BASE_URL_SECURITY+ options.url;
+    return getRequest(options);
+};
+
+function getRequest(options){
+
     const headers = new Headers({
         'Content-Type': 'application/json',
     })
@@ -21,69 +32,4 @@ const request = (options) => {
             return json;
         })
     );
-};
-
-export function getUserProfile() {
-    if(!localStorage.getItem(ACCESS_TOKEN)) {
-        return Promise.reject("No access token set.");
-    }
-
-    return request({
-        url: API_BASE_URL + "/user/view",
-        method: 'GET'
-    });
-}
-
-export function getUserMenu(callback) {
-    if(!localStorage.getItem(ACCESS_TOKEN)) {
-        return Promise.reject("No access token set.");
-    }
-
-    request({
-        url: API_BASE_URL + "/user/menu",
-        method: 'GET'
-    }).then(response => {
-        var principalMenu = response.data.reduce((principalMenu, { formGroup, id,name, path, showInMenu  }) => {
-            if (formGroup.showInMenu){
-                if (!principalMenu[formGroup.name]){
-                    principalMenu[formGroup.name]=[];
-                    principalMenu[formGroup.name].push({id: 0, name: formGroup.name, path:path});
-                }
-                if (showInMenu) principalMenu[formGroup.name].push({id:id, name:name, path: path});
-            }
-            return principalMenu;
-        }, {});
-        localStorage.setItem(PRINCIPAL_MENU, JSON.stringify(principalMenu));
-        callback(principalMenu);
-    }).catch(error => {
-        localStorage.setItem(PRINCIPAL_MENU, {});
-        callback({});
-    });
-}
-
-export function getCurrentUser() {
-    if(!localStorage.getItem(ACCESS_TOKEN)) {
-        return Promise.reject("No access token set.");
-    }
-
-    return request({
-        url: API_BASE_URL + "/user/me",
-        method: 'GET'
-    });
-}
-
-export function login(loginRequest) {
-    return request({
-        url: API_BASE_URL + "/auth/login",
-        method: 'POST',
-        body: JSON.stringify(loginRequest)
-    });
-}
-
-export function signup(signupRequest) {
-    return request({
-        url: API_BASE_URL + "/auth/signup",
-        method: 'POST',
-        body: JSON.stringify(signupRequest)
-    });
 }

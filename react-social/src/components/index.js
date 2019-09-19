@@ -1,3 +1,6 @@
-import Menu from './Menu';
+import Template from './Template';
+import Group from './Group';
+import VerticalMenu from './VerticalMenu';
+import ListOfGroup from './ListOfGroup';
 
-export {Menu};
+export {Template, VerticalMenu, Group, ListOfGroup};

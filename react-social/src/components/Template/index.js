@@ -17,7 +17,7 @@ import Login from 'pages/user/Login/';
 import Signup from 'pages/user/Signup/';
 import Profile from 'pages/user/Profile/';
 import {useStyles} from './Style';
-import ListMenu from 'components/ListMenu';
+import VerticalMenu from 'components/VerticalMenu';
 
 export default function Menu(props) {
   const classes = useStyles();
@@ -84,14 +84,7 @@ export default function Menu(props) {
           </IconButton>
         </div>
         <Divider />
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
+        <VerticalMenu menu={props.menu}></VerticalMenu>
         <Divider />
         <List>
           {['Mi perfil', 'Cambiar clave'].map((text, index) => (
@@ -110,7 +103,7 @@ export default function Menu(props) {
           ))}
         <Divider />
        
-          <ListMenu></ListMenu>
+       
 
 
       </Drawer>

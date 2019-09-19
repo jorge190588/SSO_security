@@ -5,7 +5,7 @@ import Alert from 'react-s-alert';
 import './App.css';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/slide.css';
-import {Menu} from 'components';
+import {Template} from 'components';
 
 class App extends Component {
   constructor(props) {
@@ -68,11 +68,11 @@ class App extends Component {
   render() {
     return (
     <div>
-      <Menu authenticated={this.state.authenticated}  
+      <Template authenticated={this.state.authenticated}  
             onLogout={this.handleLogout} 
             onLogin={this.handleLogin}
             menu = {this.state.menu}
-            ></Menu>
+            ></Template>
       <Alert stack={{limit: 1}} 
           timeout = {3000}
           position='top-right' effect='slide' offset={65} />

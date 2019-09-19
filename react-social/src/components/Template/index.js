@@ -3,7 +3,7 @@ import { Route,  Switch, Link } from 'react-router-dom';
 import clsx from 'clsx';
 import {  useTheme } from '@material-ui/core/styles';
 import {ListItem, ListItemIcon, ListItemText, IconButton, Drawer, CssBaseline, AppBar , 
-        Toolbar, List, Typography, Button, Divider } from '@material-ui/core';
+        Toolbar, Typography, Button, Divider } from '@material-ui/core';
  
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -84,16 +84,9 @@ export default function Menu(props) {
           </IconButton>
         </div>
         <Divider />
+        
         <VerticalMenu menu={props.menu}></VerticalMenu>
-        <Divider />
-        <List>
-          {['Mi perfil', 'Cambiar clave'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
+        
         <Divider />
         {['Preguntas frecuentes', 'Ayuda','Contacto','Sistema'].map((text, index) => (
             <ListItem button key={text}>
@@ -103,10 +96,7 @@ export default function Menu(props) {
           ))}
         <Divider />
        
-       
-
-
-      </Drawer>
+       </Drawer>
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,

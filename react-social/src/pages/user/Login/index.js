@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './style.css';
 import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN } from '../../../constants';
-import { login, getUserMenu } from 'services/User';
+import { login } from 'services/User';
 import { Link, Redirect } from 'react-router-dom'
 import fbLogo from '../../../img/fb-logo.png';
 import googleLogo from '../../../img/google-logo.png';
@@ -81,7 +81,6 @@ class LoginForm extends Component {
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.getMenu = this.getMenu.bind(this);
         this.onLogin = props.onLogin;
     }
 
@@ -95,11 +94,7 @@ class LoginForm extends Component {
         });        
     }
 
-    getMenu(){
-        return new Promise(function(resolve) {
-            getUserMenu(function(){     resolve();  }) 
-        });
-    }
+    
  
     handleSubmit(event) {
         event.preventDefault();   
@@ -110,10 +105,7 @@ class LoginForm extends Component {
         .then(response => {
             localStorage.setItem(ACCESS_TOKEN, response.accessToken);
             Alert.success("Registro exitoso!");
-            this.getMenu().then(()=>{
-                this.onLogin();
-            }).catch();                
-
+            this.onLogin();
         }).catch(error => {
             Alert.error((error && error.message) || 'Oops! algo esta mal. Por favor intenta de nuevo!');
         });

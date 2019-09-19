@@ -1,5 +1,5 @@
 import { request_security } from 'services/Api';
-import { ACCESS_TOKEN, PRINCIPAL_MENU } from '../constants';
+import { ACCESS_TOKEN } from '../constants';
 
 export function getUserProfile() {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
@@ -12,7 +12,7 @@ export function getUserProfile() {
     });
 }
 
-function setMenuFormat(data){
+export function setMenuFormat(data){
     var principalMenu = data.reduce((principalMenu, { formGroup, id,name, path, showInMenu  }) => {
         if (formGroup.showInMenu){
             if (!principalMenu[formGroup.name]){
@@ -32,16 +32,9 @@ export function getUserMenu(callback) {
         return Promise.reject("Acceso denegado");
     }
 
-    request_security({
+    return request_security({
         url: "/user/menu",
         method: 'GET'
-    }).then(response => {
-        var data = setMenuFormat(response.data);
-        localStorage.setItem(PRINCIPAL_MENU, JSON.stringify(data));
-        callback(data);
-    }).catch(error => {
-        localStorage.setItem(PRINCIPAL_MENU, {});
-        callback({});
     });
 }
 

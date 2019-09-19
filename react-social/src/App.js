@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getCurrentUser, getUserProfile } from 'services/User';
+import { getCurrentUser, getUserMenu, setMenuFormat } from 'services/User';
 import { ACCESS_TOKEN } from './constants';
 import Alert from 'react-s-alert';
 import './App.css';
@@ -12,7 +12,8 @@ class App extends Component {
     super(props);
     this.state = {
       authenticated: false,
-      currentUser: null
+      currentUser: null,
+      menu: null
     }
 
     this.loadCurrentlyLoggedInUser = this.loadCurrentlyLoggedInUser.bind(this);
@@ -20,24 +21,29 @@ class App extends Component {
     this.handleLogin = this.handleLogin.bind(this);
   }
 
-  loadCurrentlyLoggedInUser() {
-    
-    getUserProfile()
-    .then(response=>{
-      console.log(response);
-    })
-    .catch(error=>{
-      console.log(error);
+  setMenu(){
+    getUserMenu()
+    .then(response =>{
+      this.setState({menu: setMenuFormat(response.data) });
+    }).catch(error=>{
+      this.setState({menu:[]});
     });
-
+  }
+  
+  loadCurrentlyLoggedInUser() {
     getCurrentUser()
     .then(response => {
       this.setState({
         currentUser: response,
         authenticated: true
       });
+      this.setMenu();
     }).catch(error => {
-      this.setState({});
+      this.setState({
+        currentUser: [],
+        authenticated: false,
+        menu: []
+      });
     });    
   }
 
@@ -45,7 +51,8 @@ class App extends Component {
     localStorage.removeItem(ACCESS_TOKEN);
     this.setState({
       authenticated: false,
-      currentUser: null
+      currentUser: null,
+      menu:[] 
     });
     Alert.success("Sesión cerrada!");
   }
@@ -61,7 +68,10 @@ class App extends Component {
   render() {
     return (
     <div>
-      <Menu authenticated={this.state.authenticated}  onLogout={this.handleLogout} onLogin={this.handleLogin}
+      <Menu authenticated={this.state.authenticated}  
+            onLogout={this.handleLogout} 
+            onLogin={this.handleLogin}
+            menu = {this.state.menu}
             ></Menu>
       <Alert stack={{limit: 1}} 
           timeout = {3000}

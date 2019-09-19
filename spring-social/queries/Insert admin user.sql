@@ -24,24 +24,35 @@ insert into method (name) values ('GET'),('POST'),('PUT'),('DEL'),('PATH'),('OPT
 insert into rol (name) values ('admin');
 
 insert into form_Group (name,item_order,show_in_menu,is_group_of_pages) 
-values ('Inicio',1,1,0),('Perfil',2,1,1);
+values ('Principal',1,1,0),('Seguridad',2,1,1);
 
 insert into form (name,form_group_id, path, show_in_menu) 
 values 
 ('Inicio',1,'inicio',1),
-('Mi perfil',1,'user',1);
+('Barriles',1,'barril',1),
+('Tarimas',1,'tarima',1),
+('Mi perfil',2,'user',1);
 
 insert into action (name,path,method_id) 
 values ('Crear','create',1),('Modificar','update',2),('Anular','cancel',5),('Listado','List',1),('Ver','view',1);
 
 insert into form_action (form_id,action_id,item_order) 
-values (1,1,1),(1,2,2),(1,3,3),(1,4,4),(1,5,5),
-(2,1,1),(2,2,2),(2,3,3),(2,4,4),(2,5,5);
+values 
+(1,1,1),(1,2,2),(1,3,3),(1,4,4),(1,5,5),
+(2,1,1),(2,2,2),(2,3,3),(2,4,4),(2,5,5),
+(3,1,1),(3,2,2),(3,3,3),(3,4,4),(3,5,5),
+(4,1,1),(4,2,2),(4,3,3),(4,4,4),(4,5,5);
 
-insert into rol_form_action (rol_id,form_action_id) values (1,1),(1,2),(1,3),(1,4),(1,5),
-(1,6),(1,7),(1,8),(1,9),(1,10);
+insert into rol_form_action (rol_id,form_action_id) 
+values 
+(1,1),(1,2),(1,3),(1,4),(1,5),
+(1,6),(1,7),(1,8),(1,9),(1,10),
+(1,11),(1,12),(1,13),(1,14),(1,15),
+(1,16),(1,17),(1,18),(1,19),(1,20);
 
-insert into users (email,email_verified, image_url,name,password,provider,provider_id,rol_id) values('netneill@hotmail.com',0,null,'jorge','$2a$10$EJJ2s.XTKxWkwDaprqJdTuglXEhUdBOOARDKexBNQdX8lHfyOB5M.','local',null,1);
+
+insert into users (email,email_verified, image_url,name,password,provider,provider_id,rol_id) 
+values('netneill@hotmail.com',0,null,'jorge','$2a$10$EJJ2s.XTKxWkwDaprqJdTuglXEhUdBOOARDKexBNQdX8lHfyOB5M.','local',null,1);
 
 -- clave de jorge es jorge1919
 select * from form_group

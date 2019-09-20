@@ -31,7 +31,7 @@ export default function ListOfGroup(props) {
                 <List component="div" disablePadding>
                     {props.listOfGroup.map((option, index) => (
                         (index>0) ? (
-                            <ListItemLink  key={index} to={option.path} primary={option.name} icon={option.icon}></ListItemLink>
+                            <ListItemLink  key={index} to={option.path} primary={option.name} icon={option.icon}  isNested={true}></ListItemLink>
                         ) :null 
                         
                     ))}

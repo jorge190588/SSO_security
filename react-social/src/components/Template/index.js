@@ -2,15 +2,10 @@ import React from 'react';
 import { Route,  Switch, Link } from 'react-router-dom';
 import clsx from 'clsx';
 import {  useTheme } from '@material-ui/core/styles';
-import {ListItem, ListItemIcon, ListItemText, IconButton, Drawer, CssBaseline, AppBar , 
-        Toolbar, Typography, Button, Divider } from '@material-ui/core';
- 
+import { IconButton, Drawer, CssBaseline, AppBar , Toolbar, Typography, Button, Divider } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-
 import PrivateRoute from 'commons/PrivateRoute';
 import Home from 'pages/Home/';
 import Login from 'pages/user/Login/';
@@ -84,34 +79,17 @@ export default function Menu(props) {
           </IconButton>
         </div>
         <Divider />
-        
         <VerticalMenu menu={props.menu}></VerticalMenu>
-        
-        <Divider />
-        {['Preguntas frecuentes', 'Ayuda','Contacto','Sistema'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
         <Divider />
        
        </Drawer>
-      <main
-        className={clsx(classes.content, {
-          [classes.contentShift]: open,
-        })}
-      >
-        <div className={classes.drawerHeader} />
-        
+      <main className={clsx(classes.content, {  [classes.contentShift]: open,})}>
+      <div className={classes.drawerHeader} />
         <Switch>
-            <Route exact path="/" component={Home}></Route>
-            <PrivateRoute path="/profile" authenticated={authenticated} currentUser={props.currentUser}
-              component={Profile}></PrivateRoute>
-            <Route path="/login"
-              render={(props) => <Login authenticated={authenticated} onLogin={onLogin} {...props} />}></Route>
-            <Route path="/signup"
-              render={(props) => <Signup authenticated={authenticated} {...props} />}></Route>
+          <Route exact path="/"   component={Home}></Route>
+          <PrivateRoute path="/profile" authenticated={authenticated} currentUser={props.currentUser} component={Profile}></PrivateRoute>
+          <Route path="/login"    render={(props) => <Login authenticated={authenticated} onLogin={onLogin} {...props} />}></Route>
+          <Route path="/signup"   render={(props) => <Signup authenticated={authenticated} {...props} />}></Route>
         </Switch>
 
       </main>

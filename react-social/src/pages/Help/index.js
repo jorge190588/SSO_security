@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import './style.css';
 import LoadingIndicator  from 'commons/LoadingIndicator';
 import Title from 'components/Title';

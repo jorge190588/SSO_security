@@ -1,7 +1,9 @@
-import Template from './Template';
 import Group from './Group';
-import VerticalMenu from './VerticalMenu';
-import ListOfGroup from './ListOfGroup';
 import ListItemLink from './ListItemLink';
+import ListOfGroup from './ListOfGroup';
+import Table from './Table';
+import Template from './Template';
+import Title from './Title';
+import VerticalMenu from './VerticalMenu';
 
-export {Template, VerticalMenu, Group, ListOfGroup, ListItemLink};
+export {Group,ListItemLink, ListOfGroup,Table, Template, Title, VerticalMenu };

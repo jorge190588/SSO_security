@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './style.css';
 import LoadingIndicator  from 'commons/LoadingIndicator';
 import Title from 'components/Title';
+import Table from 'components/Table';
 
 class User extends Component {
       
@@ -27,6 +28,7 @@ class User extends Component {
         return (
             <div>
                  <Title title="Usuarios"/>
+                 <Table></Table>
             </div>
         )
     }

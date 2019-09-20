@@ -13,13 +13,13 @@ export function getUserProfile() {
 }
 
 export function setMenuFormat(data){
-    var principalMenu = data.reduce((principalMenu, { formGroup, id,name, path, showInMenu  }) => {
+    var principalMenu = data.reduce((principalMenu, { formGroup, id,name, path, showInMenu, icon  }) => {
         if (formGroup.showInMenu){
             if (!principalMenu[formGroup.name]){
                 principalMenu[formGroup.name]=[];
-                principalMenu[formGroup.name].push({id: 0, name: formGroup.name, path:path});
+                principalMenu[formGroup.name].push({id: 0, name: formGroup.name, path:formGroup.path, icon:formGroup.icon});
             }
-            if (showInMenu) principalMenu[formGroup.name].push({id:id, name:name, path: path});
+            if (showInMenu) principalMenu[formGroup.name].push({id:id, name:name, path: path, icon: icon});
         }
         return principalMenu;
     }, {});

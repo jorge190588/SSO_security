@@ -1,6 +1,6 @@
 import React from 'react';
-import {ListItem, ListItemIcon, ListItemText, List } from '@material-ui/core';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
+import {ListItem, ListItemText, List } from '@material-ui/core';
+import Icon from '@material-ui/core/Icon';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
@@ -22,9 +22,7 @@ export default function ListOfGroup(props) {
     return (
         <List component="nav" aria-labelledby="nested-list-subheader" className={classes.root}>
             <ListItem button onClick={handleClick}>
-                <ListItemIcon>
-                    <InboxIcon />
-                </ListItemIcon>
+                <Icon>{props.listOfGroup[0].icon}</Icon>
                 <ListItemText primary={props.listOfGroup[0].name} />
                 {open ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
@@ -33,7 +31,7 @@ export default function ListOfGroup(props) {
                 <List component="div" disablePadding>
                     {props.listOfGroup.map((option, index) => (
                         (index>0) ? (
-                            <ListItemLink  key={index} to={option.path} primary={option.name} icon={<InboxIcon />}></ListItemLink>
+                            <ListItemLink  key={index} to={option.path} primary={option.name} icon={option.icon}></ListItemLink>
                         ) :null 
                         
                     ))}

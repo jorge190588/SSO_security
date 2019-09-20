@@ -1,8 +1,8 @@
 import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Link as RouterLink } from 'react-router-dom';
+import Icon from '@material-ui/core/Icon';
 import {useStyles} from './style';
 
 export default function ListItemLink(props) {
@@ -21,7 +21,7 @@ export default function ListItemLink(props) {
     return (
       <div>
         <ListItem button component={renderLink}  className={classes.nested}>
-          <ListItemIcon>{icon}</ListItemIcon>
+          <Icon>{icon}</Icon>
           <ListItemText primary={primary} />
         </ListItem>
       </div>

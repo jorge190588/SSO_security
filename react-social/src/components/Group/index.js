@@ -1,7 +1,6 @@
 import React from 'react';
-import {ListItem, ListItemIcon, ListItemText  } from '@material-ui/core';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import {ListItem, ListItemText  } from '@material-ui/core';
+import Icon from '@material-ui/core/Icon';
 import ListOfGroup from 'components/ListOfGroup';
 
 export default function Group(props) {
@@ -14,7 +13,7 @@ export default function Group(props) {
       <div>
         {(props.group.length===1) ? (
             <ListItem button key={props.group[0].name} >
-                <ListItemIcon>{props.group % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <Icon>{props.group[0].icon}</Icon>
                 <ListItemText primary={props.group[0].name} />
             </ListItem>
         ):( <ListOfGroup listOfGroup={props.group}/>  )

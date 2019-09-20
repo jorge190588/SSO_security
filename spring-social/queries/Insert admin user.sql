@@ -23,15 +23,15 @@ insert into method (name) values ('GET'),('POST'),('PUT'),('DEL'),('PATH'),('OPT
 
 insert into rol (name) values ('admin');
 
-insert into form_Group (name,item_order,show_in_menu,is_group_of_pages) 
-values ('Principal',1,1,0),('Seguridad',2,1,1);
+insert into form_Group (name,item_order,show_in_menu,is_group_of_pages,icon) 
+values ('Principal',1,1,0,'home'),('Seguridad',2,1,1,'security');
 
-insert into form (name,form_group_id, path, show_in_menu) 
+insert into form (name,form_group_id, path, show_in_menu,icon) 
 values 
-('Inicio',1,'/',1),
-('Barriles',1,'/barril',1),
-('Tarimas',1,'/tarima',1),
-('Mi perfil',2,'/profile',1);
+('Inicio',1,'/',1,'home'),
+('Barriles',1,'/barril',1,'delete_outline'),
+('Tarimas',1,'/tarima',1,'dns'),
+('Mi perfil',2,'/profile',1,'person');
 
 insert into action (name,path,method_id) 
 values ('Crear','create',1),('Modificar','update',2),('Anular','cancel',5),('Listado','List',1),('Ver','view',1);

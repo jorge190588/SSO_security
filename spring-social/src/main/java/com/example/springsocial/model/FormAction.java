@@ -36,7 +36,7 @@ public class FormAction {
     private Long action_id;
 	
 	private Integer itemOrder;
-	private String icon;
+	
 	
 	public Long getId() {
 		return id;
@@ -86,11 +86,5 @@ public class FormAction {
 		this.itemOrder = itemOrder;
 	}
 
-	public String getIcon() {
-		return icon;
-	}
-
-	public void setIcon(String icon) {
-		this.icon = icon;
-	}	 
+	
 }

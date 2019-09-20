@@ -25,6 +25,7 @@ public class FormGroup {
 	private Boolean showInMenu;
 	
 	private Boolean isGroupOfPages;
+	private String icon;
 	
 	public Boolean getIsGroupOfPages() {
 		return isGroupOfPages;
@@ -65,6 +66,13 @@ public class FormGroup {
 	public void setItemOrder(Integer itemOrder) {
 		this.itemOrder = itemOrder;
 	}
+	
+	public String getIcon() {
+		return icon;
+	}
 
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}	 
 	  
 }

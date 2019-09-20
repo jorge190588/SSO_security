@@ -9,9 +9,10 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import PrivateRoute from 'commons/PrivateRoute';
 import Home from 'pages/Home/';
 import Help from 'pages/Help/';
-import Login from 'pages/user/Login/';
-import Signup from 'pages/user/Signup/';
-import Profile from 'pages/user/Profile/';
+import User from 'pages/User/';
+import Login from 'pages/Security/Login/';
+import Signup from 'pages/Security/Signup/';
+import Profile from 'pages/Security/Profile/';
 import {useStyles} from './Style';
 import VerticalMenu from 'components/VerticalMenu';
 
@@ -90,6 +91,7 @@ export default function Menu(props) {
           <Route exact path="/"   component={Home}></Route>
           <Route path="/help"     component={Help}/>
           <PrivateRoute path="/profile" authenticated={authenticated} currentUser={props.currentUser} component={Profile}></PrivateRoute>
+          <PrivateRoute path="/user" authenticated={authenticated} currentUser={props.currentUser} component={User}></PrivateRoute>
           <Route path="/login"    render={(props) => <Login authenticated={authenticated} onLogin={onLogin} {...props} />}></Route>
           <Route path="/signup"   render={(props) => <Signup authenticated={authenticated} {...props} />}></Route>
         </Switch>

@@ -8,6 +8,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import PrivateRoute from 'commons/PrivateRoute';
 import Home from 'pages/Home/';
+import Help from 'pages/Help/';
 import Login from 'pages/user/Login/';
 import Signup from 'pages/user/Signup/';
 import Profile from 'pages/user/Profile/';
@@ -87,6 +88,7 @@ export default function Menu(props) {
       <div className={classes.drawerHeader} />
         <Switch>
           <Route exact path="/"   component={Home}></Route>
+          <Route path="/help"     component={Help}/>
           <PrivateRoute path="/profile" authenticated={authenticated} currentUser={props.currentUser} component={Profile}></PrivateRoute>
           <Route path="/login"    render={(props) => <Login authenticated={authenticated} onLogin={onLogin} {...props} />}></Route>
           <Route path="/signup"   render={(props) => <Signup authenticated={authenticated} {...props} />}></Route>

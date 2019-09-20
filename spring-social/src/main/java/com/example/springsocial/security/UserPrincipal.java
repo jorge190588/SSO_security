@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,6 +29,7 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     private Optional<String> searchCriteria;
     private Optional<String> orderCriteria;
     private Long rol_id;
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     
     public UserPrincipal(Long id, String email, String password, Collection<? extends GrantedAuthority> authorities, Long rol_id) {
         this.id = id;
@@ -65,17 +69,24 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     public boolean hasPermissionToRoute(Object rolFormActionRepository, String uri) {
     	String 	[]parts =  uri.split("/");
     	String 	rolFilter ="{\"id\":\"rol_id\",\"option\":\"Igual\",\"value\":\""+ this.rol_id + "\"}",
-    			formFilter = "{\"id\":\"formAction.form.path\",\"option\":\"Igual\",\"value\":\""+ parts[1] + "\"}",
+    			formFilter = "{\"id\":\"formAction.form.path\",\"option\":\"Igual\",\"value\":\"/"+ parts[1] + "\"}",
         		actionFilter = "{\"id\":\"formAction.action.path\",\"option\":\"Igual\",\"value\":\""+ parts[2] + "\"}";
          
         searchCriteria =  Optional.of("[" + rolFilter +","+formFilter+"," + actionFilter +"]");
         orderCriteria =  Optional.empty();
         instanceCrudRolFormAction(rolFormActionRepository);
 		RestResponse response= crudRolFormAction.findAll(searchCriteria, orderCriteria);
-  		if (response.getError()!=null) return false;
+  		
+		if (response.getError()!=null) {
+			logger.info("Access not authorized (error) "+searchCriteria);
+			return false;
+		}
+  		
   		List<RolFormAction> rolActionAcces =  (List<RolFormAction>) response.getData();
-  		if (rolActionAcces.size()==0) return false;
-        else return true;
+  		if (rolActionAcces.size()==0) {
+  			logger.info("Access not authorized (Denied) "+searchCriteria);
+  			return false;
+  		}else return true;
     }
     
 	public RestResponse menu(Object formRepository) {

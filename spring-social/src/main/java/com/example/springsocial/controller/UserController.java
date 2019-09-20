@@ -11,8 +11,6 @@ import com.example.springsocial.security.CurrentUser;
 import com.example.springsocial.security.UserPrincipal;
 import com.example.springsocial.tools.RestResponse;
 import javax.servlet.http.HttpServletRequest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,19 +21,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("user")
 public class UserController {
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private RolFormActionRepository rolFormActionRepository;
     @Autowired
     private FormRepository formRepository;
-    
     private RestResponse response=null;
         
     @GetMapping("/me")
     @PreAuthorize("hasRole('USER')")
-    public User getCurrentUser(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request) {
+    public User me(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request) {
     	User user;
     	try {
     		user = userRepository.findById(userPrincipal.getId());
@@ -47,30 +43,33 @@ public class UserController {
    
 	@GetMapping("/view")
     @PreAuthorize("hasRole('USER')")
-    public RestResponse userView(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request) {
+    public RestResponse view(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request) {
     	response= new RestResponse();
     	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
-    		logger.info("user doesnt has access to "+request.getRequestURI());
-    		response.setError(new CustomException("Usuario no encontrado",ErrorCode.REST_FIND, this.getClass().getSimpleName(),0));
+    		response.setError(new CustomException("Acceso no autorizado",ErrorCode.ACCESS_DENIED, this.getClass().getSimpleName(),0));
     		return response;
     	}
     		
-    	User user = userRepository.findById(userPrincipal.getId());
-    	if (user!=null) response.setData(user);
-    	else response.setError(new CustomException("Usuario no encontrado",ErrorCode.REST_FIND, this.getClass().getSimpleName(),0));    
-        return response;
+    	response.setData(true);
+    	return response;
+    }
+	
+	@GetMapping("/list")
+    @PreAuthorize("hasRole('USER')")
+    public RestResponse list(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request) {
+    	response= new RestResponse();
+    	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
+    		response.setError(new CustomException("Acceso no autorizado",ErrorCode.ACCESS_DENIED, this.getClass().getSimpleName(),0));
+    		return response;
+    	}
+    		
+    	response.setData(true);
+    	return response;
     }
     
 	@GetMapping("/menu")
     @PreAuthorize("hasRole('USER')")
-    public RestResponse userMenu(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request) {
-    	response= new RestResponse();
-    	/*if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI(),userPrincipal.getRol_id() )){
-    		logger.info("user doesnt has access to "+request.getRequestURI());
-    		response.setError(new CustomException("Usuario no encontrado",ErrorCode.REST_FIND, this.getClass().getSimpleName(),0));
-    		return response;
-    	}*/
-    		
+    public RestResponse menu(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request) {
     	return userPrincipal.menu(formRepository);
     }
 }

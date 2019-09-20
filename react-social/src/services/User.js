@@ -49,6 +49,17 @@ export function getCurrentUser() {
     });
 }
 
+export function getUserView() {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("Acceso denegado");
+    }
+
+    return request_security({
+        url:  "/user/view",
+        method: 'GET'
+    });
+}
+
 export function login(loginRequest) {
     return request_security({
         url: "/auth/login",

@@ -26,7 +26,7 @@ export default function Table(props) {
 
   return (
     <MaterialTable
-      title="Editable Example"
+      title="Listado de registros"
       columns={state.columns}
       data={state.data}
       editable={{

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './style.css';
+import { getUserView } from 'services/User';
 import LoadingIndicator  from 'commons/LoadingIndicator';
+import NotAuthorized from 'commons/NotAuthorized';
 import Title from 'components/Title';
 import Table from 'components/Table';
 
@@ -9,26 +11,41 @@ class User extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          loading: false
+          loading: true,
+          authorized:false
         }
     }
   
-    componentDidMount() {
-        this.setState({loading: true });
-        setTimeout(function(){ 
-            this.setState({loading: false });
-         }.bind(this), 1000);
+    async componentDidMount() {
+        try{
+            const userView = await getUserView();
+            
+            this.setState({
+              authorized: (userView.error) ? false : true,
+              loading: false
+            });
+        }catch(exception){
+            this.setState({
+                authorized: false,
+                loading: false
+            });
+        }
     }
     
     render() {
         if (this.state.loading){
-            return <LoadingIndicator></LoadingIndicator>
+            return <LoadingIndicator/>
+        }
+
+        if (!this.state.authorized){
+            return <NotAuthorized/>
         }
        
         return (
             <div>
                  <Title title="Usuarios"/>
-                 <Table></Table>
+                 <br/>
+                 <Table/>
             </div>
         )
     }

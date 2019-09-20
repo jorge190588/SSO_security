@@ -35,6 +35,8 @@ public class Form {
     
     private Boolean showInMenu;
     
+    private String icon;
+    
    	public Long getId() {
 		return id;
 	}
@@ -81,5 +83,13 @@ public class Form {
 
 	public void setShowInMenu(Boolean showInMenu) {
 		this.showInMenu = showInMenu;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 }

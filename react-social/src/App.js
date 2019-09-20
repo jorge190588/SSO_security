@@ -49,9 +49,6 @@ class App extends Component {
     this.handleLogin();
   }
 
-  componentWillMount(){
-    console.log('componentWillMount ');
-  } 
 
   render() {
     if (this.state===undefined || this.state===null){

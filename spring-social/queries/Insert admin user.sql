@@ -28,10 +28,10 @@ values ('Principal',1,1,0),('Seguridad',2,1,1);
 
 insert into form (name,form_group_id, path, show_in_menu) 
 values 
-('Inicio',1,'inicio',1),
-('Barriles',1,'barril',1),
-('Tarimas',1,'tarima',1),
-('Mi perfil',2,'user',1);
+('Inicio',1,'/',1),
+('Barriles',1,'/barril',1),
+('Tarimas',1,'/tarima',1),
+('Mi perfil',2,'/profile',1);
 
 insert into action (name,path,method_id) 
 values ('Crear','create',1),('Modificar','update',2),('Anular','cancel',5),('Listado','List',1),('Ver','view',1);

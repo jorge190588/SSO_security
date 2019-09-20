@@ -60,6 +60,7 @@ class App extends Component {
               onLogout={this.handleLogout} 
               onLogin={this.handleLogin}
               menu = {this.state.menu}
+              currentUser = {this.state.currentUser}
               ></Template>
         <Alert stack={{limit: 1}} 
             timeout = {3000}

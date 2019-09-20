@@ -10,42 +10,8 @@ import {Template} from 'components';
 class App extends Component {
   constructor(props) {
     super(props);
-    
-    this.loadCurrentlyLoggedInUser = this.loadCurrentlyLoggedInUser.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
-    this.getMenu = this.getMenu.bind(this);
-  }
-
-  getMenu(_callback){
-    getUserMenu()
-    .then(response =>{
-      console.log('menu response.data', response.data);
-      _callback(setMenuFormat(response.data));
-    }).catch(error=>{
-      _callback([]);
-    });
-  }
-  
-  loadCurrentlyLoggedInUser() {
-    getCurrentUser()
-    .then(response => {
-      
-      this.AlertgetMenu(function(menu){
-        this.setState({
-          currentUser: response,
-          authenticated: true,
-          menu:menu
-        });
-      });
-
-    }).catch(error => {
-      this.setState({
-        currentUser: [],
-        authenticated: false,
-        menu: []
-      });
-    });    
   }
 
   handleLogout() {
@@ -58,12 +24,29 @@ class App extends Component {
     Alert.success("Sesión cerrada!");
   }
 
-  handleLogin(){
-    this.loadCurrentlyLoggedInUser();
+  async handleLogin(){
+    try{
+      const currentUser = await getCurrentUser();
+      const menuResponse = await getUserMenu();
+      const formatedMenu = setMenuFormat(menuResponse.data);
+      this.setState({
+        authenticated: true,
+        currentUser: currentUser,
+        menu:formatedMenu
+      });
+    }catch(exception){
+      this.setState({
+        authenticated: false,
+        currentUser: null,
+        menu:null
+      });
+    }
+    
+
   }
 
-  componentDidMount() {
-    this.loadCurrentlyLoggedInUser();
+  async componentDidMount() {
+    this.handleLogin();
   }
 
   componentWillMount(){

@@ -27,7 +27,7 @@ export function setMenuFormat(data){
 }
 
 
-export function getUserMenu(callback) {
+export function getUserMenu() {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("Acceso denegado");
     }

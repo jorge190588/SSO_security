@@ -4,24 +4,18 @@ import MaterialTable from 'material-table';
 export default function Table(props) {
   const [state, setState] = React.useState({
     columns: [
-      { title: 'Name', field: 'name' },
-      { title: 'Surname', field: 'surname' },
-      { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
+      { title: 'ID', field: 'id' },
+      { title: 'Nombre', field: 'name' },
+      { title: 'Correo', field: 'email' },
+      { title: 'Correo verificado', field: 'emailVerified', type: 'boolean' },
       {
-        title: 'Birth Place',
-        field: 'birthCity',
-        lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
+        title: 'Rol',
+        field: 'rol_id',
+        lookup: { 1: 'Admin', 2: 'Usuario' },
       },
+      { title: 'Imagen', field: 'imageUrl' },
     ],
-    data: [
-      { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-      {
-        name: 'Zerya Betül',
-        surname: 'Baran',
-        birthYear: 2017,
-        birthCity: 34,
-      },
-    ],
+    data: props.data,
   });
 
   return (
@@ -29,35 +23,14 @@ export default function Table(props) {
       title="Listado de registros"
       columns={state.columns}
       data={state.data}
-      editable={{
-        onRowAdd: newData =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              const data = [...state.data];
-              data.push(newData);
-              setState({ ...state, data });
-            }, 600);
-          }),
-        onRowUpdate: (newData, oldData) =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              const data = [...state.data];
-              data[data.indexOf(oldData)] = newData;
-              setState({ ...state, data });
-            }, 600);
-          }),
-        onRowDelete: oldData =>
-          new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-              const data = [...state.data];
-              data.splice(data.indexOf(oldData), 1);
-              setState({ ...state, data });
-            }, 600);
-          }),
-      }}
+      actions={[
+        {
+          icon: 'add',
+          tooltip: 'Agregar',
+          isFreeAction: true,
+          onClick: props.addRegister
+        }
+      ]}
     />
   );
 }

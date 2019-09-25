@@ -6,6 +6,7 @@ import com.example.springsocial.error.CustomException;
 import com.example.springsocial.error.ErrorCode;
 import com.example.springsocial.exception.ResourceNotFoundException;
 import com.example.springsocial.model.User;
+import com.example.springsocial.payload.UserHasPermission;
 import com.example.springsocial.repository.FormRepository;
 import com.example.springsocial.repository.RolFormActionRepository;
 import com.example.springsocial.repository.UserRepository;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -84,5 +87,19 @@ public class UserController {
     @PreAuthorize("hasRole('USER')")
     public RestResponse menu(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request) {
     	return userPrincipal.menu(formRepository);
+    }
+	
+	
+	@PostMapping("/haspermission")
+    @PreAuthorize("hasRole('USER')")
+    public RestResponse hasPermission(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request,@RequestBody UserHasPermission userHasPermission ) {
+    	response= new RestResponse();
+    	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository, userHasPermission.getForm(), userHasPermission.getAction())){
+    		response.setError(new CustomException("Acceso no autorizado",ErrorCode.ACCESS_DENIED, this.getClass().getSimpleName(),0));
+    		return response;
+    	}
+    		
+    	response.setData(true);
+    	return response;
     }
 }

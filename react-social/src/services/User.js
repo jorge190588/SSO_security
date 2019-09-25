@@ -38,6 +38,18 @@ export function getUserMenu() {
     });
 }
 
+
+export function getUserList() {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("Acceso denegado");
+    }
+
+    return request_security({
+        url: "/user/list",
+        method: 'GET'
+    });
+}
+
 export function getCurrentUser() {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("Acceso denegado");
@@ -49,14 +61,17 @@ export function getCurrentUser() {
     });
 }
 
-export function getUserView() {
+
+
+export function hasPermission(form,action) {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("Acceso denegado");
     }
 
     return request_security({
-        url:  "/user/view",
-        method: 'GET'
+        url: "/user/haspermission",
+        method: 'POST',
+        body: JSON.stringify({form: form, action:action})
     });
 }
 

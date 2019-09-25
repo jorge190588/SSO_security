@@ -68,9 +68,17 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     
     public boolean hasPermissionToRoute(Object rolFormActionRepository, String uri) {
     	String 	[]parts =  uri.split("/");
+    	return hasPermissionToRouteValidation(rolFormActionRepository, parts[1], parts[2]);
+    }
+    
+    public boolean hasPermissionToRoute(Object rolFormActionRepository, String form, String action) {
+    	return hasPermissionToRouteValidation(rolFormActionRepository, form, action);
+    }
+    
+    private boolean hasPermissionToRouteValidation(Object rolFormActionRepository, String form, String action) {
     	String 	rolFilter ="{\"id\":\"rol_id\",\"option\":\"Igual\",\"value\":\""+ this.rol_id + "\"}",
-    			formFilter = "{\"id\":\"formAction.form.path\",\"option\":\"Igual\",\"value\":\"/"+ parts[1] + "\"}",
-        		actionFilter = "{\"id\":\"formAction.action.path\",\"option\":\"Igual\",\"value\":\""+ parts[2] + "\"}";
+    			formFilter = "{\"id\":\"formAction.form.path\",\"option\":\"Igual\",\"value\":\"/"+ form + "\"}",
+        		actionFilter = "{\"id\":\"formAction.action.path\",\"option\":\"Igual\",\"value\":\""+ action + "\"}";
          
         searchCriteria =  Optional.of("[" + rolFilter +","+formFilter+"," + actionFilter +"]");
         orderCriteria =  Optional.empty();

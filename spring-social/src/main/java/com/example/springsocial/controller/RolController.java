@@ -1,17 +1,5 @@
 package com.example.springsocial.controller;
 
-import com.example.springsocial.repository.ElementRepositorio;
-import com.example.springsocial.tools.CrudValidations;
-import com.example.springsocial.error.CustomException;
-import com.example.springsocial.error.ErrorCode;
-import com.example.springsocial.exception.ResourceNotFoundException;
-import com.example.springsocial.model.User;
-import com.example.springsocial.repository.FormRepository;
-import com.example.springsocial.repository.RolFormActionRepository;
-import com.example.springsocial.repository.UserRepository;
-import com.example.springsocial.security.CurrentUser;
-import com.example.springsocial.security.UserPrincipal;
-import com.example.springsocial.tools.RestResponse;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +8,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.example.springsocial.error.CustomException;
+import com.example.springsocial.error.ErrorCode;
+import com.example.springsocial.repository.ElementRepositorio;
+import com.example.springsocial.repository.RolFormActionRepository;
+import com.example.springsocial.repository.RolRepository;
+import com.example.springsocial.security.CurrentUser;
+import com.example.springsocial.security.UserPrincipal;
+import com.example.springsocial.tools.CrudValidations;
+import com.example.springsocial.tools.RestResponse;
 
 @SuppressWarnings({"unchecked","rawtypes"})
 @RestController
-@RequestMapping("user")
-public class UserController {
+@RequestMapping("rol")
+public class RolController {
     @Autowired
-    private UserRepository repository;
+    private RolRepository repository;
     @Autowired
     private RolFormActionRepository rolFormActionRepository;
-    @Autowired
-    private FormRepository formRepository;
     @Autowired
 	ElementRepositorio elementRepository;
     private RestResponse response=null;
@@ -40,19 +35,7 @@ public class UserController {
 	private void instanceCrud() {
 		if (crud==null) crud = new CrudValidations(repository,moduleName,elementRepository );
 	}
-	
-    @GetMapping("/me")
-    @PreAuthorize("hasRole('USER')")
-    public User me(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request) {
-    	User user;
-    	try {
-    		user = repository.findById(userPrincipal.getId());
-    	}catch(Exception ex) {
-    		throw new ResourceNotFoundException("User", "id", userPrincipal.getId());
-    	}
-        return user;
-    }
-   
+
 	@GetMapping("/view")
     @PreAuthorize("hasRole('USER')")
     public RestResponse view(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request) {
@@ -79,10 +62,5 @@ public class UserController {
 		return crud.findAll(searchCriteria, orderCriteria);
 
     }
-    
-	@GetMapping("/menu")
-    @PreAuthorize("hasRole('USER')")
-    public RestResponse menu(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request) {
-    	return userPrincipal.menu(formRepository);
-    }
+	
 }

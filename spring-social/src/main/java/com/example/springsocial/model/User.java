@@ -2,9 +2,15 @@ package com.example.springsocial.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Date;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
@@ -27,7 +33,6 @@ public class User {
     @Column(nullable = false)
     private Boolean emailVerified = false;
 
-    @JsonIgnore
     private String password;
 
     @NotNull
@@ -43,6 +48,20 @@ public class User {
 	@Column(name = "rol_id")
     @JsonProperty("rol_id")
     private Long rol_id;
+	
+	private Date createdAt;
+	
+	@org.hibernate.annotations.ColumnDefault("0")
+	@Column(nullable= true)
+	private Date updatedAt;
+	
+	@org.hibernate.annotations.ColumnDefault("0")
+	@Column(nullable= true)
+	private int createdBy;
+	
+	@ColumnDefault("0")
+	@Column(nullable= true)
+	private int updatedBy;
 	
     public Rol getRol() {
 		return rol;
@@ -123,4 +142,36 @@ public class User {
     public void setProviderId(String providerId) {
         this.providerId = providerId;
     }
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public int getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public int getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(int updatedBy) {
+		this.updatedBy = updatedBy;
+	}
 }

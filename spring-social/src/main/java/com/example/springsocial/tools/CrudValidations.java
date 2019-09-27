@@ -2,8 +2,8 @@ package com.example.springsocial.tools;
 
 import java.util.List;
 import java.util.Optional;
-// import javax.validation.Validation;
-// import javax.validation.ValidatorFactory;
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.codehaus.jettison.json.JSONArray;
@@ -22,8 +22,8 @@ public class CrudValidations<T>   {
 	private String moduleName;
 	private GenericClass genericClass;
 	private JPAcustomSpecification jpacustomSpecification = new JPAcustomSpecification();
-	// private ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-	// private javax.validation.Validator validator =  factory.getValidator();
+	private ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+	private javax.validation.Validator validator =  factory.getValidator();
     private GenericValidations validations;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     
@@ -39,8 +39,8 @@ public class CrudValidations<T>   {
 		GenericClass genericClass;
 		try {
 			validations.checkIfParamIsNull(updateElement,moduleName);
-			/*
-			Set<ConstraintViolation<Object>> errors = validator.validate(updateElement);
+			
+			/*Set<ConstraintViolation<Object>> errors = validator.validate(updateElement);
 		    if (errors != null && errors.size() != 0) {
 		    	CustomException ex = new CustomException("Error en las validaciones", ErrorCode.REST_CREATE, this.getClass().getSimpleName(), 0, errors);
 		    	ErrorFormat _errorFormat = new ErrorFormat(ex);
@@ -49,7 +49,7 @@ public class CrudValidations<T>   {
 		    }*/
 			  
 			validations.setUpdatedAtInElement(updateElement);
-			//validations.validations(updateElement, this);
+			validations.validations(updateElement, this);
 			
 			// check list
 			genericClass= new GenericClass(updateElement,"getId");
@@ -105,7 +105,7 @@ public class CrudValidations<T>   {
 				return response;
 		    }*/
 			
-			//validations.validations(newElement, this);
+			validations.validations(newElement, this);
 			
 			validations.setCreatedAtInElement(newElement);
 				

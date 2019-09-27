@@ -3,23 +3,26 @@ import MaterialTable from 'material-table';
 
 export default function Table(props) {
   const [state, setState] = React.useState({
-    columns: [
-      { title: 'ID', field: 'id' },
-      { title: 'Nombre', field: 'name' },
-      { title: 'Correo', field: 'email' },
-      { title: 'Correo verificado', field: 'emailVerified', type: 'boolean' },
-      {
-        title: 'Rol',
-        field: 'rol_id',
-        lookup: { 1: 'Admin', 2: 'Usuario' },
-      },
-      { title: 'Imagen', field: 'imageUrl' },
-    ],
+    columns: props.header,
     data: props.data,
   });
 
   return (
     <MaterialTable
+      
+    localization={{
+      toolbar: {
+        searchPlaceholder: "Buscar",
+        searchTooltip: "Buscar "
+      },
+      pagination:{
+        labelRowsSelect:"Registros"
+      },
+      body: {
+        deleteTooltip: "Eliminar",
+        emptyDataSourceMessage: "No existen registros"
+      }
+    }}
       title="Listado de registros"
       columns={state.columns}
       data={state.data}

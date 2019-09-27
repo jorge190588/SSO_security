@@ -13,6 +13,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import com.example.springsocial.error.CustomException;
 import com.example.springsocial.error.ErrorCode;
 import com.example.springsocial.error.ErrorMessage;
+import com.example.springsocial.model.Element;
 import com.example.springsocial.tools.CrudValidations;
 import com.example.springsocial.tools.RestResponse;
 
@@ -128,5 +129,75 @@ public class GenericValidations<T> {
 	}
 	
 	
+	public void validations(Object _class, Object repository) throws CustomException, NoSuchFieldException, SecurityException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		instanceCrud();
+		Optional<String> searchFilter =  Optional.of("[{\"id\":\"entiti.name\",\"option\":\"Igual\",\"value\":\""+ this.moduleName + "\"}]");
+		Optional<String> orderFilter =  Optional.empty();
+		RestResponse response  = elementCrud.findAll(searchFilter, orderFilter);
+		List<Element> listOfElements = (List<Element>) response.getData();
+		String idElement="", methodName="", pattern="";
+		Boolean matches=false;
+		List<ErrorMessage> errorMessageList =  new ArrayList<ErrorMessage>();
 		
+		for(Element element: listOfElements){
+			
+			idElement =capitalizeString(element.getIdelement());
+			methodName="get"+idElement;
+			genericClass = new GenericClass(_class,methodName);
+			genericClass.executeMethod();
+			if (genericClass.getIsError()==true){
+				ErrorMessage patternError = new ErrorMessage();
+				patternError.setMessage("Error al obtener el atributo");
+				patternError.setAttribute(element.getLabel());
+				errorMessageList.add(patternError);
+				return;
+			}	
+			
+			if (genericClass.getResult()==null){
+				ErrorMessage patternError = new ErrorMessage();
+				patternError.setMessage(element.getPatternMessage());
+				patternError.setAttribute(element.getLabel());
+				errorMessageList.add(patternError);
+			}else{
+				pattern= element.getPattern();
+				if (genericClass.getResult() instanceof BigDecimal)
+					matches= new BigDecimal(((BigDecimal) genericClass.getResult()).longValueExact()).toString().matches(pattern);
+				else
+					matches= genericClass.getResult().toString().matches(pattern);
+				if (matches==false){
+					ErrorMessage patternError = new ErrorMessage();
+					patternError.setMessage(element.getPatternMessage());
+					patternError.setAttribute(element.getLabel());
+					errorMessageList.add(patternError);
+				}
+			}
+			
+			if (element.getIsUnique()) {
+				searchFilter= Optional.of("[{\"id\":\""+element.getIdelement()+"\",\"option\":\"Igual\",\"value\":\""+ PropertyUtils.getProperty(_class, element.getIdelement()) + "\"}]");
+				
+				genericClass= new GenericClass(repository,"findAll",new Object [] {searchFilter,orderFilter});
+				genericClass.executeMethod();
+				if (genericClass.getIsError()==true){
+					ErrorMessage patternError = new ErrorMessage();
+					patternError.setMessage("Error al obtener el atributo");
+					patternError.setAttribute(element.getLabel());
+					errorMessageList.add(patternError);
+				}else {
+					RestResponse responseFindAll = ( RestResponse) genericClass.getResult();
+					List<Object> responseObject=(List<Object>) responseFindAll.getData();
+					if (responseObject.size()>0) {
+						ErrorMessage patternError = new ErrorMessage();
+						patternError.setMessage("El valor esta duplicado");
+						patternError.setAttribute(element.getLabel());
+						errorMessageList.add(patternError);
+					}
+				}
+			}
+			
+		}
+		
+		if (errorMessageList.size()>0) {
+			throw new CustomException("Error en las validaciones",ErrorCode.REST_CREATE, this.getClass().getSimpleName().toString() , errorMessageList);
+		}
+	}	
 }

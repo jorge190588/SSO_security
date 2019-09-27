@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import './style.css';
 import { hasPermission as userHasPermission, getUserList } from 'services/User';
 import LoadingIndicator  from 'commons/LoadingIndicator';
 import NotAuthorized from 'commons/NotAuthorized';
 import Title from 'components/Title';
 import Table from 'components/Table';
-import New from './new';
+import New from './New/index';
 
 class User extends Component {
       
@@ -15,14 +14,25 @@ class User extends Component {
           loading: true,
           authorized:false,
           create:false,
-          data: []
+          data: [],
+          header: [
+            { title: 'ID', field: 'id' },
+            { title: 'Nombre', field: 'name' },
+            { title: 'Correo', field: 'email' },
+            { title: 'Correo verificado', field: 'emailVerified', type: 'boolean' },
+            {
+              title: 'Rol',
+              field: 'rol_id',
+              lookup: { 1: 'Admin', 2: 'Usuario' },
+            },
+            { title: 'Imagen', field: 'imageUrl' },
+          ]
         }
         this.addRegister = this.addRegister.bind(this);
         this.showList = this.showList.bind(this);
     }
   
     async addRegister(){
-        const hasPermission = await userHasPermission('user','create');
         this.setState({create: true});
     }
 
@@ -64,7 +74,7 @@ class User extends Component {
             <div>
                  <Title title="Usuarios"/>
                  <br/>
-                 <Table data={this.state.data} addRegister={this.addRegister} />
+                 <Table header = {this.state.header} data={this.state.data} addRegister={this.addRegister} />
             </div>
         )
     }

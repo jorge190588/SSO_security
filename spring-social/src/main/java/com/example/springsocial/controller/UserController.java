@@ -5,7 +5,9 @@ import com.example.springsocial.tools.CrudValidations;
 import com.example.springsocial.error.CustomException;
 import com.example.springsocial.error.ErrorCode;
 import com.example.springsocial.exception.ResourceNotFoundException;
+import com.example.springsocial.model.AuthProvider;
 import com.example.springsocial.model.User;
+import com.example.springsocial.payload.SignUpRequest;
 import com.example.springsocial.payload.UserHasPermission;
 import com.example.springsocial.repository.FormRepository;
 import com.example.springsocial.repository.RolFormActionRepository;
@@ -15,8 +17,11 @@ import com.example.springsocial.security.UserPrincipal;
 import com.example.springsocial.tools.RestResponse;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,8 +43,10 @@ public class UserController {
 	ElementRepositorio elementRepository;
     private RestResponse response=null;
 	private CrudValidations crud = null;
-	private String moduleName="Deporte";
-	
+	private String moduleName="Users";
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    
 	private void instanceCrud() {
 		if (crud==null) crud = new CrudValidations(repository,moduleName,elementRepository );
 	}
@@ -83,6 +90,21 @@ public class UserController {
 
     }
     
+	@PostMapping("/create")
+    @PreAuthorize("hasRole('USER')")
+    public RestResponse create(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request,@RequestBody User user) {
+		user.setPassword(user.getPassword());
+		user.setProvider(AuthProvider.local);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+    	response= new RestResponse();
+    	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
+    		response.setError(new CustomException("Acceso no autorizado",ErrorCode.ACCESS_DENIED, this.getClass().getSimpleName(),0));
+    		return response;
+    	}
+    	instanceCrud();
+    	return crud.create(user);
+    }
+	
 	@GetMapping("/menu")
     @PreAuthorize("hasRole('USER')")
     public RestResponse menu(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request) {

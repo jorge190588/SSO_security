@@ -39,6 +39,17 @@ export function getUserMenu() {
 }
 
 
+export function getUserCreate(data) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("Acceso denegado");
+    }
+    return request_security({
+        url: "/user/create",
+        method: 'POST',
+        body: JSON.stringify(data)
+    });
+}
+
 export function getUserList() {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("Acceso denegado");

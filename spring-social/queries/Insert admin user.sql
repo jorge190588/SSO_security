@@ -57,8 +57,8 @@ values
 (1,26),(1,27),(1,28),(1,29),(1,30);
 
 
-insert into users (email,email_verified, image_url,name,password,provider,provider_id,rol_id) 
-values('netneill@hotmail.com',0,null,'jorge','$2a$10$EJJ2s.XTKxWkwDaprqJdTuglXEhUdBOOARDKexBNQdX8lHfyOB5M.','local',null,1);
+insert into users (email,email_verified, image_url,name,password,provider,provider_id,rol_id, created_by, updated_by) 
+values('netneill@hotmail.com',0,null,'jorge','$2a$10$EJJ2s.XTKxWkwDaprqJdTuglXEhUdBOOARDKexBNQdX8lHfyOB5M.','local',null,1,0,0);
 
 -- clave de jorge es jorge1919
 select * from form_group
@@ -85,4 +85,29 @@ select * from rol_form_action
 formGroup form accion rol_rol_action
 
 
-select * from form_group 
+update users set created_by=0, updated_by=0, created_at=null, updated_at=null
+
+
+
+
+/*VALIDACIONES*/
+delete from entiti;
+delete from element_type;
+delete from element;
+
+DBCC CHECKIDENT ('entiti', RESEED, 0)
+DBCC CHECKIDENT ('element_type', RESEED, 0)
+DBCC CHECKIDENT ('element', RESEED, 0)
+
+insert into entiti (name,version) values('users',1) ;
+insert into element_type (name,version) values ('input',1), ('hidden',1), ('h3',1), ('password',1), ('checkbox',1), ('dropdown',1), ('textarea',1), ('file',1);
+
+insert into element (created_at,idelement,is_create,is_delete,is_required,is_unique, is_update,
+		label,mask,mask_property,order_element,pattern, pattern_message,
+updated_at, version, element_type_id, entiti_id) 
+values
+(getdate(),'email',1,0,1,1,1,'Correo electronico','','',1,'^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$','Ejemplo: jorge@gmail.com',
+null,1,1,1)
+
+select * from element
+select * from entiti

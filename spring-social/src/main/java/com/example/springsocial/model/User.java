@@ -50,17 +50,8 @@ public class User {
     private Long rol_id;
 	
 	private Date createdAt;
-	
-	@org.hibernate.annotations.ColumnDefault("0")
-	@Column(nullable= true)
 	private Date updatedAt;
-	
-	@org.hibernate.annotations.ColumnDefault("0")
-	@Column(nullable= true)
 	private int createdBy;
-	
-	@ColumnDefault("0")
-	@Column(nullable= true)
 	private int updatedBy;
 	
     public Rol getRol() {

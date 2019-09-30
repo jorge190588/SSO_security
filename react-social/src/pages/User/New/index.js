@@ -14,13 +14,22 @@ class New extends Component {
             authorized:true,
             showList: props.showList,
             values: { name:'', email:'', password:'', repassword:''},
-            clean: true
+            clean: true,
+            elements:{
+                name: {         value:'', pattern:"^([\\w_]){1,15}", validators: ['required'], errorMessages:['Campo requiere un texto entre 1 a 15 caracteres'], isError:false },
+                email: {        value:'', pattern: "^[\\w-+._%]+(\\.[\\w-]{1,20}){0,20}@[\\w-]{1,15}(\\.[\\w-]{1,5})+[\\w-]+$", validators: ['required'], errorMessages:['Campo requerido (ejemplo: jorge@gmail.com)'], isError:false },
+                password: {     value:'', pattern:"^([\\w-\\.]+){1,20}$", validators: ['required'], errorMessages:['Campo requerido (ejemplo: Jorge10$%)'], isError:false },
+                repassword: {   value:'', pattern:"^([\\w-\\.]+){1,20}$", validators: ['required'], errorMessages:['Campo requerido (ejemplo: Jorge10$%)'], isError:false },
+                rol_id: {       value:0,  pattern:"^[1-9][0-9]*$", validators: ['required'], errorMessages:['Campo requerido'], isError:false },
+                rol: {value: [{id: 1, name:'Admin'},{id:2 , name:'Usuario'}]} 
+              }
         }
         this.save = this.save.bind(this);
         this.handleShowList = this.handleShowList.bind(this);
         this.handleChange  = this.handleChange.bind(this);
     }
-  
+    
+
     async save(data, backToList){
         this.setState({loading: true});
         
@@ -35,9 +44,19 @@ class New extends Component {
                 var _data = Object.assign({}, data);
                 delete _data["rol"];
                 const newUser = await getUserCreate(_data);
+                var _elements = Object.assign({}, this.state.elements);
                 if (newUser.error){
-                    Alert.error(newUser.error.message);
+                    if(newUser.error.code===301){
+                        newUser.error.messageList.forEach(function(entry) {
+                            _elements[entry.attribute].errorMessages=entry.message;
+                            _elements[entry.attribute].isError=true;
+                        });
+                    }else{
+                        Alert.error("Error !, intente de nuevo");
+                    }
+                    
                     this.setState({
+                        elements:_elements,
                         authorized: true,
                         loading: false,
                         clean:false
@@ -92,7 +111,7 @@ class New extends Component {
             <div>
                 {this.state.loading ? (<LoadingIndicator/>): null}
                 <Title title="Nuevo usuario"/>
-                <Form save={this.save} handleShowList={this.handleShowList} clean={this.clean} />
+                <Form elements= {this.state.elements} save={this.save} handleShowList={this.handleShowList} clean={this.clean} />
             </div>
         )
     }

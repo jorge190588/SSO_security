@@ -148,7 +148,7 @@ public class GenericValidations<T> {
 			if (genericClass.getIsError()==true){
 				ErrorMessage patternError = new ErrorMessage();
 				patternError.setMessage("Error al obtener el atributo");
-				patternError.setAttribute(element.getLabel());
+				patternError.setAttribute(element.getIdelement());
 				errorMessageList.add(patternError);
 				return;
 			}	
@@ -156,7 +156,7 @@ public class GenericValidations<T> {
 			if (genericClass.getResult()==null){
 				ErrorMessage patternError = new ErrorMessage();
 				patternError.setMessage(element.getPatternMessage());
-				patternError.setAttribute(element.getLabel());
+				patternError.setAttribute(element.getIdelement());
 				errorMessageList.add(patternError);
 			}else{
 				pattern= element.getPattern();
@@ -167,7 +167,7 @@ public class GenericValidations<T> {
 				if (matches==false){
 					ErrorMessage patternError = new ErrorMessage();
 					patternError.setMessage(element.getPatternMessage());
-					patternError.setAttribute(element.getLabel());
+					patternError.setAttribute(element.getIdelement());
 					errorMessageList.add(patternError);
 				}
 			}
@@ -180,7 +180,7 @@ public class GenericValidations<T> {
 				if (genericClass.getIsError()==true){
 					ErrorMessage patternError = new ErrorMessage();
 					patternError.setMessage("Error al obtener el atributo");
-					patternError.setAttribute(element.getLabel());
+					patternError.setAttribute(element.getIdelement());
 					errorMessageList.add(patternError);
 				}else {
 					RestResponse responseFindAll = ( RestResponse) genericClass.getResult();
@@ -188,7 +188,7 @@ public class GenericValidations<T> {
 					if (responseObject.size()>0) {
 						ErrorMessage patternError = new ErrorMessage();
 						patternError.setMessage("El valor esta duplicado");
-						patternError.setAttribute(element.getLabel());
+						patternError.setAttribute(element.getIdelement());
 						errorMessageList.add(patternError);
 					}
 				}

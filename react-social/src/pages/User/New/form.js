@@ -1,10 +1,12 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import {Grid, TextField, Button, Paper, InputLabel, Select, MenuItem} from '@material-ui/core/';
-import Alert from 'react-s-alert';
+import {Grid, Input, TextField, Button, Paper, InputLabel, Select, MenuItem} from '@material-ui/core/';
 import SaveIcon from '@material-ui/icons/Save';
 import CancelIcon from '@material-ui/icons/Cancel';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 const useStyles = makeStyles(theme => ({
     root:{
@@ -14,15 +16,8 @@ const useStyles = makeStyles(theme => ({
       display: 'flex',
       flexWrap: 'wrap',
     },
-    textField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      width: 300,
-    },
-    passwordField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        width: 300,
+    TextValidator:{
+        minWidth: 300,
     },
     button:{
         margin: theme.spacing(1),
@@ -52,6 +47,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function Table(props) {
     const classes = useStyles();
+    const [form,setForm] = React.useState();
+
     const [values, setValues] = React.useState({
       name: '',
       email: '',
@@ -60,16 +57,25 @@ export default function Table(props) {
       rol_id: 0,
       rol: [{id: 1, name:'Admin'},{id:2 , name:'Usuario'}]
     });
+
+    const [validations, setValidations] = React.useState({
+        name: {         patern:"^([\w_]){1,15}", validators: ['required'], errorMessages:['Campo requiere de 1 a 15 caracteres'], isError:false },
+        email: {        pattern: "^([\w-\\.]+){1,20}@([\w]+){2,20}.[a-z]{2,10}$", validators: ['required'], errorMessages:['Este campo es requerido'], isError:false },
+        password: {     patern:"^([\w-\\.]+){1,20}$", validators: ['required'], errorMessages:['Este campo es requerido'], isError:false },
+        repassword: {   patern:"^([\w-\\.]+){1,20}$", validators: ['required'], errorMessages:['Este campo es requerido'], isError:false },
+        rol_id: {       patern:"^([0-9]+){1,2}$", validators: ['required'], errorMessages:['Este campo es requerido'], isError:false },
+      });
   
-    const handleChange = name => event => {
-      setValues({ ...values, [name]: event.target.value });
+    const handleChange = event => {        
+        console.log(event.target.value.match(validations[event.target.name].patern));
+        setValues({ ...values, [event.target.name]: event.target.value });
     };
 
-    const saveAndClean= function(){
+    const saveAndClean= function(event){
         props.save(values,false);
     }
     
-    const saveAndBack = function(){
+    const saveAndBack = function(event){
         props.save(values,true);
     }
 
@@ -82,6 +88,8 @@ export default function Table(props) {
         });
     }
 
+     
+
     if (props.clean){
         cleanValues();        
     }
@@ -92,14 +100,38 @@ export default function Table(props) {
             <Grid item xs={3}> </Grid>
             <Grid item xs={6}>
                 <Paper className={classes.paper}>
+                <FormControl className={classes.formControl} >
+                    <InputLabel htmlFor="component-error">Name</InputLabel>
+                    <Input
+                        id="component-error"
+                        name="name"
+                        value={values.name}
+                        onChange={handleChange}
+                        aria-describedby="component-error-text"
+                    />
+                    <FormHelperText id="component-error-text">Error</FormHelperText>
+                </FormControl>
+
+                </Paper>
+            </Grid>
+        </Grid>
+    
+ 
+  );
+}
+
+/*
+<Paper className={classes.paper}>
                     <TextField className={classes.textField}
                         id="name"
                         label="Usuario"
                         value={values.name}
                         onChange={handleChange('name')}
                         margin="normal"
+                        aria-describedby="component-error-text"
                         />
                         
+                    <FormHelperText id="component-error-text">Error</FormHelperText>
                     <TextField className={classes.textField}
                         id="email"
                         label="Correo"
@@ -110,6 +142,7 @@ export default function Table(props) {
                     <TextField className={classes.passwordField}
                         id="password"
                         label="Clave"
+                        type="password"
                         value={values.password}
                         onChange={handleChange('password')}
                         margin="normal"
@@ -118,6 +151,7 @@ export default function Table(props) {
                     <TextField className={classes.passwordField}
                         id="repassword"
                         label="Confirmar clave"
+                        type="password"
                         value={values.repassword}
                         onChange={handleChange('repassword')}
                         margin="normal"
@@ -157,10 +191,4 @@ export default function Table(props) {
                         </Button>
                     </Grid>
                 </Paper>
-            </Grid>
-        </Grid>
-    
- 
-  );
-}
- 
+*/

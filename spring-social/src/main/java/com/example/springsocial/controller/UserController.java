@@ -7,7 +7,6 @@ import com.example.springsocial.error.ErrorCode;
 import com.example.springsocial.exception.ResourceNotFoundException;
 import com.example.springsocial.model.AuthProvider;
 import com.example.springsocial.model.User;
-import com.example.springsocial.payload.SignUpRequest;
 import com.example.springsocial.payload.UserHasPermission;
 import com.example.springsocial.repository.FormRepository;
 import com.example.springsocial.repository.RolFormActionRepository;
@@ -17,8 +16,6 @@ import com.example.springsocial.security.UserPrincipal;
 import com.example.springsocial.tools.RestResponse;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;

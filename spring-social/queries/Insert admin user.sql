@@ -106,7 +106,7 @@ insert into element (created_at,idelement,is_create,is_delete,is_required,is_uni
 		label,mask,mask_property,order_element,pattern, pattern_message,
 updated_at, version, element_type_id, entiti_id) 
 values
-(getdate(),'email',1,0,1,1,1,'Correo electronico','','',1,'^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$','Ejemplo: jorge@gmail.com',
+(getdate(),'email',1,0,1,1,1,'Correo electronico','','',1,'^([\w-\\.]+){1,20}@([\w]+){2,20}.[a-z]{2,10}$','Ejemplo: jorge@gmail.com',
 null,1,1,1)
 
 select * from element

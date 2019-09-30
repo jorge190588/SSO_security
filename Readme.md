@@ -74,3 +74,10 @@
 cd react-social
 npm install && npm start
 ```
+
+## Validations Forms
+1. (react-form-validator-core)[https://www.npmjs.com/package/react-form-validator-core]
+2. (react-material-ui-form-validator)[https://www.npmjs.com/package/react-material-ui-form-validator]
+
+## Java regex
+1. (regextester)[https://www.regextester.com/97778]

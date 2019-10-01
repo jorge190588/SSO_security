@@ -1,11 +1,12 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import {Grid, Input, TextField, Button, Paper, InputLabel, MenuItem} from '@material-ui/core/';
+import {Grid, Button, Paper} from '@material-ui/core/';
 import SaveIcon from '@material-ui/icons/Save';
 import CancelIcon from '@material-ui/icons/Cancel';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControlInput from 'components/Form/FormControlInput';
+import FormControlPassword from 'components/Form/FormControlPassword';
+import FormControlSelect from 'components/Form/FormControlSelect';
 
 const useStyles = makeStyles(theme => ({
     root:{
@@ -86,63 +87,61 @@ export default function Table(props) {
         return isValid;
     }
  
+    var html =  Object.keys(elements).map(key => {
+        switch(elements[key].elementType) {
+            case "input": return(
+                <FormControlInput key={key} label={elements[key].label} isError={elements[key].isError}  name={elements[key].idelement} value={elements[key].value}
+                    handleChange={handleChange} errorMessages={elements[key].errorMessages}
+                ></FormControlInput>
+            );
+            case "password": return(
+                <FormControlPassword key={key} label={elements[key].label} isError={elements[key].isError}  name={elements[key].idelement} value={elements[key].value}
+                    handleChange={handleChange} errorMessages={elements[key].errorMessages}
+                ></FormControlPassword>
+            );
+            case "dropdown": return(
+                <FormControlSelect key={key} label={elements[key].label} isError={elements[key].isError}  name={elements[key].idelement} value={elements[key].value}
+                    handleChange={handleChange} errorMessages={elements[key].errorMessages} list={elements[key].list}
+                ></FormControlSelect>
+            );
+            default: return(null);
+          }
+    });
+  
     return (
         
         <Grid container className={classes.root} spacing={2}>
             <Grid item xs={3}> </Grid>
             <Grid item xs={5}>
                 <Paper className={classes.paper}>
-                    
-                    <FormControl className={classes.formControl} >
-                        <InputLabel htmlFor="component-error">Usuario</InputLabel>
-                        <Input error={elements["name"].isError}
-                            id="name"
-                            name="name"
-                            value={elements.name.value}
-                            onChange={handleChange}
-                            aria-describedby="component-error-text"
-                        />
-                        {(elements["name"].isError) ? <FormHelperText className="Mui-error" id="component-error-text">{elements["name"].errorMessages}</FormHelperText> : null }
-                    </FormControl>
+                     {html}
 
-                    <FormControl className={classes.formControl} >
-                        <InputLabel htmlFor="component-error">Correo electrónico</InputLabel>
-                        <Input error={elements["email"].isError}
-                            id="email"
-                            name="email"
-                            value={elements.email.value}
-                            onChange={handleChange}
-                            aria-describedby="component-error-text"
-                        />
-                        {(elements["email"].isError) ? <FormHelperText className="Mui-error" id="component-error-text">{elements["email"].errorMessages}</FormHelperText> : null }
-                    </FormControl>
+                    <Grid item xs={12}>
+                        <Button variant="contained" color="primary" className={classes.button} onClick={saveAndClean}>
+                            <SaveIcon className={clsx(classes.leftIcon, classes.iconSmall)} />
+                            Guardar y limpiar
+                        </Button>
+                        <Button variant="contained" color="primary" className={classes.button} onClick={saveAndBack}>
+                            <SaveIcon className={clsx(classes.leftIcon, classes.iconSmall)} />
+                            Guardar y regresar
+                        </Button>
+                        <Button variant="contained" color="secondary" className={classes.button} onClick={props.handleShowList} >
+                            <CancelIcon className={classes.leftIcon} />
+                            Cancelar
+                        </Button>
+                    </Grid>
 
-                    <FormControl className={classes.formControl} >
-                        <InputLabel htmlFor="component-error">Clave</InputLabel>
-                        <Input error={elements["password"].isError}
-                            id="password"
-                            type="password"
-                            name="password"
-                            value={elements.password.value}
-                            onChange={handleChange}
-                            aria-describedby="component-error-text"
-                        />
-                        {(elements["password"].isError) ? <FormHelperText className="Mui-error" id="component-error-text">{elements["password"].errorMessages}</FormHelperText> : null }
-                    </FormControl>
+                </Paper>
+            </Grid>
+        </Grid>
+    
+ 
+  );
+} 
 
-                    <FormControl className={classes.formControl} >
-                        <InputLabel htmlFor="component-error">Confirmar clave</InputLabel>
-                        <Input error={elements["repassword"].isError}
-                            type="password"
-                            id="repassword"
-                            name="repassword"
-                            value={elements.repassword.value}
-                            onChange={handleChange}
-                            aria-describedby="component-error-text"
-                        />
-                        {(elements["repassword"].isError) ? <FormHelperText className="Mui-error" id="component-error-text">{elements["repassword"].errorMessages}</FormHelperText> : null }
-                    </FormControl>
 
+ /*
+ 
                     <TextField
                         name= 'rol_id'
                         id="outlined-select-currency"
@@ -168,25 +167,4 @@ export default function Table(props) {
                     </TextField>
                     {(elements["rol_id"].isError) ? <FormHelperText className="Mui-error" id="component-error-text">{elements["rol_id"].errorMessages}</FormHelperText> : null }
 
-                    <Grid item xs={12}>
-                        <Button variant="contained" color="primary" className={classes.button} onClick={saveAndClean}>
-                            <SaveIcon className={clsx(classes.leftIcon, classes.iconSmall)} />
-                            Guardar y limpiar
-                        </Button>
-                        <Button variant="contained" color="primary" className={classes.button} onClick={saveAndBack}>
-                            <SaveIcon className={clsx(classes.leftIcon, classes.iconSmall)} />
-                            Guardar y regresar
-                        </Button>
-                        <Button variant="contained" color="secondary" className={classes.button} onClick={props.handleShowList} >
-                            <CancelIcon className={classes.leftIcon} />
-                            Cancelar
-                        </Button>
-                    </Grid>
-
-                </Paper>
-            </Grid>
-        </Grid>
-    
- 
-  );
-} 
+ */

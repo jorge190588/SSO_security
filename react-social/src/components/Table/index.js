@@ -2,7 +2,7 @@ import React from 'react';
 import MaterialTable from 'material-table';
 
 export default function Table(props) {
-  const [state, setState] = React.useState({
+  const [state] = React.useState({
     columns: props.header,
     data: props.data,
   });

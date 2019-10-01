@@ -91,9 +91,9 @@ update users set created_by=0, updated_by=0, created_at=null, updated_at=null
 
 
 /*VALIDACIONES*/
-delete from entiti;
 delete from element_type;
 delete from element;
+delete from entiti;
 
 DBCC CHECKIDENT ('entiti', RESEED, 0)
 DBCC CHECKIDENT ('element_type', RESEED, 0)
@@ -106,8 +106,13 @@ insert into element (created_at,idelement,is_create,is_delete,is_required,is_uni
 		label,mask,mask_property,order_element,pattern, pattern_message,
 updated_at, version, element_type_id, entiti_id) 
 values
-(getdate(),'email',1,0,1,1,1,'Correo electronico','','',1,'^([\w-\\.]+){1,20}@([\w]+){2,20}.[a-z]{2,10}$','Ejemplo: jorge@gmail.com',
+(getdate(),'email',1,0,1,1,1,
+'Correo electronico','','',1,'^([\w-\\.]+){1,25}@([\w]+){2,25}.[a-z]{2,10}$','Campo requiere un correo válido (Ejemplo: jorge@gmail.com)',
+null,1,1,1),
+(getdate(),'name',1,0,1,1,1,
+'Usuario','','',1,'^([\w-\\.]+){4,20}$','Campo requiere un texto de 4 a 20 caracteres (Ejemplo: jorgesantos1)',
 null,1,1,1)
 
 select * from element
 select * from entiti
+select * from element_type

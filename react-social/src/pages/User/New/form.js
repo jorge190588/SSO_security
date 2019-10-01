@@ -1,13 +1,11 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import {Grid, Input, TextField, Button, Paper, InputLabel, Select, MenuItem} from '@material-ui/core/';
+import {Grid, Input, TextField, Button, Paper, InputLabel, MenuItem} from '@material-ui/core/';
 import SaveIcon from '@material-ui/icons/Save';
 import CancelIcon from '@material-ui/icons/Cancel';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import { element } from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
     root:{
@@ -54,8 +52,7 @@ const useStyles = makeStyles(theme => ({
 export default function Table(props) {
     const classes = useStyles();
     const [elements,setElements] = React.useState(props.elements);
-    const [clean,setClean] = React.useState(props.clean);
-     
+         
     const handleChange = event => {        
         elements[event.target.name].isError= ((event.target.value.toString().match(elements[event.target.name].pattern))===null) ? true : false;
         elements[event.target.name].value = event.target.value;
@@ -64,50 +61,31 @@ export default function Table(props) {
 
     const saveAndClean= function(){
         var isValid = isValidForm();        
-        if(isValid===true){
-            var data = {};
-            Object.keys(elements).map(key => {
-                data[key]=elements[key].value;
-            })
-            props.save(data,false);
-        }
-    }
-    
-    const saveAndBack = function(event){
-        var isValid = isValidForm();
-        if(isValid===true){
-            props.save(elements, true);
-        }
+        if(isValid===true)  props.save(getData(),false);
     }
 
-    const cleanValues=function(){
-        Object.keys(elements).map(key => {
-            elements[key].value='';
-        });
-        setElements({ ...elements});
-    }    
+    const getData=function(){
+        var data = {};
+        Object.keys(elements).map(key => data[key]=elements[key].value)
+        return data;
+    }
+
+    const saveAndBack = function(){
+        var isValid = isValidForm();        
+        if(isValid===true)  props.save(getData(),true);
+    }
 
     const isValidForm=function(){
         var isValid = true;
-        Object.keys(elements).map(function(key, index) {
-            if (elements[key]!==undefined){
-                if ((elements[key].value.toString().match(elements[key].pattern))===null){
-                    elements[key].isError=true;
-                    isValid=false;
-                }else {
-                    elements[key].isError=false;
-                }
-            }
-        });
+        Object.keys(elements).forEach(function (key) {
+            if ((elements[key].value.toString().match(elements[key].pattern))===null)  { elements[key].isError=true; isValid=false;}
+            else    elements[key].isError=false;
+         });
+          
         setElements({ ...elements});
         return isValid;
     }
-/*
-    if (clean){   
-        console.log('cleanValues');
-        cleanValues();          
-    }
-*/
+ 
     return (
         
         <Grid container className={classes.root} spacing={2}>

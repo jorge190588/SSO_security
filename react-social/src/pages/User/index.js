@@ -11,7 +11,8 @@ class User extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          loading: true,
+            pageSize:10,
+            loading: true,
           authorized:false,
           create:false,
           data: [],
@@ -64,6 +65,7 @@ class User extends Component {
 
     async componentDidMount() {
         this.showList();
+        this.setState({pageSize:10})
     }
     
     render() {
@@ -74,7 +76,7 @@ class User extends Component {
             <div>
                  <Title title="Usuarios"/>
                  <br/>
-                 <Table header = {this.state.header} data={this.state.data} addRegister={this.addRegister} />
+                 <Table pageSize={this.state.pageSize} header = {this.state.header} data={this.state.data} addRegister={this.addRegister} numberRowPerPage={10}/>
             </div>
         )
     }

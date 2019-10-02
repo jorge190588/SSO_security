@@ -37,17 +37,36 @@ export default function Table(props) {
             tooltip: 'Agregar',
             isFreeAction: true,
             onClick: props.addRegister
-            }
+            },
+            {
+                icon: 'save',
+                tooltip: 'Modificar',
+                onClick: (event, rowData) => alert("Modificar " + rowData.name)
+              },
+              rowData => ({
+                icon: 'delete',
+                tooltip: 'Eliminar',
+                onClick: (event, rowData) => alert("Eliminar ? " + rowData.name),
+                //disabled: rowData.birthYear < 2000
+              }),
+              rowData => ({
+                  icon: 'visibility',
+                  tooltip: 'Ver información',
+                  onClick: (event, rowData) => alert("Ver informacion ? " + rowData.name),
+                  //disabled: rowData.birthYear < 2000
+                }),
         ]}
 
         options={{
             pageSize: 10,
             pageSizeOptions: [5, 10, 20, 30 ,50, 75, 100 ],
             toolbar: true,
-            paging: true
+            paging: true,
+            actionsColumnIndex: -1
         }}
-
+         
         components={{
+             
             Pagination: props => (
               <TablePagination
                 {...props}

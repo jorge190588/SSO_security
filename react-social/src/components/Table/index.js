@@ -41,7 +41,7 @@ export default function Table(props) {
             {
                 icon: 'save',
                 tooltip: 'Modificar',
-                onClick: (event, rowData) => alert("Modificar " + rowData.name)
+                onClick:  props.updateRegister//(event, rowData) => alert("Modificar " + rowData.name)
               },
               rowData => ({
                 icon: 'delete',
@@ -52,7 +52,7 @@ export default function Table(props) {
               rowData => ({
                   icon: 'visibility',
                   tooltip: 'Ver información',
-                  onClick: (event, rowData) => alert("Ver informacion ? " + rowData.name),
+                  onClick: props.updateRegister// (event, rowData) => alert("Ver informacion ? " + rowData.name),
                   //disabled: rowData.birthYear < 2000
                 }),
         ]}

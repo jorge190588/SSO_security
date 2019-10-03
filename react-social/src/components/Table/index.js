@@ -1,9 +1,18 @@
 import React from 'react';
 import MaterialTable from 'material-table';
 import TablePagination from '@material-ui/core/TablePagination';
+import { IconButton } from '@material-ui/core';
+import Icon from '@material-ui/core/Icon';
+import ButtonBack from 'components/Table/Buttonback';
 
 export default function Table(props) {
     const actionsList =[];
+    
+    if (props.customActions){
+        Object.keys(props.customActions).forEach(key=> 
+            actionsList.push(props.customActions[key])    
+        )
+    }
 
     if (props.addRegister){
         actionsList.push({
@@ -15,9 +24,13 @@ export default function Table(props) {
     }
 
     if (props.updateRegister){
-        actionsList.push({icon: 'save',
-        tooltip: 'Modificar',
-        onClick:  props.updateRegister});
+        actionsList.push(function(rowData){ 
+            return {
+                icon: 'edit',
+                tooltip: 'Modificar',
+                onClick: function() { props.updateRegister(rowData); }
+            }
+        });
     }
 
     if (props.viewRegister){
@@ -25,7 +38,7 @@ export default function Table(props) {
             return {
                 icon: 'visibility',
                 tooltip: 'Ver información',
-                onClick: props.viewRegister
+                onClick: function() { props.viewRegister(rowData); }
             }
         });
     }
@@ -33,9 +46,9 @@ export default function Table(props) {
     if (props.cancelRegister){
         actionsList.push(function(rowData){ 
             return {
-                icon: 'delete',
+                icon: 'cancel',
                 tooltip: 'Cancelar registro',
-                onClick: props.cancelRegister
+                onClick: function() { props.cancelRegister(rowData); }
             }
         });
     }
@@ -78,7 +91,25 @@ export default function Table(props) {
             }}
             
             components={{
-                
+                Action: props => {
+                    if (typeof props.action === "function"){
+                        var element= props.action(props.data);
+                        return (
+                            <IconButton aria-label={element.icon} size="small"
+                                onClick={element.onClick}
+                            >
+                                <Icon>{element.icon}</Icon>
+                            </IconButton>
+                            )
+                    }else{
+                        return (
+                            <ButtonBack     icon={props.action.icon} tooltip={props.action.tooltip}
+                                            onClick={props.action.onClick}
+                            >
+                            </ButtonBack>
+                        )
+                    }   
+                },
                 Pagination: props => (
                 <TablePagination
                     {...props}

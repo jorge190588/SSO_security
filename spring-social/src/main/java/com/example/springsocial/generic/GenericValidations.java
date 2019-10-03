@@ -135,6 +135,7 @@ public class GenericValidations<T> {
 		Optional<String> orderFilter =  Optional.empty();
 		RestResponse response  = elementCrud.findAll(searchFilter, orderFilter);
 		List<Element> listOfElements = (List<Element>) response.getData();
+		if (listOfElements==null) return;
 		String idElement="", methodName="", pattern="";
 		Boolean matches=false;
 		List<ErrorMessage> errorMessageList =  new ArrayList<ErrorMessage>();

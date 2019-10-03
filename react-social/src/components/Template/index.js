@@ -10,6 +10,8 @@ import PrivateRoute from 'commons/PrivateRoute';
 import Home from 'pages/Home/';
 import Help from 'pages/Help/';
 import User from 'pages/User/';
+import Rol from 'pages/Rol/';
+import RolFormAction from 'pages/RolFormAction/';
 import Login from 'pages/Security/Login/';
 import Signup from 'pages/Security/Signup/';
 import Profile from 'pages/Security/Profile/';
@@ -92,6 +94,8 @@ export default function Menu(props) {
           <Route path="/help"     component={Help}/>
           <PrivateRoute path="/profile" authenticated={authenticated} currentUser={props.currentUser} component={Profile}></PrivateRoute>
           <PrivateRoute path="/user" authenticated={authenticated} currentUser={props.currentUser} component={User}></PrivateRoute>
+          <PrivateRoute path="/rol" authenticated={authenticated} component={Rol}></PrivateRoute>
+          <PrivateRoute path="/rolFormAction" authenticated={authenticated} component={RolFormAction}></PrivateRoute>
           <Route path="/login"    render={(props) => <Login authenticated={authenticated} onLogin={onLogin} {...props} />}></Route>
           <Route path="/signup"   render={(props) => <Signup authenticated={authenticated} {...props} />}></Route>
         </Switch>

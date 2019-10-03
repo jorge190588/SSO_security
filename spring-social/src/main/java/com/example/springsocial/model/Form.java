@@ -1,5 +1,7 @@
 package com.example.springsocial.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,11 +34,16 @@ public class Form {
     private FormGroup formGroup; 
         
     private String path;
-    
     private Boolean showInMenu;
-    
     private String icon;
-    
+    private Date createdAt;
+	@Column(nullable = true)
+	private Date updatedAt;
+	@Column(nullable = true)
+	private int createdBy;
+	@Column(nullable = true)
+	private int updatedBy;
+	
    	public Long getId() {
 		return id;
 	}
@@ -91,5 +98,37 @@ public class Form {
 
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}
+	
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public int getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public int getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(int updatedBy) {
+		this.updatedBy = updatedBy;
 	}
 }

@@ -2,6 +2,7 @@ package com.example.springsocial.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,10 +39,15 @@ public class Element {
 	private Boolean isCreate;
 	private Boolean isUpdate;
 	private Boolean isDelete;
-	private Date createdAt;
-	private Date updatedAt;
 	private String mask;
 	private String maskProperty;
+	private Date createdAt;
+	@Column(nullable = true)
+	private Date updatedAt;
+	@Column(nullable = true)
+	private int createdBy;
+	@Column(nullable = true)
+	private int updatedBy;
 	
 	public int getVersion() {
 		return version;
@@ -130,18 +136,6 @@ public class Element {
 	public void setIsDelete(Boolean isDelete) {
 		this.isDelete = isDelete;
 	}
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-	public Date getUpdatedAt() {
-		return updatedAt;
-	}
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
-	}
 	public String getMask() {
 		return mask;
 	}
@@ -153,5 +147,37 @@ public class Element {
 	}
 	public void setMaskProperty(String maskProperty) {
 		this.maskProperty = maskProperty;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public int getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public int getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(int updatedBy) {
+		this.updatedBy = updatedBy;
 	}
 }

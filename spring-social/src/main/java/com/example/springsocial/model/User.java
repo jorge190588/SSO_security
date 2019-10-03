@@ -6,16 +6,10 @@ import java.util.Date;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-
-import org.hibernate.annotations.ColumnDefault;
 
 @Entity
-@Table(name = "users", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email")
-})
+@Table(name = "users")//, uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,8 +44,11 @@ public class User {
     private Long rol_id;
 	
 	private Date createdAt;
+	@Column(nullable = true)
 	private Date updatedAt;
+	@Column(nullable = true)
 	private int createdBy;
+	@Column(nullable = true)
 	private int updatedBy;
 	
     public Rol getRol() {

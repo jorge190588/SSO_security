@@ -1,5 +1,7 @@
 package com.example.springsocial.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,11 +22,16 @@ public class Action {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	@Column(nullable = false)
-	private String name;
-	
+	private String name;	
 	private String path;
+	private Date createdAt;
+	@Column(nullable = true)
+	private Date updatedAt;
+	@Column(nullable = true)
+	private int createdBy;
+	@Column(nullable = true)
+	private int updatedBy;
 	
 	public Long getMethod_id() {
 		return method_id;
@@ -72,5 +79,37 @@ public class Action {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+	
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public int getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public int getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(int updatedBy) {
+		this.updatedBy = updatedBy;
 	}
 }

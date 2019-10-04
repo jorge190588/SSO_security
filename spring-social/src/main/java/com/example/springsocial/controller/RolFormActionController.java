@@ -1,5 +1,6 @@
 package com.example.springsocial.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,13 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.example.springsocial.security.UserPrincipal;
 import com.example.springsocial.error.CustomException;
 import com.example.springsocial.error.ErrorCode;
 import com.example.springsocial.model.RolFormAction;
 import com.example.springsocial.repository.RolFormActionRepository;
 import com.example.springsocial.security.CurrentUser;
-import com.example.springsocial.security.UserPrincipal;
 import com.example.springsocial.tools.CrudValidations;
 import com.example.springsocial.tools.RestResponse;
 
@@ -50,30 +50,54 @@ public class RolFormActionController {
 	
 	@PostMapping("/create")
 	@PreAuthorize("hasRole('USER')")
-	public RestResponse create(@RequestBody RolFormAction newElement) {
-		logger.info("access to: POST /"+moduleName+"/"+newElement);
-		instanceCrud();
+	public RestResponse create(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request, @RequestBody RolFormAction newElement) {
+		response= new RestResponse();
+    	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
+    		response.setError(new CustomException("Acceso no autorizado",ErrorCode.ACCESS_DENIED, this.getClass().getSimpleName(),0));
+    		return response;
+    	}
+    		
+    	instanceCrud(); 
 		return crud.create(newElement);
 	}
 	
-	@DeleteMapping("/delete/{id}")
-	public RestResponse delete(@PathVariable Integer id) {
-		logger.info("access to: DELETE /"+moduleName+"/"+id);
-		instanceCrud();
-		return crud.delete(id.toString());
+	@DeleteMapping("/delete/{rol_id}/form_action_id")
+	public RestResponse delete(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request, @PathVariable Integer rol_id, @PathVariable Integer form_action_id) {
+		response= new RestResponse();
+    	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
+    		response.setError(new CustomException("Acceso no autorizado",ErrorCode.ACCESS_DENIED, this.getClass().getSimpleName(),0));
+    		return response;
+    	}
+    	
+    	List<RolFormAction> rolFormActionList=  repository.findByRolAndFormAction(1, 1);
+    	if (rolFormActionList.size()==0 || rolFormActionList==null)
+    		response.setError("Regsitro no encontrado");
+    	
+    	instanceCrud(); 
+		return crud.delete(rolFormActionList.get(0).getId().toString());
 	}
 	
-	@PutMapping("/{id}")
-	public RestResponse update(@RequestBody RolFormAction updateElement) {
-		logger.info("access to: PUT /"+moduleName+"/"+updateElement.getId());
-		instanceCrud();
+	@PutMapping("update")
+	public RestResponse update(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request,@RequestBody RolFormAction updateElement) {
+		response= new RestResponse();
+    	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
+    		response.setError(new CustomException("Acceso no autorizado",ErrorCode.ACCESS_DENIED, this.getClass().getSimpleName(),0));
+    		return response;
+    	}
+    		
+    	instanceCrud(); 
 		return crud.update(updateElement);
 	}
 	
 	@GetMapping("/{id}")
-	public RestResponse  finbyid(@PathVariable int id) {
-		logger.info("access to: GET /"+moduleName+"/"+id);
-		instanceCrud(); 
+	public RestResponse  finbyid(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request,@PathVariable int id) {
+		response= new RestResponse();
+    	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
+    		response.setError(new CustomException("Acceso no autorizado",ErrorCode.ACCESS_DENIED, this.getClass().getSimpleName(),0));
+    		return response;
+    	}
+    		
+    	instanceCrud(); 
 		return crud.findById(id);
 	}
 	
@@ -91,7 +115,7 @@ public class RolFormActionController {
     }
 	
 	@GetMapping("/{page}/{rows}")
-	public  RestResponse  page(	@PathVariable int page,@PathVariable int rows,
+	public  RestResponse  page(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request,	@PathVariable int page,@PathVariable int rows,
 			@RequestParam("searchCriteria") Optional<String> searchCriteria,@RequestParam Optional<String> orderCriteria) {
 		logger.info("access to: GET /"+moduleName+"/page/"+page+"/"+rows+"?searchCriteria="+searchCriteria+"&orderCriteria="+orderCriteria);
 		instanceCrud(); 

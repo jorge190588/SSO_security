@@ -1,5 +1,6 @@
 package com.example.springsocial.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,6 +15,6 @@ public interface RolFormActionRepository extends 	CrudRepository<RolFormAction, 
 													PagingAndSortingRepository<RolFormAction, Integer>, 
 													JpaSpecificationExecutor<RolFormAction>, JpaRepository<RolFormAction, Integer>
 {
-    Optional<RolFormAction> findByRolAndFormAction(Long rol, Long formAction);
-    Boolean existsByRolAndFormAction(Long rol, Long formAction);
+    List<RolFormAction> findByRolAndFormAction(int rol, int formAction);
+    Boolean existsByRolAndFormAction(int rol, int formAction);
 }

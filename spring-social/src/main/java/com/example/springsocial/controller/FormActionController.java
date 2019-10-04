@@ -71,16 +71,16 @@ public class FormActionController {
     @PreAuthorize("hasRole('USER')")
     public RestResponse listByRolIdNotInRolFormAction(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request, @RequestParam("rol_id") Optional<Integer> rol_id  ) {
     	response= new RestResponse();
-    	/*if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
+    	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
     		response.setError(new CustomException("Acceso no autorizado",ErrorCode.ACCESS_DENIED, this.getClass().getSimpleName(),0));
     		return response;
-    	}*/
+    	}
     		
     	instanceCrud();    	
     	String 	rolFilter ="{\"id\":\"rol_id\",\"option\":\"Igual\",\"value\":\""+ rol_id.get() + "\"}";
     	searchCriteria =  Optional.of("[" + rolFilter +"]");
         orderCriteria =  Optional.empty();
-		return crud.custom("findFormActionByRolIdNotInRolFormActionParamsNative", rol_id.get());
+		return crud.custom("listByRolIdNotInRolFormAction", rol_id.get());
     }
 
 

@@ -22,7 +22,7 @@ public class FormAction {
 	private Long id;
 	
 	@ManyToOne
-    @JoinColumn(name="form_id", insertable=false, updatable=false)
+    @JoinColumn(name="form_id", referencedColumnName="id", insertable=false, updatable=false)
     private Form form; 
     
 	@Column(name = "form_id")
@@ -30,7 +30,7 @@ public class FormAction {
     private Long form_id;
 	
 	@ManyToOne
-    @JoinColumn(name="action_id", insertable=false, updatable=false)
+    @JoinColumn(name="action_id", referencedColumnName="id", insertable=false, updatable=false)
     private Action action; 
     
 	@Column(name = "action_id")
@@ -99,7 +99,8 @@ public class FormAction {
 	}
 
 	public Boolean getIsTheRol() {
-		return isTheRol;
+		
+		return (isTheRol == null) ? false : isTheRol ;
 	}	
 	
 	public Date getCreatedAt() {

@@ -16,12 +16,8 @@ public interface FormActionRepository  extends CrudRepository<FormAction, Intege
 												PagingAndSortingRepository<FormAction, Integer>, 
 												JpaSpecificationExecutor<FormAction>, JpaRepository<FormAction, Integer> {
 
-	@Query(value = "select id,action_id,form_id,item_order,1 'is_the_rol',created_at,updated_at,created_by,updated_by "+
-	" from form_action fa "+
-	" where fa.id in (select rfa.form_action_id from rol_form_action rfa where rfa.rol_id = :rol_id)" +
-	" union all " +
-	" select id,action_id,form_id,item_order,0 'is_the_rol',created_at,updated_at,created_by,updated_by " +
-	" from form_action fa  " +
-	" where fa.id not in (select rfa.form_action_id from rol_form_action rfa where rfa.rol_id = :rol_id)  " , nativeQuery = true)
-	List<FormAction> findFormActionByRolIdNotInRolFormActionParamsNative(@Param("rol_id") int rol_id);
+	@Query(value = "select fa.id, fa.form_id, fa.action_id, fa.item_order,(select count(*) from rol_form_action rfa where rfa.form_action_id=fa.id) [is_the_rol],created_at,updated_at,created_by,updated_by "+
+	" from form_action fa ", nativeQuery = true)
+	//@Query(value = "select *,(select count(*) from rol_form_action rfa where rfa.form_action_id=fa.id) 'is_the_rol' from form_action fa",nativeQuery=true)
+	List<FormAction> listByRolIdNotInRolFormAction(@Param("rol_id") int rol_id);
 }

@@ -24,3 +24,15 @@ export function createRolFormAction(data) {
         body: JSON.stringify(data)
     });
 }
+
+
+
+export function deleteRolFormAction(params) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("Acceso denegado");
+    }
+    return request_security({
+        url: "/"+moduleName+"/delete/"+params.rol_id+"/"+params.form_action_id,
+        method: 'DELETE'
+    });
+}

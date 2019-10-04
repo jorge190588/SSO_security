@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { hasPermission as userHasPermission} from 'services/User';
 import { getFormActionByRolIdList } from 'services/FormAction';
-import { createRolFormAction} from 'services/RolFormAction';
+import { createRolFormAction, deleteRolFormAction } from 'services/RolFormAction';
 import LoadingIndicator  from 'commons/LoadingIndicator';
 import NotAuthorized from 'commons/NotAuthorized';
 import Title from 'components/Title';
@@ -10,11 +10,12 @@ import Table from 'components/Table';
 //import Update from  './Update/index';
 import Alert from 'react-s-alert';
 
-class Rol extends Component {
+class RolFormAction extends Component {
       
     constructor(props) {
         super(props);
         this.state = {
+            controller: "rolFormAction",
             loading: true,
             authorized:false,
             cancel:false,
@@ -40,7 +41,6 @@ class Rol extends Component {
     }
   
     async addRegister(rowData){
-        
         if (rowData.isTheRol){
             Alert.warning("El acceso ya es permitido");
             return ;
@@ -48,33 +48,51 @@ class Rol extends Component {
 
         this.setState({ loading: true   });
         try{
-            const response = await createRolFormAction({"rol_id":this.state.rol_id,"form_action_id":rowData.id });
-
-            if (response.error){    
-                Alert.error("Error !, intente de nuevo");
-            }else{
-                Alert.success("Registro guardado");
-                await this.showList();
+            const hasPermission = await userHasPermission(this.state.controller,'create');    
+            if (hasPermission.error)    this.setState({ authorized: false,  loading: false  });
+            else{
+                const response = await createRolFormAction({"rol_id":this.state.rol_id,"form_action_id":rowData.id });
+                if (response.error)     Alert.error("Error !, intente de nuevo");
+                else{
+                    Alert.success("Registro guardado");
+                    await this.showList();
+                }
             }
-
         }catch(exception){
             Alert.error("Error !, intente de nuevo");
-            this.setState({
-                authorized: true,
-                loading: false
-            });
+            this.setState({     authorized: true,   loading: false});
         }
     }
     
     async cancelRegister(rowData){
         if (!rowData.isTheRol){
-            Alert.warning("El acceso ya es denegado");
+            Alert.warning("El acceso ya esta denegado");
+            return ;
+        }
+
+        this.setState({ loading: true   });
+        try{
+            const hasPermission = await userHasPermission(this.state.controller,'cancel');    
+            if (hasPermission.error)    this.setState({ authorized: false,  loading: false  });
+            else{
+                const response = await deleteRolFormAction({"rol_id":this.state.rol_id,"form_action_id":rowData.id });
+                if (response.error)     Alert.error("Error !, intente de nuevo");
+                else{
+                    Alert.success("Registro eliminado");
+                    await this.showList();
+                }
+                this.setState({ authorized: true,  loading: false  });
+                console.log(rowData);
+            }
+        }catch(exception){
+            Alert.error("Error !, intente de nuevo");
+            this.setState({     authorized: true,   loading: false});
         }
     }
 
     async showList(){
         try{
-            const hasPermission = await userHasPermission('rolFormAction','list');    
+            const hasPermission = await userHasPermission(this.state.controller,'list');    
             if (hasPermission.error)    this.setState({ authorized: false,  loading: false  });
             else{
                 const response =  await getFormActionByRolIdList(this.state.rol_id);
@@ -92,7 +110,6 @@ class Rol extends Component {
                         data: response.data,
                       });
                 }
-                
             }
 
         }catch(exception){
@@ -139,4 +156,4 @@ class Rol extends Component {
     }
 }
 
-export default Rol;
+export default RolFormAction;

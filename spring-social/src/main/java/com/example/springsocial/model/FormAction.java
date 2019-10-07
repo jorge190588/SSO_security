@@ -1,7 +1,6 @@
 package com.example.springsocial.model;
 
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -39,16 +36,16 @@ public class FormAction {
 	
 	private Integer itemOrder;
 	
-	@Column(name = "is_the_rol", insertable=false, updatable=false)
-	private Boolean isTheRol;
+	@Column(name = "is_the_rol", insertable=false, updatable=false, nullable=true)
+	private boolean  isTheRol;
 	
 	private Date createdAt;
 	@Column(nullable = true)
 	private Date updatedAt;
 	@Column(nullable = true)
-	private int createdBy;
+	private Integer createdBy;
 	@Column(nullable = true)
-	private int updatedBy;
+	private Integer updatedBy;
 	
 	public Long getId() {
 		return id;
@@ -98,9 +95,12 @@ public class FormAction {
 		this.itemOrder = itemOrder;
 	}
 
-	public Boolean getIsTheRol() {
-		
-		return (isTheRol == null) ? false : isTheRol ;
+	public boolean getIsTheRol() {
+		return isTheRol ;
+	}	
+	
+	public void setIsTheRol(boolean isTheRol) {
+		this.isTheRol =isTheRol;
 	}	
 	
 	public Date getCreatedAt() {
@@ -119,19 +119,19 @@ public class FormAction {
 		this.updatedAt = updatedAt;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 }

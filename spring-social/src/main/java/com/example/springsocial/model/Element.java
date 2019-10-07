@@ -17,9 +17,9 @@ import javax.persistence.Version;
 public class Element {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	@Version
-	private int version;
+	private Integer version;
 	
 	@ManyToOne
     @JoinColumn(name="elementType_id", insertable=false, updatable=false)
@@ -35,7 +35,7 @@ public class Element {
 	private Boolean isUnique;
 	private String pattern;
 	private String patternMessage;
-	private int orderElement;
+	private Integer orderElement;
 	private Boolean isCreate;
 	private Boolean isUpdate;
 	private Boolean isDelete;
@@ -45,23 +45,23 @@ public class Element {
 	@Column(nullable = true)
 	private Date updatedAt;
 	@Column(nullable = true)
-	private int createdBy;
+	private Integer createdBy;
 	@Column(nullable = true)
-	private int updatedBy;
+	private Integer updatedBy;
 	
-	public int getVersion() {
+	public Integer getVersion() {
 		return version;
 	}
-	public void setVersion(int version) {
+	public void setVersion(Integer version) {
 		this.version = version;
 	}
 	
 	 
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public ElementType getElementType() {
@@ -112,10 +112,10 @@ public class Element {
 	public void setPatternMessage(String patternMessage) {
 		this.patternMessage = patternMessage;
 	}
-	public int getOrderElement() {
+	public Integer getOrderElement() {
 		return orderElement;
 	}
-	public void setOrderElement(int orderElement) {
+	public void setOrderElement(Integer orderElement) {
 		this.orderElement = orderElement;
 	}
 	public Boolean getIsCreate() {
@@ -165,19 +165,19 @@ public class Element {
 		this.updatedAt = updatedAt;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 }

@@ -215,7 +215,7 @@ public class CrudValidations<T>   {
 		return response;
 	}
 	
-	public RestResponse getPage(Optional<String> searchCriteria, Optional<String> orderCriteria, int pageNumber, int pageSize) {
+	public RestResponse getPage(Optional<String> searchCriteria, Optional<String> orderCriteria, Integer pageNumber, Integer pageSize) {
 		RestResponse response = new RestResponse();
 		GenericClass genericClass;
 		JSONArray searchCriteriaArray=null, orderCriteriaArray=null;

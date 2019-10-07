@@ -15,6 +15,6 @@ public interface RolFormActionRepository extends 	CrudRepository<RolFormAction, 
 													PagingAndSortingRepository<RolFormAction, Integer>, 
 													JpaSpecificationExecutor<RolFormAction>, JpaRepository<RolFormAction, Integer>
 {
-    List<RolFormAction> findByRolAndFormAction(int rol, int formAction);
-    Boolean existsByRolAndFormAction(int rol, int formAction);
+    List<RolFormAction> findByRolAndFormAction(Integer rol, Integer formAction);
+    Boolean existsByRolAndFormAction(Integer rol, Integer formAction);
 }

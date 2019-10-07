@@ -33,9 +33,9 @@ public class FormGroup {
 	@Column(nullable = true)
 	private Date updatedAt;
 	@Column(nullable = true)
-	private int createdBy;
+	private Integer createdBy;
 	@Column(nullable = true)
-	private int updatedBy;
+	private Integer updatedBy;
 	
 	public Boolean getIsGroupOfPages() {
 		return isGroupOfPages;
@@ -101,19 +101,19 @@ public class FormGroup {
 		this.updatedAt = updatedAt;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 }

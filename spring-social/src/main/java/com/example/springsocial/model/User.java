@@ -1,9 +1,6 @@
 package com.example.springsocial.model;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.Date;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -47,9 +44,9 @@ public class User {
 	@Column(nullable = true)
 	private Date updatedAt;
 	@Column(nullable = true)
-	private int createdBy;
+	private Integer createdBy;
 	@Column(nullable = true)
-	private int updatedBy;
+	private Integer updatedBy;
 	
     public Rol getRol() {
 		return rol;
@@ -147,19 +144,19 @@ public class User {
 		this.updatedAt = updatedAt;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 }

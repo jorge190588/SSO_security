@@ -69,7 +69,7 @@ public class FormActionController {
 	
 	@GetMapping("/listByRolId")
     @PreAuthorize("hasRole('USER')")
-    public RestResponse listByRolIdNotInRolFormAction(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request, @RequestParam("rol_id") Optional<Integer> rol_id  ) {
+    public RestResponse listByRolIdNotInRolFormAction(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request, @RequestParam("rol_id") Optional<Long> rol_id  ) {
     	response= new RestResponse();
     	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
     		response.setError(new CustomException("Acceso no autorizado",ErrorCode.ACCESS_DENIED, this.getClass().getSimpleName(),0));

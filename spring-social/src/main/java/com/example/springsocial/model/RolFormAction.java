@@ -40,9 +40,9 @@ public class RolFormAction {
 	@Column(nullable = true)
 	private Date updatedAt;
 	@Column(nullable = true)
-	private int createdBy;
+	private Integer createdBy;
 	@Column(nullable = true)
-	private int updatedBy;
+	private Integer updatedBy;
 	
 	public Long getId() {
 		return id;
@@ -100,19 +100,19 @@ public class RolFormAction {
 		this.updatedAt = updatedAt;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 	

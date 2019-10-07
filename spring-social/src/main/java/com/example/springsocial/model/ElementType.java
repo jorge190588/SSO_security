@@ -15,22 +15,22 @@ import javax.persistence.Version;
 public class ElementType {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	@Version
-	private int version;
+	private Integer version;
 	private String name;
 	private Date createdAt;
 	@Column(nullable = true)
 	private Date updatedAt;
 	@Column(nullable = true)
-	private int createdBy;
+	private Integer createdBy;
 	@Column(nullable = true)
-	private int updatedBy;
+	private Integer updatedBy;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -40,10 +40,10 @@ public class ElementType {
 		this.name = name;
 	}
 	
-	public int getVersion() {
+	public Integer getVersion() {
 		return version;
 	}
-	public void setVersion(int version) {
+	public void setVersion(Integer version) {
 		this.version = version;
 	}
 	
@@ -63,19 +63,19 @@ public class ElementType {
 		this.updatedAt = updatedAt;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 }

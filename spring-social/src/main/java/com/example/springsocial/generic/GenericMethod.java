@@ -36,6 +36,8 @@ public class GenericMethod<T> {
 				method = genericClass.getClass().getMethod(this.name,Object.class);
 			}else if (param instanceof Integer){
 				method = genericClass.getClass().getMethod(this.name,int.class);
+			}else if (param instanceof Long){
+				method = genericClass.getClass().getMethod(this.name,Long.class);
 			}else if (param instanceof String){
 				method = genericClass.getClass().getMethod(this.name,String.class);
 			}else if (param instanceof Boolean){

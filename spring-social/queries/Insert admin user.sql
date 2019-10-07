@@ -64,15 +64,47 @@ values
 
 insert into rol_form_action (rol_id,form_action_id,created_by,updated_by, created_at, updated_at) 
 values 
-(1,1,0,0,getDate(),null),(1,2,0,0,getDate(),null),(1,3,0,0,getDate(),null),(1,4,0,0,getDate(),null),(1,5,0,0,getDate(),null),
-(1,6,0,0,getDate(),null),(1,7,0,0,getDate(),null),(1,8,0,0,getDate(),null),(1,9,0,0,getDate(),null),(1,10,0,0,getDate(),null),
-(1,11,0,0,getDate(),null),(1,12,0,0,getDate(),null),(1,13,0,0,getDate(),null),(1,14,0,0,getDate(),null),(1,15,0,0,getDate(),null),
-(1,16,0,0,getDate(),null),(1,17,0,0,getDate(),null),(1,18,0,0,getDate(),null),(1,19,0,0,getDate(),null),(1,20,0,0,getDate(),null),
-(1,21,0,0,getDate(),null),(1,22,0,0,getDate(),null),(1,23,0,0,getDate(),null),(1,24,0,0,getDate(),null),(1,25,0,0,getDate(),null),
-(1,26,0,0,getDate(),null),(1,27,0,0,getDate(),null),(1,28,0,0,getDate(),null),(1,29,0,0,getDate(),null),(1,30,0,0,getDate(),null),
-(1,31,0,0,getDate(),null),(1,32,0,0,getDate(),null),(1,33,0,0,getDate(),null),(1,34,0,0,getDate(),null),(1,35,0,0,getDate(),null),
-(1,36,0,0,getDate(),null),(1,37,0,0,getDate(),null),(1,38,0,0,getDate(),null),(1,39,0,0,getDate(),null),(1,40,0,0,getDate(),null),(1,41,0,0,getDate(),null);
-
+(1,1,0,0,getDate(),null),
+(1,2,0,0,getDate(),null),
+(1,3,0,0,getDate(),null),
+(1,4,0,0,getDate(),null),
+(1,5,0,0,getDate(),null),
+(1,6,0,0,getDate(),null),
+(1,7,0,0,getDate(),null),
+(1,8,0,0,getDate(),null),
+(1,9,0,0,getDate(),null),
+(1,10,0,0,getDate(),null),
+(1,11,0,0,getDate(),null),
+(1,12,0,0,getDate(),null),
+(1,13,0,0,getDate(),null),
+(1,14,0,0,getDate(),null),
+(1,15,0,0,getDate(),null),
+(1,16,0,0,getDate(),null),
+(1,17,0,0,getDate(),null),
+(1,18,0,0,getDate(),null),
+(1,19,0,0,getDate(),null),
+(1,20,0,0,getDate(),null),
+(1,21,0,0,getDate(),null),
+(1,22,0,0,getDate(),null),
+(1,23,0,0,getDate(),null),
+(1,24,0,0,getDate(),null),
+(1,25,0,0,getDate(),null),
+(1,26,0,0,getDate(),null),
+(1,27,0,0,getDate(),null),
+(1,28,0,0,getDate(),null),
+(1,29,0,0,getDate(),null),
+(1,30,0,0,getDate(),null),
+(1,31,0,0,getDate(),null),
+(1,32,0,0,getDate(),null),
+(1,33,0,0,getDate(),null),
+(1,34,0,0,getDate(),null),
+(1,35,0,0,getDate(),null),
+(1,36,0,0,getDate(),null),
+(1,37,0,0,getDate(),null),
+(1,38,0,0,getDate(),null),
+(1,39,0,0,getDate(),null),
+(1,40,0,0,getDate(),null),
+(1,41,0,0,getDate(),null);
 
 insert into users (email,email_verified, image_url,name,password,provider,provider_id,rol_id, created_by, updated_by,created_at) 
 values('netneill@hotmail.com',0,null,'jorge','$2a$10$EJJ2s.XTKxWkwDaprqJdTuglXEhUdBOOARDKexBNQdX8lHfyOB5M.','local',null,1,0,0, getDate());
@@ -134,6 +166,6 @@ select id,action_id,form_id,item_order,0 'isTheRol',created_by,updated_by, creat
 from form_action fa 
 where fa.id not in (select rfa.form_action_id from rol_form_action rfa where rfa.rol_id = 1)
 
-
 select * from rol_form_action
-delete from  rol_form_action where id in (3,5)
+select concat('(getDate(),0,',+form_action_id,',',rol_id,',null,',0,'),') from rol_form_action
+order by id

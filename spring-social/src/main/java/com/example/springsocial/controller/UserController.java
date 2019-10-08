@@ -21,6 +21,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -101,6 +102,26 @@ public class UserController {
     	instanceCrud();
     	return crud.create(user);
     }
+	
+	
+	@PutMapping("update")
+    @PreAuthorize("hasRole('USER')")
+    public RestResponse upudate(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request,@RequestBody User updateElement) {
+    	response= new RestResponse();
+    	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
+    		response.setError(new CustomException("Acceso no autorizado",ErrorCode.ACCESS_DENIED, this.getClass().getSimpleName(),0));
+    		return response;
+    	}
+    	User findedElement = repository.findById(updateElement.getId());
+    	
+    	updateElement.setPassword(findedElement.getPassword());
+    	updateElement.setEmail(findedElement.getEmail());
+    	updateElement.setEmailVerified(findedElement.getEmailVerified());
+    	updateElement.setProvider(findedElement.getProvider());
+    	instanceCrud();
+    	return crud.update(updateElement);
+    }
+	
 	
 	@GetMapping("/menu")
     @PreAuthorize("hasRole('USER')")

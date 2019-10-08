@@ -16,6 +16,7 @@ public interface RolFormActionRepository extends 	CrudRepository<RolFormAction, 
 													JpaSpecificationExecutor<RolFormAction>, JpaRepository<RolFormAction, Integer>
 {
     List<RolFormAction> findByRolAndFormAction(Long rol, Long formAction);
+    List<RolFormAction> findByRolId(Long rol_id);
     Boolean existsByRolAndFormAction(Integer rol, Integer formAction);
     List<RolFormAction> findAllById(ArrayList<Long> ids);	
 }

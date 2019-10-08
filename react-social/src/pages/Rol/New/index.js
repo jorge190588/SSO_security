@@ -3,23 +3,21 @@ import LoadingIndicator  from 'commons/LoadingIndicator';
 import NotAuthorized from 'commons/NotAuthorized';
 import Title from 'components/Title';
 import Form from './form';
-import { hasPermission as userHasPermission, getUserCreate } from 'services/User';
+import { hasPermission as userHasPermission } from 'services/User';
+import { createRol } from 'services/Rol';
 import Alert from 'react-s-alert';
 
 class New extends Component {      
     constructor(props) {       
         super(props);
         this.state = {
+            controller: "rol",
             loading: true,
             authorized:true,
             showList: props.showList,
             clean: true,
             elements:   {
-                name: {         idelement: "name", value:'', label: "Usuario", pattern:"^([\\w_]){4,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 4 a 20 caracteres (Ejemplo: jorgesantos1)'], isError:false, elementType:'input' },
-                email: {        idelement: "email", value:'', label: "Correo electrónico", pattern: "^[\\w-+._%]+(\\.[\\w-]{1,25}){0,25}@[\\w-]{1,25}(\\.[\\w-]{1,10})+[\\w-]+$", validators: ['required'], errorMessages:['Campo requiere un correo válido (Ejemplo: jorge@gmail.com)'], isError:false, elementType:'input' },
-                password: {     idelement: "password", value:'', label: "Clave", pattern:"^([\\w-\\.]+){1,20}$", validators: ['required'], errorMessages:['Campo requerido (ejemplo: Jorge10$%)'], isError:false, elementType:'password' },
-                repassword: {   idelement: "repassword", value:'', label: "Confirmar clave", pattern:"^([\\w-\\.]+){1,20}$", validators: ['required'], errorMessages:['Campo requerido (ejemplo: Jorge10$%)'], isError:false, elementType:'password' },
-                rol_id: {       idelement: "rol_id", value: 0, label: "Rol de usuario", pattern:"^[1-9][0-9]*$", validators: ['required'], errorMessages:['Campo requerido'], isError:false, elementType:'dropdown', list: [{id: 1, name:'Admin'},{id:2 , name:'Usuario'}] },
+                name: {         idelement: "name", value:'', label: "Nombre del rol", pattern:"^([\\w_\\s]){4,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 4 a 20 caracteres (Ejemplo: jorgesantos1)'], isError:false, elementType:'input' },
             }
         }
         this.save = this.save.bind(this);
@@ -29,20 +27,13 @@ class New extends Component {
     }
     
     async save(data, backToList){
-        if (data.password !== data.repassword){
-            this.state.elements["password"].isError=true;
-            this.state.elements["password"].errorMessages="La clave y confirmación deben ser iguales";
-            this.state.elements["repassword"].isError=true;
-            this.state.elements["repassword"].errorMessages="La clave y confirmación deben ser iguales";
-            this.setState({ loading: false  });
-            return;
-        }
+       
         this.setState({loading: true});    
         try{
-            const hasPermission = await userHasPermission('user','create');    
+            const hasPermission = await userHasPermission(this.state.controller,'create');    
             if (hasPermission.error)   this.setState({ authorized: false,  loading: false  });
             else{
-                const newUser = await getUserCreate(data,this.state.elements);
+                const newUser = await createRol(data,this.state.elements);
                 if (newUser.error)  {
                     if(newUser.error.code===301)    this.setState({ elements:this.setErrors(newUser, this.state.elements),  authorized: true,   loading: false, clean:false });
                     else{
@@ -80,16 +71,15 @@ class New extends Component {
 
     async componentDidMount() {
         try{
-            const hasPermission = await userHasPermission('user','create');    
-            this.setState({
-              authorized: (hasPermission.error) ? false : true,
-              loading: false
-            });
+            const hasPermission = await userHasPermission(this.state.controller,'create');    
+            if (hasPermission.error){
+                this.setState({ authorized: false,  loading: false  });
+                Alert.error("Error !, intente de nuevo");                   
+            }else   this.setState({ authorized: true,   loading: false  });
+
         }catch(exception){
-            this.setState({
-                authorized: false,
-                loading: false
-            });
+            (exception.status===404) ? Alert.error("Falla del sistema"): Alert.error("Intente de nuevo ");
+            this.setState({ authorized: false,  loading: false  });
         }
     }
     

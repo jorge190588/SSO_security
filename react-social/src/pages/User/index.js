@@ -6,9 +6,9 @@ import Title from 'components/Title';
 import Table from 'components/Table';
 import New from './New/index';
 import Update from  './Update/index';
+import Alert from 'react-s-alert';
 
 class User extends Component {
-      
     constructor(props) {
         super(props);
         this.state = {
@@ -23,11 +23,7 @@ class User extends Component {
                 { title: 'Nombre', field: 'name' },
                 { title: 'Correo', field: 'email' },
                 { title: 'Correo verificado', field: 'emailVerified', type: 'boolean' },
-                {
-                title: 'Rol',
-                field: 'rol_id',
-                lookup: { 1: 'Admin', 2: 'Usuario' },
-                },
+                { title: 'Rol',   field: 'rol.name',    },
                 { title: 'Imagen', field: 'imageUrl' },
             ]
         }
@@ -40,7 +36,7 @@ class User extends Component {
         this.setState({create: true});
     }
 
-    async updateRegister(event, rowData){
+    async updateRegister(rowData){
         this.setState({update: true, rowData: rowData});
     }
 
@@ -64,10 +60,8 @@ class User extends Component {
             }
 
         }catch(exception){
-            this.setState({
-                authorized: false,
-                loading: false
-            });
+            (exception.status===404) ? Alert.error("Falla del sistema"): Alert.error("Intente de nuevo ");
+            this.setState({ loading: false  });
         }
     }
 
@@ -84,7 +78,7 @@ class User extends Component {
             <div>
                  <Title title="Usuarios"/>
                  <br/>
-                 <Table pageSize={this.state.pageSize} header = {this.state.header} data={this.state.data} addRegister={this.addRegister} updateRegister={this.updateRegister}/>
+                 <Table pageSize={this.state.pageSize} header = {this.state.header} data={this.state.data} addRegister={this.addRegister} updateRegister={this.updateRegister} />
             </div>
         )
     }

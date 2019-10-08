@@ -13,3 +13,35 @@ export function getRolList() {
     });
 }
  
+export function createRol(data) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("Acceso denegado");
+    }
+    return request_security({
+        url: "/"+moduleName+"/create",
+        method: 'POST',
+        body: JSON.stringify(data)
+    });
+}
+
+export function updateRol(data) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("Acceso denegado");
+    }
+    return request_security({
+        url: "/"+moduleName+"/update",
+        method: 'PUT',
+        body: JSON.stringify(data)
+    });
+}
+
+
+export function deleteRol(params) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("Acceso denegado");
+    }
+    return request_security({
+        url: "/"+moduleName+"/delete/"+params.id,
+        method: 'DELETE'
+    });
+}

@@ -1,7 +1,5 @@
 package com.example.springsocial.controller;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
@@ -85,7 +83,10 @@ public class RolFormActionController {
     	}
     	
     	List<RolFormAction> list=(List<RolFormAction>) responseFind.getData();
-    	
+    	if (list.size()==0) {
+    		response.setError(new CustomException("Registro no existe",ErrorCode.REST_DELETE, this.getClass().getSimpleName(),0));
+    		return response;	
+    	}
     	
 		return crud.delete(list.get(0).getId());
 	}

@@ -3,13 +3,15 @@ import LoadingIndicator  from 'commons/LoadingIndicator';
 import NotAuthorized from 'commons/NotAuthorized';
 import Title from 'components/Title';
 import Form from './form';
-import { hasPermission as userHasPermission, getUserCreate } from 'services/User';
+import { hasPermission as userHasPermission, createUser } from 'services/User';
+import { getRolList } from 'services/Rol';
 import Alert from 'react-s-alert';
 
 class New extends Component {      
     constructor(props) {       
         super(props);
         this.state = {
+            controller: 'user',
             loading: true,
             authorized:true,
             showList: props.showList,
@@ -42,7 +44,7 @@ class New extends Component {
             const hasPermission = await userHasPermission('user','create');    
             if (hasPermission.error)   this.setState({ authorized: false,  loading: false  });
             else{
-                const newUser = await getUserCreate(data,this.state.elements);
+                const newUser = await createUser(data,this.state.elements);
                 if (newUser.error)  {
                     if(newUser.error.code===301)    this.setState({ elements:this.setErrors(newUser, this.state.elements),  authorized: true,   loading: false, clean:false });
                     else{
@@ -80,16 +82,19 @@ class New extends Component {
 
     async componentDidMount() {
         try{
-            const hasPermission = await userHasPermission('user','create');    
-            this.setState({
-              authorized: (hasPermission.error) ? false : true,
-              loading: false
-            });
+            const hasPermission = await userHasPermission(this.state.controller,'create');    
+            if (hasPermission.error){
+                this.setState({ authorized: false,  loading: false  });
+                Alert.error("Error !, intente de nuevo");                   
+            }else{
+                const response =  await getRolList();
+                if (response.error) this.state.elements.rol_id.list=[];
+                else   this.state.elements.rol_id.list=response.data;
+                this.setState({ authorized: true,   loading: false, ...this.state.elements  });
+            }   
         }catch(exception){
-            this.setState({
-                authorized: false,
-                loading: false
-            });
+            (exception.status===404) ? Alert.error("Falla del sistema"): Alert.error("Intente de nuevo ");
+            this.setState({ authorized: false,  loading: false  });
         }
     }
     

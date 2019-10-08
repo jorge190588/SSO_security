@@ -53,12 +53,15 @@ export default function Table(props) {
         });
     }
 
-    const [state] = React.useState({
-        columns: props.header,
-        data: props.data,
-        rowsPerPage: 10
-    });
-
+    if (props.deleteRegister){
+        actionsList.push(function(rowData){ 
+            return {
+                icon: 'delete',
+                tooltip: 'Eliminar registro',
+                onClick: function() { props.deleteRegister(rowData); }
+            }
+        });
+    }
    
   return (
     <div>
@@ -78,8 +81,8 @@ export default function Table(props) {
             }
             }}
             title="Listado de registros"
-            columns={state.columns}
-            data={state.data}
+            columns={props.header}
+            data={props.data}
             actions={actionsList}
 
             options={{

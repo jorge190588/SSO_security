@@ -1,13 +1,15 @@
 import { request_security } from 'services/Api';
 import { ACCESS_TOKEN } from '../constants';
 
+const moduleName="user";
+
 export function getUserProfile() {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("Acceso denegado");
     }
 
     return request_security({
-        url:  "/user/view",
+        url:  "/"+moduleName+"/view",
         method: 'GET'
     });
 }
@@ -33,19 +35,32 @@ export function getUserMenu() {
     }
 
     return request_security({
-        url: "/user/menu",
+        url: "/"+moduleName+"/menu",
         method: 'GET'
     });
 }
 
 
-export function getUserCreate(data) {
+export function createUser(data) {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("Acceso denegado");
     }
     return request_security({
-        url: "/user/create",
+        url: "/"+moduleName+"/create",
         method: 'POST',
+        body: JSON.stringify(data)
+    });
+}
+
+
+
+export function updateUser(data) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("Acceso denegado");
+    }
+    return request_security({
+        url: "/"+moduleName+"/update",
+        method: 'PUT',
         body: JSON.stringify(data)
     });
 }
@@ -56,7 +71,7 @@ export function getUserList() {
     }
 
     return request_security({
-        url: "/user/list",
+        url: "/"+moduleName+"/list",
         method: 'GET'
     });
 }
@@ -67,12 +82,10 @@ export function getCurrentUser() {
     }
 
     return request_security({
-        url:  "/user/me",
+        url:  "/"+moduleName+"/me",
         method: 'GET'
     });
 }
-
-
 
 export function hasPermission(form,action) {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
@@ -80,7 +93,7 @@ export function hasPermission(form,action) {
     }
 
     return request_security({
-        url: "/user/haspermission",
+        url: "/"+moduleName+"/haspermission",
         method: 'POST',
         body: JSON.stringify({form: form, action:action})
     });

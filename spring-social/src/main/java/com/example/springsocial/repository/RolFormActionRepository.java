@@ -2,7 +2,6 @@ package com.example.springsocial.repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -16,7 +15,7 @@ public interface RolFormActionRepository extends 	CrudRepository<RolFormAction, 
 													PagingAndSortingRepository<RolFormAction, Integer>, 
 													JpaSpecificationExecutor<RolFormAction>, JpaRepository<RolFormAction, Integer>
 {
-    List<RolFormAction> findByRolAndFormAction(Integer rol, Integer formAction);
+    List<RolFormAction> findByRolAndFormAction(Long rol, Long formAction);
     Boolean existsByRolAndFormAction(Integer rol, Integer formAction);
     List<RolFormAction> findAllById(ArrayList<Long> ids);	
 }

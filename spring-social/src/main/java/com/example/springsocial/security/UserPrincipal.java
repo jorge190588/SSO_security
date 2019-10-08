@@ -76,7 +76,7 @@ public class UserPrincipal implements OAuth2User, UserDetails {
     }
     
     private boolean hasPermissionToRouteValidation(Object rolFormActionRepository, String form, String action) {
-    	return true;/*
+    	
     	String 	rolFilter ="{\"id\":\"rol_id\",\"option\":\"Igual\",\"value\":\""+ this.rol_id + "\"}",
     			formFilter = "{\"id\":\"formAction.form.path\",\"option\":\"Igual\",\"value\":\"/"+ form + "\"}",
         		actionFilter = "{\"id\":\"formAction.action.path\",\"option\":\"Igual\",\"value\":\""+ action + "\"}";
@@ -95,7 +95,7 @@ public class UserPrincipal implements OAuth2User, UserDetails {
   		if (rolActionAcces.size()==0) {
   			logger.info("Access not authorized (Denied) "+searchCriteria);
   			return false;
-  		}else return true;*/
+  		}else return true;
     }
     
 	public RestResponse menu(Object formRepository) {

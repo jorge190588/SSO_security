@@ -1,6 +1,7 @@
 package com.example.springsocial.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +44,9 @@ public class RolFormActionController {
 	ElementRepositorio elementRepository;
 	 
 	private RestResponse response=null;
-	
+	private Optional<String> searchCriteria;
+    private Optional<String> orderCriteria;
+    
     private void instanceCrud() {
 		if (crud==null) crud = new CrudValidations(rolFormActionRepository,moduleName,elementRepository );
 	}
@@ -61,16 +64,30 @@ public class RolFormActionController {
 		return crud.create(newElement);
 	}
 	
-	@DeleteMapping("/delete/{id}")
-	public RestResponse delete(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request, @PathVariable Long id) {
+	@DeleteMapping("/delete/{form_action_id}/{rol_id}")
+	public RestResponse delete(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request, @PathVariable Long form_action_id, @PathVariable Long rol_id) {
 		response= new RestResponse();
     	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
     		response.setError(new CustomException("Acceso no autorizado",ErrorCode.ACCESS_DENIED, this.getClass().getSimpleName(),0));
     		return response;
     	}
-   
-    	instanceCrud();
-		return crud.delete(id);
+    	
+    	String 	rol_id_filter ="{\"id\":\"rol_id\",\"option\":\"Igual\",\"value\":\""+ rol_id + "\"}";
+    	String 	form_action_id_filter ="{\"id\":\"form_action_id\",\"option\":\"Igual\",\"value\":\""+ form_action_id + "\"}";
+    	searchCriteria =  Optional.of("[" + rol_id_filter+","+ form_action_id_filter +"]");
+        orderCriteria =  Optional.empty();
+        
+        instanceCrud();
+    	RestResponse responseFind= crud.findAll(searchCriteria, orderCriteria);
+    	if (responseFind.getError()!=null) {
+    		response.setError(new CustomException("Registro no existe",ErrorCode.REST_DELETE, this.getClass().getSimpleName(),0));
+    		return response;	
+    	}
+    	
+    	List<RolFormAction> list=(List<RolFormAction>) responseFind.getData();
+    	
+    	
+		return crud.delete(list.get(0).getId());
 	}
 	
 	@PutMapping("update")

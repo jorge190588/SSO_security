@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -36,7 +38,7 @@ public class FormAction {
 	
 	private Integer itemOrder;
 	
-	@Column(name = "is_the_rol", insertable=false, updatable=false, nullable=true)
+	@Column(name = "is_the_rol", insertable=false, updatable=false)
 	@org.hibernate.annotations.ColumnDefault("0")
 	private boolean  isTheRol;
 	
@@ -95,7 +97,7 @@ public class FormAction {
 	public void setItemOrder(Integer itemOrder) {
 		this.itemOrder = itemOrder;
 	}
-
+	
 	public boolean getIsTheRol() {
 		return isTheRol ;
 	}	

@@ -80,7 +80,8 @@ public class FormActionController {
     	String 	rolFilter ="{\"id\":\"rol_id\",\"option\":\"Igual\",\"value\":\""+ rol_id.get() + "\"}";
     	searchCriteria =  Optional.of("[" + rolFilter +"]");
         orderCriteria =  Optional.empty();
-		return crud.custom("listByRolIdNotInRolFormAction", rol_id.get());
+		response=crud.custom("listByRolIdNotInRolFormAction", rol_id.get());
+		return response;
     }
 
 

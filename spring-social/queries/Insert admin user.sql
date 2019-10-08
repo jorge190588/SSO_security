@@ -25,7 +25,7 @@ values
 ('PUT',0,0,getDate(),null),
 ('DEL',0,0,getDate(),null),
 ('PATH',0,0,getDate(),null),
-('OPTION',0,0,getDate(),null) ;
+('OPTION',0,0,getDate(),null);
 
 insert into rol (name,created_by,updated_by, created_at, updated_at) values ('admin',0,0,getDate(),null);
 
@@ -35,32 +35,75 @@ values ('Principal',1,1,0,'home',0,0,getDate(),null),('Seguridad',2,1,1,'securit
 insert into form (name,form_group_id, path, show_in_menu,icon,created_by,updated_by, created_at, updated_at) 
 values 
 ('Inicio',1,'/',1,'home',0,0,getDate(),null),
-('Barriles',1,'/barril',1,'delete_outline',0,0,getDate(),null),
-('Tarimas',1,'/tarima',1,'dns',0,0,getDate(),null),
 ('Mi perfil',2,'/profile',1,'person',0,0,getDate(),null),
 ('Usuarios',2,'/user',1,'people',0,0,getDate(),null),
 ('Roles',2,'/rol',1,'supervised_user_circle',0,0,getDate(),null),
 ('Acciones de roles',2,'/rolFormAction',1,'supervised_user_circle',0,0,getDate(),null),
-('Acciones por formulario',2,'/formAction',1,'supervised_user_circle',0,0,getDate(),null);
+('Acciones por formulario',2,'/formAction',1,'supervised_user_circle',0,0,getDate(),null),
+('Barriles',1,'/barril',1,'delete_outline',0,0,getDate(),null),
+('Tarimas',1,'/tarima',1,'dns',0,0,getDate(),null);
 
 insert into action (name,path,method_id,created_by,updated_by, created_at, updated_at) 
-values ('Crear','create',1,0,0,getDate(),null),
-('Modificar','update',2,0,0,getDate(),null),
+values ('Crear','create',2,0,0,getDate(),null),
+('Modificar','update',3,0,0,getDate(),null),
 ('Anular','cancel',5,0,0,getDate(),null),
 ('Listado','List',1,0,0,getDate(),null),
 ('Ver','view',1,0,0,getDate(),null),
+('Eliminar','delete',4,0,0,getDate(),null),
 ('Listado permisos por rol','listByRolId',1,0,0,getDate(),null);
 
-insert into form_action (form_id,action_id,item_order,created_by,updated_by, created_at, updated_at) 
+insert into form_action (form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) 
 values 
-(1,1,1,0,0,getDate(),null),(1,2,2,0,0,getDate(),null),(1,3,3,0,0,getDate(),null),(1,4,4,0,0,getDate(),null),(1,5,5,0,0,getDate(),null),
-(2,1,1,0,0,getDate(),null),(2,2,2,0,0,getDate(),null),(2,3,3,0,0,getDate(),null),(2,4,4,0,0,getDate(),null),(2,5,5,0,0,getDate(),null),
-(3,1,1,0,0,getDate(),null),(3,2,2,0,0,getDate(),null),(3,3,3,0,0,getDate(),null),(3,4,4,0,0,getDate(),null),(3,5,5,0,0,getDate(),null),
-(4,1,1,0,0,getDate(),null),(4,2,2,0,0,getDate(),null),(4,3,3,0,0,getDate(),null),(4,4,4,0,0,getDate(),null),(4,5,5,0,0,getDate(),null),
-(5,1,1,0,0,getDate(),null),(5,2,2,0,0,getDate(),null),(5,3,3,0,0,getDate(),null),(5,4,4,0,0,getDate(),null),(5,5,5,0,0,getDate(),null),
-(6,1,1,0,0,getDate(),null),(6,2,2,0,0,getDate(),null),(6,3,3,0,0,getDate(),null),(6,4,4,0,0,getDate(),null),(6,5,5,0,0,getDate(),null),
-(7,1,1,0,0,getDate(),null),(7,2,2,0,0,getDate(),null),(7,3,3,0,0,getDate(),null),(7,4,4,0,0,getDate(),null),(7,5,5,0,0,getDate(),null),
-(8,1,1,0,0,getDate(),null),(8,2,2,0,0,getDate(),null),(8,3,3,0,0,getDate(),null),(8,4,4,0,0,getDate(),null),(8,5,5,0,0,getDate(),null), (8,6,6,0,0,getDate(),null) ;
+(1,1,1,NULL,NULL,GETDATE(),NULL,0),
+(1,2,2,NULL,NULL,GETDATE(),NULL,0),
+(1,3,3,NULL,NULL,GETDATE(),NULL,0),
+(1,4,4,NULL,NULL,GETDATE(),NULL,0),
+(1,5,5,NULL,NULL,GETDATE(),NULL,0),
+(1,6,6,NULL,NULL,GETDATE(),NULL,0),
+(2,1,1,NULL,NULL,GETDATE(),NULL,0),
+(2,2,2,NULL,NULL,GETDATE(),NULL,0),
+(2,3,3,NULL,NULL,GETDATE(),NULL,0),
+(2,4,4,NULL,NULL,GETDATE(),NULL,0),
+(2,5,5,NULL,NULL,GETDATE(),NULL,0),
+(2,6,6,NULL,NULL,GETDATE(),NULL,0),
+(3,1,1,NULL,NULL,GETDATE(),NULL,0),
+(3,2,2,NULL,NULL,GETDATE(),NULL,0),
+(3,3,3,NULL,NULL,GETDATE(),NULL,0),
+(3,4,4,NULL,NULL,GETDATE(),NULL,0),
+(3,5,5,NULL,NULL,GETDATE(),NULL,0),
+(3,6,6,NULL,NULL,GETDATE(),NULL,0),
+(4,1,1,NULL,NULL,GETDATE(),NULL,0),
+(4,2,2,NULL,NULL,GETDATE(),NULL,0),
+(4,3,3,NULL,NULL,GETDATE(),NULL,0),
+(4,4,4,NULL,NULL,GETDATE(),NULL,0),
+(4,5,5,NULL,NULL,GETDATE(),NULL,0),
+(4,6,6,NULL,NULL,GETDATE(),NULL,0),
+(5,1,1,NULL,NULL,GETDATE(),NULL,0),
+(5,2,2,NULL,NULL,GETDATE(),NULL,0),
+(5,3,3,NULL,NULL,GETDATE(),NULL,0),
+(5,4,4,NULL,NULL,GETDATE(),NULL,0),
+(5,5,5,NULL,NULL,GETDATE(),NULL,0),
+(5,6,6,NULL,NULL,GETDATE(),NULL,0),
+(6,1,1,NULL,NULL,GETDATE(),NULL,0),
+(6,2,2,NULL,NULL,GETDATE(),NULL,0),
+(6,3,3,NULL,NULL,GETDATE(),NULL,0),
+(6,4,4,NULL,NULL,GETDATE(),NULL,0),
+(6,5,5,NULL,NULL,GETDATE(),NULL,0),
+(6,6,6,NULL,NULL,GETDATE(),NULL,0),
+(6,7,7,NULL,NULL,GETDATE(),NULL,0),
+(7,1,1,NULL,NULL,GETDATE(),NULL,0),
+(7,2,2,NULL,NULL,GETDATE(),NULL,0),
+(7,3,3,NULL,NULL,GETDATE(),NULL,0),
+(7,4,4,NULL,NULL,GETDATE(),NULL,0),
+(7,5,5,NULL,NULL,GETDATE(),NULL,0),
+(7,6,6,NULL,NULL,GETDATE(),NULL,0),
+(8,1,1,NULL,NULL,GETDATE(),NULL,0),
+(8,2,2,NULL,NULL,GETDATE(),NULL,0),
+(8,3,3,NULL,NULL,GETDATE(),NULL,0),
+(8,4,4,NULL,NULL,GETDATE(),NULL,0),
+(8,5,5,NULL,NULL,GETDATE(),NULL,0),
+(8,6,6,NULL,NULL,GETDATE(),NULL,0);
+
 
 insert into rol_form_action (created_at,created_by,form_action_id,rol_id,updated_at,updated_by) 
 values 
@@ -104,12 +147,19 @@ values
 (getDate(),NULL,38,1,NULL,NULL),
 (getDate(),NULL,39,1,NULL,NULL),
 (getDate(),NULL,40,1,NULL,NULL),
-(getDate(),NULL,41,1,NULL,NULL);
-
-
+(getDate(),NULL,41,1,NULL,NULL),
+(getDate(),NULL,42,1,NULL,NULL),
+(getDate(),NULL,43,1,NULL,NULL),
+(getDate(),NULL,44,1,NULL,NULL),
+(getDate(),NULL,45,1,NULL,NULL),
+(getDate(),NULL,46,1,NULL,NULL),
+(getDate(),NULL,47,1,NULL,NULL),
+(getDate(),NULL,48,1,NULL,NULL),
+(getDate(),NULL,49,1,NULL,NULL);
 
 insert into users (email,email_verified, image_url,name,password,provider,provider_id,rol_id, created_by, updated_by,created_at) 
 values('netneill@hotmail.com',0,null,'jorge','$2a$10$EJJ2s.XTKxWkwDaprqJdTuglXEhUdBOOARDKexBNQdX8lHfyOB5M.','local',null,1,0,0, getDate());
+
 
 -- clave de jorge es jorge1919
 select * from form_group
@@ -121,7 +171,7 @@ select * from form_action
 select * from method order by id
 select * from rol
 
-
+update form_action set is_the_rol=1
 
 /*VALIDACIONES*/
 delete from element;

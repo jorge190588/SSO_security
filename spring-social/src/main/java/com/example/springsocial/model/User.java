@@ -48,6 +48,8 @@ public class User {
 	@Column(nullable = true)
 	private Integer updatedBy;
 	
+    private Boolean isCancel = false;
+	
     public Rol getRol() {
 		return rol;
 	}
@@ -158,5 +160,13 @@ public class User {
 
 	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
+	}
+
+	public Boolean getIsCancel() {
+		return isCancel;
+	}
+
+	public void setIsCancel(Boolean isCancel) {
+		this.isCancel = isCancel;
 	}
 }

@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -94,6 +95,7 @@ public class UserController {
 		user.setPassword(user.getPassword());
 		user.setProvider(AuthProvider.local);
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user.setIsCancel(false);
     	response= new RestResponse();
     	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
     		response.setError(new CustomException("Acceso no autorizado",ErrorCode.ACCESS_DENIED, this.getClass().getSimpleName(),0));
@@ -119,8 +121,31 @@ public class UserController {
     	updateElement.setEmailVerified(findedElement.getEmailVerified());
     	updateElement.setProvider(findedElement.getProvider());
     	updateElement.setCreatedAt(findedElement.getCreatedAt());
+    	updateElement.setIsCancel(findedElement.getIsCancel());
+    	
     	instanceCrud();
     	return crud.update(updateElement);
+    }
+	
+	
+	@PutMapping("/cancel/{id}")
+    @PreAuthorize("hasRole('USER')")
+    public RestResponse cancel(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request, @PathVariable Long id) {
+    	response= new RestResponse();
+    	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
+    		response.setError(new CustomException("Acceso no autorizado",ErrorCode.ACCESS_DENIED, this.getClass().getSimpleName(),0));
+    		return response;
+    	}
+    	User findedElement = repository.findById(id);
+    	
+    	if (findedElement.getIsCancel()) {
+    		response.setError(new CustomException("Usuario esta cancelado",ErrorCode.REST_UPDATE, this.getClass().getSimpleName(),0));
+    		return response;	
+    	}
+    	
+    	findedElement.setIsCancel(true);
+    	instanceCrud();
+    	return crud.update(findedElement);
     }
 	
 	

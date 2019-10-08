@@ -52,7 +52,15 @@ export function createUser(data) {
     });
 }
 
-
+export function cancelUser(data) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("Acceso denegado");
+    }
+    return request_security({
+        url: "/"+moduleName+"/cancel/"+data.id,
+        method: 'PUT'
+    });
+}
 
 export function updateUser(data) {
     if(!localStorage.getItem(ACCESS_TOKEN)) {

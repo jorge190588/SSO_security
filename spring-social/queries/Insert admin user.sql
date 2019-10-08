@@ -157,8 +157,8 @@ values
 (getDate(),NULL,48,1,NULL,NULL),
 (getDate(),NULL,49,1,NULL,NULL);
 
-insert into users (email,email_verified, image_url,name,password,provider,provider_id,rol_id, created_by, updated_by,created_at) 
-values('netneill@hotmail.com',0,null,'jorge','$2a$10$EJJ2s.XTKxWkwDaprqJdTuglXEhUdBOOARDKexBNQdX8lHfyOB5M.','local',null,1,0,0, getDate());
+insert into users (email,email_verified, image_url,name,password,provider,provider_id,rol_id, created_by, updated_by,created_at,is_cancel) 
+values('netneill@hotmail.com',0,null,'jorge','$2a$10$EJJ2s.XTKxWkwDaprqJdTuglXEhUdBOOARDKexBNQdX8lHfyOB5M.','local',null,1,0,0, getDate(),0);
 
 
 -- clave de jorge es jorge1919

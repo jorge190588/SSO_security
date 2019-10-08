@@ -1,5 +1,7 @@
 package com.example.springsocial.tools;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Validation;
@@ -15,6 +17,7 @@ import com.example.springsocial.error.ErrorCode;
 import com.example.springsocial.error.ErrorFormat;
 import com.example.springsocial.generic.GenericClass;
 import com.example.springsocial.generic.GenericValidations;
+import com.sun.mail.imap.protocol.ID;
 
 @SuppressWarnings({"rawtypes","unchecked"})
 public class CrudValidations<T>   {
@@ -129,13 +132,15 @@ public class CrudValidations<T>   {
 		return response;
 	}
  
-	public RestResponse delete(String id){
+	public RestResponse delete(Long id){
 		RestResponse response = new RestResponse();
 		 
 		GenericClass genericClass;
 		try{
-			 
-			genericClass= new GenericClass(model,"getAll","id="+id);
+			Collection<Long> ids = new ArrayList<>();
+			ids.add(id);
+			
+			genericClass= new GenericClass(model,"findAllById",ids);
 			genericClass.executeMethod();
 			if (genericClass.getIsError()==true) throw new Exception(genericClass.getErrorMessage());
 			List<?> listWithSpecificId = (List<?>) genericClass.getResult(); 

@@ -1,5 +1,6 @@
 package com.example.springsocial.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,4 +18,5 @@ public interface RolFormActionRepository extends 	CrudRepository<RolFormAction, 
 {
     List<RolFormAction> findByRolAndFormAction(Integer rol, Integer formAction);
     Boolean existsByRolAndFormAction(Integer rol, Integer formAction);
+    List<RolFormAction> findAllById(ArrayList<Long> ids);	
 }

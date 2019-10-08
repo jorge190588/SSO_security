@@ -37,6 +37,7 @@ public class FormAction {
 	private Integer itemOrder;
 	
 	@Column(name = "is_the_rol", insertable=false, updatable=false, nullable=true)
+	@org.hibernate.annotations.ColumnDefault("0")
 	private boolean  isTheRol;
 	
 	private Date createdAt;
@@ -99,9 +100,9 @@ public class FormAction {
 		return isTheRol ;
 	}	
 	
-	public void setIsTheRol(boolean isTheRol) {
+	/*public void setIsTheRol(boolean isTheRol) {
 		this.isTheRol =isTheRol;
-	}	
+	}	*/
 	
 	public Date getCreatedAt() {
 		return createdAt;

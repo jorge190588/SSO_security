@@ -32,7 +32,7 @@ export function deleteRolFormAction(params) {
         return Promise.reject("Acceso denegado");
     }
     return request_security({
-        url: "/"+moduleName+"/delete/"+params.rol_id+"/"+params.form_action_id,
+        url: "/"+moduleName+"/delete/"+params.id,
         method: 'DELETE'
     });
 }

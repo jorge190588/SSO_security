@@ -51,6 +51,8 @@ public class GenericMethod<T> {
 				method = genericClass.getClass().getMethod(this.name,(Class<?>[]) param);
 			}else if (param instanceof Set<?>){
 				method = genericClass.getClass().getMethod(this.name,Set.class);
+			}else if (param instanceof java.util.ArrayList){
+				method = genericClass.getClass().getMethod(this.name,java.util.ArrayList.class);
 			}else if (param instanceof Specification) {
 				method = genericClass.getClass().getMethod(this.name,Specification.class);	
 			}else if (param instanceof Object){

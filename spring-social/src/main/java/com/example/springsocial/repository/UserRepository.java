@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -16,5 +18,5 @@ public interface UserRepository extends CrudRepository<User, Integer>,
     Optional<User> findByEmail(String email);
     User findById(Long id);
     Boolean existsByEmail(String email);
-
+	List<User> findAllById(ArrayList<Long> ids);
 }

@@ -1,10 +1,9 @@
 package com.example.springsocial.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,7 @@ import com.example.springsocial.security.UserPrincipal;
 import com.example.springsocial.error.CustomException;
 import com.example.springsocial.error.ErrorCode;
 import com.example.springsocial.model.RolFormAction;
+import com.example.springsocial.repository.ElementRepositorio;
 import com.example.springsocial.repository.RolFormActionRepository;
 import com.example.springsocial.security.CurrentUser;
 import com.example.springsocial.tools.CrudValidations;
@@ -40,12 +40,12 @@ public class RolFormActionController {
     private RolFormActionRepository rolFormActionRepository;
 	
 	@Autowired
-    private RolFormActionRepository repository;
-    
+	ElementRepositorio elementRepository;
+	 
 	private RestResponse response=null;
 	
     private void instanceCrud() {
-		if (crud==null) crud = new CrudValidations(repository,moduleName,null );
+		if (crud==null) crud = new CrudValidations(rolFormActionRepository,moduleName,elementRepository );
 	}
 	
 	@PostMapping("/create")
@@ -61,20 +61,16 @@ public class RolFormActionController {
 		return crud.create(newElement);
 	}
 	
-	@DeleteMapping("/delete/{rol_id}/form_action_id")
-	public RestResponse delete(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request, @PathVariable Integer rol_id, @PathVariable Integer form_action_id) {
+	@DeleteMapping("/delete/{id}")
+	public RestResponse delete(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request, @PathVariable Long id) {
 		response= new RestResponse();
     	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
     		response.setError(new CustomException("Acceso no autorizado",ErrorCode.ACCESS_DENIED, this.getClass().getSimpleName(),0));
     		return response;
     	}
-    	
-    	List<RolFormAction> rolFormActionList=  repository.findByRolAndFormAction(1, 1);
-    	if (rolFormActionList.size()==0 || rolFormActionList==null)
-    		response.setError("Regsitro no encontrado");
-    	
-    	instanceCrud(); 
-		return crud.delete(rolFormActionList.get(0).getId().toString());
+   
+    	instanceCrud();
+		return crud.delete(id);
 	}
 	
 	@PutMapping("update")

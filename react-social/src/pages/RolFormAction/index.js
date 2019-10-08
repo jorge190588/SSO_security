@@ -75,7 +75,7 @@ class RolFormAction extends Component {
             const hasPermission = await userHasPermission(this.state.controller,'cancel');    
             if (hasPermission.error)    this.setState({ authorized: false,  loading: false  });
             else{
-                const response = await deleteRolFormAction({"rol_id":this.state.rol_id,"form_action_id":rowData.id });
+                const response = await deleteRolFormAction({"id":rowData.id });
                 if (response.error)     Alert.error("Error !, intente de nuevo");
                 else{
                     Alert.success("Registro eliminado");

@@ -118,6 +118,7 @@ public class UserController {
     	updateElement.setEmail(findedElement.getEmail());
     	updateElement.setEmailVerified(findedElement.getEmailVerified());
     	updateElement.setProvider(findedElement.getProvider());
+    	updateElement.setCreatedAt(findedElement.getCreatedAt());
     	instanceCrud();
     	return crud.update(updateElement);
     }

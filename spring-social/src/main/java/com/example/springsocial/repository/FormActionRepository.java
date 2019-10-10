@@ -25,4 +25,6 @@ public interface FormActionRepository  extends CrudRepository<FormAction, Intege
 			"inner join action a on fa.action_id=a.id", nativeQuery = true)
 	List<Object[]> listByRolIdNotInRolFormAction(@Param("rol_id") Long rol_id);
 	List<FormAction> findAllById(ArrayList<Long> ids);
+	List<FormAction> findAllByFormId(ArrayList<Long> ids);
+	List<FormAction> findAllByFormId(Long ids);
 }

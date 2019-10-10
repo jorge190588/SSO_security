@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
+
+import com.example.springsocial.model.FormAction;
 import com.example.springsocial.model.RolFormAction;
 
 @Repository
@@ -19,4 +21,5 @@ public interface RolFormActionRepository extends 	CrudRepository<RolFormAction, 
     List<RolFormAction> findByRolId(Long rol_id);
     Boolean existsByRolAndFormAction(Integer rol, Integer formAction);
     List<RolFormAction> findAllById(ArrayList<Long> ids);	
+    List<RolFormAction> findAllByFormAction(List<FormAction> formActionList);
 }

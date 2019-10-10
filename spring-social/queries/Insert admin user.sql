@@ -38,8 +38,9 @@ values
 ('Mi perfil',2,'/profile',1,'person',0,0,getDate(),null),
 ('Usuarios',2,'/user',1,'people',0,0,getDate(),null),
 ('Roles',2,'/rol',1,'supervised_user_circle',0,0,getDate(),null),
-('Acciones de roles',2,'/rolFormAction',1,'supervised_user_circle',0,0,getDate(),null),
-('Acciones por formulario',2,'/formAction',1,'supervised_user_circle',0,0,getDate(),null),
+('Acciones de roles',2,'/rolFormAction',0,'supervised_user_circle',0,0,getDate(),null),
+('Acciones por formulario',2,'/formAction',0,'supervised_user_circle',0,0,getDate(),null),
+('Formularios',2,'/form',1,'chrome_reader_mode',0,0,getDate(),null),
 ('Barriles',1,'/barril',1,'delete_outline',0,0,getDate(),null),
 ('Tarimas',1,'/tarima',1,'dns',0,0,getDate(),null);
 
@@ -102,7 +103,13 @@ values
 (8,3,3,NULL,NULL,GETDATE(),NULL,0),
 (8,4,4,NULL,NULL,GETDATE(),NULL,0),
 (8,5,5,NULL,NULL,GETDATE(),NULL,0),
-(8,6,6,NULL,NULL,GETDATE(),NULL,0);
+(8,6,6,NULL,NULL,GETDATE(),NULL,0),
+(9,1,1,NULL,NULL,GETDATE(),NULL,0),
+(9,2,2,NULL,NULL,GETDATE(),NULL,0),
+(9,3,3,NULL,NULL,GETDATE(),NULL,0),
+(9,4,4,NULL,NULL,GETDATE(),NULL,0),
+(9,5,5,NULL,NULL,GETDATE(),NULL,0),
+(9,6,6,NULL,NULL,GETDATE(),NULL,0);
 
 
 insert into rol_form_action (created_at,created_by,form_action_id,rol_id,updated_at,updated_by) 
@@ -155,7 +162,13 @@ values
 (getDate(),NULL,46,1,NULL,NULL),
 (getDate(),NULL,47,1,NULL,NULL),
 (getDate(),NULL,48,1,NULL,NULL),
-(getDate(),NULL,49,1,NULL,NULL);
+(getDate(),NULL,49,1,NULL,NULL),
+(getDate(),NULL,50,1,NULL,NULL),
+(getDate(),NULL,51,1,NULL,NULL),
+(getDate(),NULL,52,1,NULL,NULL),
+(getDate(),NULL,53,1,NULL,NULL),
+(getDate(),NULL,54,1,NULL,NULL),
+(getDate(),NULL,55,1,NULL,NULL);
 
 insert into users (email,email_verified, image_url,name,password,provider,provider_id,rol_id, created_by, updated_by,created_at,is_cancel) 
 values('netneill@hotmail.com',0,null,'jorge','$2a$10$EJJ2s.XTKxWkwDaprqJdTuglXEhUdBOOARDKexBNQdX8lHfyOB5M.','local',null,1,0,0, getDate(),0);
@@ -218,4 +231,5 @@ select id,action_id,form_id,item_order,0 'isTheRol',created_by,updated_by, creat
 from form_action fa 
 where fa.id not in (select rfa.form_action_id from rol_form_action rfa where rfa.rol_id = 1)
 
-update form_action set is_the_rol=0
+select * from rol_form_action
+select * from form

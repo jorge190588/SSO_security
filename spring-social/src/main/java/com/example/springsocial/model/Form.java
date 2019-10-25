@@ -34,6 +34,7 @@ public class Form {
     private FormGroup formGroup; 
         
     private String path;
+    private String mobileScreen;
     private Boolean showInMenu;
     private String icon;
     private Date createdAt;
@@ -130,5 +131,13 @@ public class Form {
 
 	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
+	}
+
+	public String getMobileScreen() {
+		return mobileScreen;
+	}
+
+	public void setMobileScreen(String mobileScreen) {
+		this.mobileScreen = mobileScreen;
 	}
 }

@@ -171,23 +171,20 @@ insert into rol_form_action (id,created_at,created_by,form_action_id,rol_id,upda
 insert into rol_form_action (id,created_at,created_by,form_action_id,rol_id,updated_at,updated_by) values  (54,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,54,1,NULL,NULL);
 insert into rol_form_action (id,created_at,created_by,form_action_id,rol_id,updated_at,updated_by) values  (55,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,55,1,NULL,NULL);
 
-
-
-insert into users (email,email_verified, image_url,name,password,provider,provider_id,rol_id, created_by, updated_by,created_at,is_cancel) 
-values('netneill@hotmail.com',0,null,'jorge','$2a$10$EJJ2s.XTKxWkwDaprqJdTuglXEhUdBOOARDKexBNQdX8lHfyOB5M.','local',null,1,0,0, getDate(),0);
-
+insert into users (id,email,email_verified, image_url,name,password,provider,provider_id,rol_id, created_by, updated_by,created_at,is_cancel) 
+values(1,'netneill@hotmail.com',0,null,'jorge','$2a$10$EJJ2s.XTKxWkwDaprqJdTuglXEhUdBOOARDKexBNQdX8lHfyOB5M.','local',null,1,0,0, getDate(),0);
 
 -- clave de jorge es jorge1919
-select * from form_group
-select * from form
-select * from action
-select * from rol_form_action
-select * from users
-select * from form_action 
-select * from method order by id
-select * from rol
+select * from form_group;
+select * from form;
+select * from action;
+select * from rol_form_action;
+select * from users;
+select * from form_action ;
+select * from method order by id;
+select * from rol;
 
-update form_action set is_the_rol=1
+update form_action set is_the_rol=1;
 
 /*VALIDACIONES*/
 delete from element;

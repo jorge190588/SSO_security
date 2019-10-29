@@ -18,10 +18,10 @@ public interface FormRepository extends CrudRepository<Form, Integer>,
 										JpaSpecificationExecutor<Form>, JpaRepository<Form, Integer>{
 
 	@Query(value = "select distinct f.* " + 
-			"from form as f " + 
-			"inner join form_action as fa on f.id= fa.form_id " + 
-			"inner join action as a on a.id=fa.action_id " + 
-			"inner join rol_form_action as rfa on fa.id=rfa.form_action_id " + 
+			"from form f " + 
+			"inner join form_action fa on f.id= fa.form_id " + 
+			"inner join action a on a.id=fa.action_id " + 
+			"inner join rol_form_action rfa on fa.id=rfa.form_action_id " + 
 			"where  rfa.rol_id = :rol_id", nativeQuery = true)
 	List<Form> findFormByRolIdParamsNative(@Param("rol_id") Long rol_id);
 	List<Form> findAllById(ArrayList<Long> ids);

@@ -1,18 +1,30 @@
 spring:
     datasource:
-        url: jdbc:sqlserver://localhost;databaseName=securitydata
-        username: sa
-        password: Web45666
-        driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+        # Enable to ORACLE
+        url: ${TRAZABILIDAD_URL}
+        username: ${TRAZABILIDAD_USER}
+        password: ${TRAZABILIDAD_PASSWORD}
+        driver-class-name: oracle.jdbc.OracleDriver
+        
+        #Enable to SQL SERVER
+        #url: jdbc:sqlserver://localhost;databaseName=securitydata
+        #username: sa
+        #password: Web45666
+        #driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
     jpa:
+        #Enable to Oracle
+        database-platform: org.hibernate.dialect.Oracle10gDialect
+        
         show-sql: true
         hibernate:
             ddl-auto: update
             naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
         properties:
             hibernate:
-                dialect: org.hibernate.dialect.SQLServer2012Dialect
+              # Enable to SQL SERVER
+              #dialect: org.hibernate.dialect.SQLServer2012Dialect
+                
     security:
       oauth2:
         client:

@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>oauth2-demo</name>
-	<description>Demo project for Spring Boot</description>
+	<description>SSO</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -91,6 +91,13 @@
 		    <version>2.0.0.Final</version>
 		</dependency>
 		
+		<!--Oracle database driver -->
+         <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc7</artifactId>
+            <version>12.1.0</version>
+        </dependency>
+        
 	</dependencies>
 
 	<build>

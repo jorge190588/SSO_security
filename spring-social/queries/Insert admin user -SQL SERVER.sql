@@ -37,16 +37,14 @@ values
 insert into form (name,form_group_id, path, show_in_menu,icon,created_by,updated_by, created_at, updated_at,mobile_screen) 
 values 
 ('Inicio',1,'/',1,'home',0,0,getDate(),null,'Home'),
-('Barriles',1,'/barril',1,'delete_outline',0,0,getDate(),null,'Barrel'),
-('Tarimas',1,'/tarima',1,'dns',0,0,getDate(),null,'Pallet'),
-
 ('Mi perfil',2,'/profile',1,'person',0,0,getDate(),null, 'Profile'),
 ('Usuarios',2,'/user',1,'people',0,0,getDate(),null, 'User'),
 ('Roles',2,'/rol',1,'supervised_user_circle',0,0,getDate(),null, 'Rol'),
 ('Acciones de roles',2,'/rolFormAction',0,'supervised_user_circle',0,0,getDate(),null,'RolAction'),
 ('Acciones por formulario',2,'/formAction',0,'supervised_user_circle',0,0,getDate(),null,'FormAction'),
-('Formularios',2,'/form',1,'chrome_reader_mode',0,0,getDate(),null,'Form')
-
+('Formularios',2,'/form',1,'chrome_reader_mode',0,0,getDate(),null,'Form'),
+('Barriles',1,'/barril',1,'delete_outline',0,0,getDate(),null,'Barrel'),
+('Tarimas',1,'/tarima',1,'dns',0,0,getDate(),null,'Pallet');
 
 insert into action (name,path,method_id,created_by,updated_by, created_at, updated_at) 
 values ('Crear','create',2,0,0,getDate(),null),
@@ -200,7 +198,7 @@ DBCC CHECKIDENT ('element_type', RESEED, 0)
 DBCC CHECKIDENT ('element', RESEED, 0)
 
 insert into entiti (name,version) values('users',1) ;
-insert into element_type (name,version) values ('input',1), ('hidden',1), ('h3',1), ('password',1), ('checkbox',1), ('dropdown',1), ('textarea',1), ('file',1);
+insert into element_type (name,version)up values ('input',1), ('hidden',1), ('h3',1), ('password',1), ('checkbox',1), ('dropdown',1), ('textarea',1), ('file',1);
 
 insert into element (created_at,idelement,is_create,is_delete,is_required,is_unique, is_update,
 		label,mask,mask_property,order_element,pattern, pattern_message,

@@ -81,3 +81,6 @@ npm install && npm start
 
 ## Java regex
 1. (regextester)[https://www.regextester.com/97778]
+
+## Oracle configuración guide
+1. [Developing RESTful web service using Spring Boot, Spring Data JPA and Oracle Database](https://medium.com/skillhive/spring-boot-spring-data-jpa-and-oracle-database-c4af89f727e0)

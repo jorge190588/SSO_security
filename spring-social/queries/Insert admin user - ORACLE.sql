@@ -5,18 +5,23 @@ delete from form_action;
 delete from users;
 delete from rol;
 delete from form;
+delete from system;
 delete from form_Group;
 delete from action;
 delete from method;
 
 DBCC CHECKIDENT ('rol', RESEED, 0)
 DBCC CHECKIDENT ('form_Group', RESEED, 0)
+DBCC CHECKIDENT ('system', RESEED, 0)
 DBCC CHECKIDENT ('form', RESEED, 0)
 DBCC CHECKIDENT ('action', RESEED, 0)
 DBCC CHECKIDENT ('form_action', RESEED, 0)
 DBCC CHECKIDENT ('rol_form_action', RESEED, 0)
 DBCC CHECKIDENT ('users', RESEED, 0)
 DBCC CHECKIDENT ('method', RESEED, 0)
+
+insert into system (id,name,created_by,updated_by, created_at, updated_at) values (1,'TRAZA_WEB',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null);
+insert into system (id,name,created_by,updated_by, created_at, updated_at) values (2,'TRAZA_APP',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null);
 
 insert into method (id,name,created_by,updated_by, created_at, updated_at) values (1,'GET',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null);
 insert into method (id,name,created_by,updated_by, created_at, updated_at) values (2,'POST',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null);
@@ -30,24 +35,24 @@ insert into rol (id,name,created_by,updated_by, created_at, updated_at) values (
 insert into form_Group (id,name,item_order,show_in_menu,is_group_of_pages,icon,created_by,updated_by, created_at, updated_at)  values (1,'Principal',1,1,0,'home',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null);
 insert into form_Group (id,name,item_order,show_in_menu,is_group_of_pages,icon,created_by,updated_by, created_at, updated_at)  values (2,'Seguridad',2,1,1,'security',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null);
 
-insert into form (id,name,form_group_id, path, show_in_menu,icon,created_by,updated_by, created_at, updated_at,mobile_screen) 
-values (1,'Inicio',1,'/',1,'home',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null,'Home');
-insert into form (id,name,form_group_id, path, show_in_menu,icon,created_by,updated_by, created_at, updated_at,mobile_screen) 
-values (2,'Mi perfil',2,'/profile',1,'person',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null, 'Profile');
-insert into form (id,name,form_group_id, path, show_in_menu,icon,created_by,updated_by, created_at, updated_at,mobile_screen) 
-values (3,'Usuarios',2,'/user',1,'people',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null, 'User');
-insert into form (id,name,form_group_id, path, show_in_menu,icon,created_by,updated_by, created_at, updated_at,mobile_screen) 
-values (4,'Roles',2,'/rol',1,'supervised_user_circle',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null, 'Rol');
-insert into form (id,name,form_group_id, path, show_in_menu,icon,created_by,updated_by, created_at, updated_at,mobile_screen) 
-values (5,'Acciones de roles',2,'/rolFormAction',0,'supervised_user_circle',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null,'RolAction');
-insert into form (id,name,form_group_id, path, show_in_menu,icon,created_by,updated_by, created_at, updated_at,mobile_screen) 
-values (6,'Acciones por formulario',2,'/formAction',0,'supervised_user_circle',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null,'FormAction');
-insert into form (id,name,form_group_id, path, show_in_menu,icon,created_by,updated_by, created_at, updated_at,mobile_screen) 
-values (7,'Formularios',2,'/form',1,'chrome_reader_mode',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null,'Form');
-insert into form (id,name,form_group_id, path, show_in_menu,icon,created_by,updated_by, created_at, updated_at,mobile_screen) 
-values (8,'Barriles',1,'/barril',1,'delete_outline',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null,'Barrel');
-insert into form (id,name,form_group_id, path, show_in_menu,icon,created_by,updated_by, created_at, updated_at,mobile_screen) 
-values (9,'Tarimas',1,'/tarima',1,'dns',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null,'Pallet');
+insert into form (id,name,form_group_id, path, show_in_menu,icon,created_by,updated_by, created_at, updated_at,mobile_screen, system_id) 
+values (1,'Inicio',1,'/',1,'home',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null,'Home',1);
+insert into form (id,name,form_group_id, path, show_in_menu,icon,created_by,updated_by, created_at, updated_at,mobile_screen, system_id) 
+values (2,'Mi perfil',2,'/profile',1,'person',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null, 'Profile',1);
+insert into form (id,name,form_group_id, path, show_in_menu,icon,created_by,updated_by, created_at, updated_at,mobile_screen, system_id) 
+values (3,'Usuarios',2,'/user',1,'people',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null, 'User',1);
+insert into form (id,name,form_group_id, path, show_in_menu,icon,created_by,updated_by, created_at, updated_at,mobile_screen, system_id) 
+values (4,'Roles',2,'/rol',1,'supervised_user_circle',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null, 'Rol',1);
+insert into form (id,name,form_group_id, path, show_in_menu,icon,created_by,updated_by, created_at, updated_at,mobile_screen, system_id) 
+values (5,'Acciones de roles',2,'/rolFormAction',0,'supervised_user_circle',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null,'RolAction',1);
+insert into form (id,name,form_group_id, path, show_in_menu,icon,created_by,updated_by, created_at, updated_at,mobile_screen, system_id) 
+values (6,'Acciones por formulario',2,'/formAction',0,'supervised_user_circle',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null,'FormAction',1);
+insert into form (id,name,form_group_id, path, show_in_menu,icon,created_by,updated_by, created_at, updated_at,mobile_screen, system_id) 
+values (7,'Formularios',2,'/form',1,'chrome_reader_mode',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null,'Form',1);
+insert into form (id,name,form_group_id, path, show_in_menu,icon,created_by,updated_by, created_at, updated_at,mobile_screen, system_id) 
+values (8,'Barriles',1,'/barril',1,'delete_outline',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null,'Barrel',1);
+insert into form (id,name,form_group_id, path, show_in_menu,icon,created_by,updated_by, created_at, updated_at,mobile_screen, system_id) 
+values (9,'Tarimas',1,'/tarima',1,'dns',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null,'Pallet',1);
 
 
 insert into action (id,name,path,method_id,created_by,updated_by, created_at, updated_at) values (1,'Crear','create',2,0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null);

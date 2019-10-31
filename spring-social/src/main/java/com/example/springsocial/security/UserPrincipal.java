@@ -98,12 +98,9 @@ public class UserPrincipal implements OAuth2User, UserDetails {
   		}else return true;
     }
     
-	public RestResponse menu(Object formRepository) {
-    	String 	rolFilter ="{\"id\":\"rol_id\",\"option\":\"Igual\",\"value\":\""+ this.rol_id + "\"}";
-    	searchCriteria =  Optional.of("[" + rolFilter +"]");
-        orderCriteria =  Optional.empty();
+	public RestResponse menu(Object formRepository, String systemName) {
         instanceCrudForm(formRepository);
- 		return crudForm.custom("findFormByRolIdParamsNative", this.rol_id);
+ 		return crudForm.custom("findFormByRolIdParamsNative", new Object[] {this.rol_id, systemName});
     }
 
     public Long getId() {

@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 })
 public class Form {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	@Column(nullable = false)
@@ -32,7 +32,15 @@ public class Form {
 	@ManyToOne
     @JoinColumn(name="formGroup_id", insertable=false, updatable=false)
     private FormGroup formGroup; 
-        
+
+	@Column(name = "system_id")
+    @JsonProperty("system_id")
+    private Long system_id;
+	
+	@ManyToOne
+    @JoinColumn(name="system_id", insertable=false, updatable=false)
+    private System system;
+	
     private String path;
     private String mobileScreen;
     private Boolean showInMenu;
@@ -139,5 +147,13 @@ public class Form {
 
 	public void setMobileScreen(String mobileScreen) {
 		this.mobileScreen = mobileScreen;
+	}
+	
+	public System getSystem() {
+		return system;
+	}
+	
+	public void setSystem(System system) {
+		this.system = system;
 	}
 }

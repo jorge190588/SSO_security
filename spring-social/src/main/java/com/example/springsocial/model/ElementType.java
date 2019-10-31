@@ -14,7 +14,7 @@ import javax.persistence.Version;
 @Table(name="elementType")
 public class ElementType {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	@Version
 	private Integer version;

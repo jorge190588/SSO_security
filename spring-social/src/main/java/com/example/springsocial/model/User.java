@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "users")//, uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)

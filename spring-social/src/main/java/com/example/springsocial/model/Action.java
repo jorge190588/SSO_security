@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 })
 public class Action {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(nullable = false)
 	private String name;	

@@ -1,5 +1,5 @@
 import { request_security } from 'services/Api';
-import { ACCESS_TOKEN } from '../constants';
+import { ACCESS_TOKEN, APP_NAME } from '../constants';
 
 const moduleName="user";
 
@@ -35,7 +35,7 @@ export function getUserMenu() {
     }
 
     return request_security({
-        url: "/"+moduleName+"/menu",
+        url: "/"+moduleName+"/menu/"+APP_NAME,
         method: 'GET'
     });
 }

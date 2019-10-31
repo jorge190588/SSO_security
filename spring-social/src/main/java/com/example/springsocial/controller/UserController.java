@@ -149,7 +149,7 @@ public class UserController {
     }
 	
 	
-	@GetMapping("/menu/{id}")
+	@GetMapping("/menu/{system_name}")
     @PreAuthorize("hasRole('USER')")
     public RestResponse menu(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request,@PathVariable String system_name) {
     	return userPrincipal.menu(formRepository, system_name);

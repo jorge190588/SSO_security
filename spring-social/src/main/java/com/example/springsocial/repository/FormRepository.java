@@ -23,8 +23,8 @@ public interface FormRepository extends CrudRepository<Form, Integer>,
 			"inner join form_action fa on f.id= fa.form_id " + 
 			"inner join action a on a.id=fa.action_id " + 
 			"inner join rol_form_action rfa on fa.id=rfa.form_action_id " + 
-			"where  rfa.rol_id = :rol_id and s.name=':system_name'", nativeQuery = true)
-	List<Form> findFormByRolIdParamsNative(@Param("rol_id") Long rol_id, @Param("system_name") String system_name);
+			"where  rfa.rol_id = :rol_id and s.name= :system_name", nativeQuery = true)
+	List<Form> findFormByRolIdParamsNative(@Param("rol_id") Object rol_id, @Param("system_name") String system_name);
 	List<Form> findAllById(ArrayList<Long> ids);
 	List<Form> findAllBySystemId(Long system_id);
 }

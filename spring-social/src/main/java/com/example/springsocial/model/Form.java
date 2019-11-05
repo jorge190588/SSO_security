@@ -14,9 +14,7 @@ import javax.persistence.UniqueConstraint;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-@Table(name = "form", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "name")
-})
+@Table(name = "form")
 public class Form {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

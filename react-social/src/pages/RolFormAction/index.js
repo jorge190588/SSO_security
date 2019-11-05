@@ -29,6 +29,7 @@ class RolFormAction extends Component {
                 { title: 'Grupo de formulario', field: '[6]' },
                 { title: 'Acción', field: '[7]' },
                 { title: 'Ruta de acción', field: '[11]' },
+                { title: 'Sistema', field: '[12]' },
                 { title: 'Tiene Permiso ?', field: '[4]', type: 'boolean'  },
                
             ],

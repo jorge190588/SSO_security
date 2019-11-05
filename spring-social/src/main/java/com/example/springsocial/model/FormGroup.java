@@ -7,13 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
-@Table(name = "form_group", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "name")
-})
+@Table(name = "form_group")
 public class FormGroup {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,6 +38,14 @@ public class FormGroup {
 	private Integer createdBy;
 	@Column(nullable = true)
 	private Integer updatedBy;
+	
+	@Column(name = "system_id")
+    @JsonProperty("system_id")
+    private Long system_id;
+	
+	@ManyToOne
+    @JoinColumn(name="system_id", insertable=false, updatable=false)
+    private System system;
 	
 	public Boolean getIsGroupOfPages() {
 		return isGroupOfPages;
@@ -115,5 +125,13 @@ public class FormGroup {
 
 	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
+	}
+	
+	public System getSystem() {
+		return system;
+	}
+	
+	public void setSystem(System system) {
+		this.system = system;
 	}
 }

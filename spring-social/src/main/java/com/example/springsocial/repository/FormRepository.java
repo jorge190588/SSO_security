@@ -17,13 +17,15 @@ public interface FormRepository extends CrudRepository<Form, Integer>,
 										PagingAndSortingRepository<Form, Integer>, 
 										JpaSpecificationExecutor<Form>, JpaRepository<Form, Integer>{
 
-	@Query(value = "select distinct f.* " + 
-			"from form f " + 
+	@Query(value = "select distinct f.*, fg.item_order " + 
+			"from form f " +
+			"inner join form_group fg on f.form_group_id=fg.id " + 
 			"inner join system s on f.system_id=s.id " +
 			"inner join form_action fa on f.id= fa.form_id " + 
 			"inner join action a on a.id=fa.action_id " + 
 			"inner join rol_form_action rfa on fa.id=rfa.form_action_id " + 
-			"where  rfa.rol_id = :rol_id and s.name= :system_name", nativeQuery = true)
+			"where  rfa.rol_id = :rol_id and s.name= :system_name " + 
+			"ORDER BY fg.item_order ASC ", nativeQuery = true)
 	List<Form> findFormByRolIdParamsNative(@Param("rol_id") Object rol_id, @Param("system_name") String system_name);
 	List<Form> findAllById(ArrayList<Long> ids);
 	List<Form> findAllBySystemId(Long system_id);

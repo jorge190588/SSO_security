@@ -140,14 +140,14 @@ class RolFormAction extends Component {
     }
     
     render() {
-        if (this.state.loading){ return <LoadingIndicator/> }
+        if (this.state.loading){ return <LoadingIndicator/> } 
         if (!this.state.authorized){ return <NotAuthorized/> }
-       
         return (
             <div>
                  <Title title="Acciones de roles"/>
                  <br/>
-                 <Table pageSize={this.state.pageSize} header = {this.state.header} 
+                 <Table pageSize={this.state.pageSize} 
+                        header = {this.state.header} 
                         data={this.state.data} 
                         cancelRegister={this.cancelRegister} customActions={this.state.customActions}/>
             </div>

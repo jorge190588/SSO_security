@@ -40,7 +40,7 @@ class Rol extends Component {
     async formAccessRegister(rowData){
         
         try{
-            const hasPermission = await userHasPermission('formAction','listByRolId');    
+            const hasPermission = await userHasPermission('rolFormAction','list');    
             if (hasPermission.error){
                 this.setState({
                     authorized: false,

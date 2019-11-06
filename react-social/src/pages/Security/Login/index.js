@@ -105,7 +105,7 @@ class LoginForm extends Component {
             this.onLogin();
         }).catch(error => {
             console.log("login error");
-            if (error.message="Bad credentials") Alert.error("Usuario o clave incorrecto !!!");
+            if (error.message==="Bad credentials") Alert.error("Usuario o clave incorrecto !!!");
             else Alert.error((error && error.message) || 'Oops! algo esta mal. Por favor intenta de nuevo!');
         });
     }

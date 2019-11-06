@@ -14,6 +14,18 @@ export function getRolFormActionList() {
     });
 }
 
+export function getRolFormActionListByRolId(rol_id) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("Acceso denegado");
+    }
+
+    return request_security({
+        url: "/"+moduleName+"/list/"+rol_id,
+        method: 'GET'
+    });
+}
+
+
 export function createRolFormAction(data) {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("Acceso denegado");

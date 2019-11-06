@@ -15,14 +15,4 @@ export function getFormActionList() {
 }
 
 
-export function getFormActionByRolIdList(rol_id) {
-    if(!localStorage.getItem(ACCESS_TOKEN)) {
-        return Promise.reject("Acceso denegado");
-    }
-
-    return request_security({
-        url: "/"+moduleName+"/listByRolId?rol_id="+rol_id,
-        method: 'GET'
-    });
-}
  

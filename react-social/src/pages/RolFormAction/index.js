@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { hasPermission as userHasPermission} from 'services/User';
-import { getFormActionByRolIdList } from 'services/FormAction';
-import { createRolFormAction, deleteRolFormAction } from 'services/RolFormAction';
+import { createRolFormAction, deleteRolFormAction, getRolFormActionListByRolId } from 'services/RolFormAction';
 import LoadingIndicator  from 'commons/LoadingIndicator';
 import NotAuthorized from 'commons/NotAuthorized';
 import Title from 'components/Title';
@@ -95,7 +94,7 @@ class RolFormAction extends Component {
             const hasPermission = await userHasPermission(this.state.controller,'list');    
             if (hasPermission.error)    this.setState({ authorized: false,  loading: false  });
             else{
-                const response =  await getFormActionByRolIdList(this.state.rol_id);
+                const response =  await getRolFormActionListByRolId(this.state.rol_id);
                 if (response.error){
                     Alert.error("Error !, intente de nuevo");
                     this.setState({

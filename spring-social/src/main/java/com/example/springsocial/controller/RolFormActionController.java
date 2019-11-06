@@ -21,6 +21,7 @@ import com.example.springsocial.error.CustomException;
 import com.example.springsocial.error.ErrorCode;
 import com.example.springsocial.model.RolFormAction;
 import com.example.springsocial.repository.ElementRepositorio;
+import com.example.springsocial.repository.FormActionRepository;
 import com.example.springsocial.repository.RolFormActionRepository;
 import com.example.springsocial.security.CurrentUser;
 import com.example.springsocial.tools.CrudValidations;
@@ -33,11 +34,15 @@ public class RolFormActionController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	CrudValidations crud = null;
+	CrudValidations crudFormAction = null;
 	private String moduleName="RolFormAction";
 
 	@Autowired
     private RolFormActionRepository rolFormActionRepository;
-	
+
+	@Autowired
+    private FormActionRepository formActionRepository;
+
 	@Autowired
 	ElementRepositorio elementRepository;
 	 
@@ -48,8 +53,12 @@ public class RolFormActionController {
     private void instanceCrud() {
 		if (crud==null) crud = new CrudValidations(rolFormActionRepository,moduleName,elementRepository );
 	}
-	
-	@PostMapping("/create")
+
+    private void instanceCrudFormAction() {
+    	if (crudFormAction==null) crudFormAction= new CrudValidations(formActionRepository,"formAction",elementRepository);
+    }
+
+    @PostMapping("/create")
 	@PreAuthorize("hasRole('USER')")
 	public RestResponse create(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request, @RequestBody RolFormAction newElement) {
 		response= new RestResponse();
@@ -127,7 +136,23 @@ public class RolFormActionController {
     	instanceCrud(); 
 		return crud.findAll(searchCriteria, orderCriteria);
     }
-	
+
+	@GetMapping("/list/{rol_id}")
+    @PreAuthorize("hasRole('USER')")
+    public RestResponse listByRolId(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request, 
+    		@RequestParam("searchCriteria") Optional<String> searchCriteria,@RequestParam Optional<String> orderCriteria,
+    		@PathVariable long rol_id) {
+		
+		response= new RestResponse();
+    	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
+    		response.setError(new CustomException("Acceso no autorizado",ErrorCode.ACCESS_DENIED, this.getClass().getSimpleName(),0));
+    		return response;
+    	}
+    		
+    	instanceCrudFormAction();    	
+		return crudFormAction.custom("listByRolIdNotInRolFormAction", rol_id);
+    }
+
 	@GetMapping("/{page}/{rows}")
 	public  RestResponse  page(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request,	@PathVariable int page,@PathVariable int rows,
 			@RequestParam("searchCriteria") Optional<String> searchCriteria,@RequestParam Optional<String> orderCriteria) {

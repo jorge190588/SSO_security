@@ -2,11 +2,11 @@ use securitydata;
 
 drop table ROL_FORM_ACTION;
 drop table form_action;
-drop table form_group;
 drop table form;
 drop table action;
 drop table method;
 drop table rol;
+drop table form_group;
 drop table users;
 drop table system;
 drop table element;
@@ -19,7 +19,6 @@ select * from form_action;
 select * from users;
 select * from rol;
 select * from form;
-select * from system;
 select * from form_Group;
 select * from action;
 select * from method;
@@ -34,6 +33,7 @@ delete from system;
 delete from form_Group;
 delete from action;
 delete from method;
+delete from system;
  
 
 insert into system (id,name,created_by,updated_by, created_at, updated_at) values (1,'TRAZA_WEB',0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null);
@@ -100,7 +100,7 @@ insert into action (id,name,path,method_id,created_by,updated_by, created_at, up
 insert into action (id,name,path,method_id,created_by,updated_by, created_at, updated_at) values (4,'Listado','list',1,0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null);
 insert into action (id,name,path,method_id,created_by,updated_by, created_at, updated_at) values (5,'Ver','view',1,0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null);
 insert into action (id,name,path,method_id,created_by,updated_by, created_at, updated_at) values (6,'Eliminar','delete',4,0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null);
-insert into action (id,name,path,method_id,created_by,updated_by, created_at, updated_at) values (7,'Listado permisos por rol','listByRolId',1,0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null);
+-- insert into action (id,name,path,method_id,created_by,updated_by, created_at, updated_at) values (7,'Listado permisos por rol','listByRolId',1,0,0,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),null);
 
 -- GENERATED IN EXCEL FILE
 insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (1,1,1,1,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
@@ -139,54 +139,53 @@ insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, 
 insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (34,6,4,4,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
 insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (35,6,5,5,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
 insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (36,6,6,6,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (37,6,7,7,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (38,7,1,1,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (39,7,2,2,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (40,7,3,3,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (41,7,4,4,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (42,7,5,5,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (43,7,6,6,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (44,8,1,1,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (45,8,2,2,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (46,8,3,3,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (47,8,4,4,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (48,8,5,5,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (49,8,6,6,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (50,9,1,1,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (51,9,2,2,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (52,9,3,3,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (53,9,4,4,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (54,9,5,5,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (55,9,6,6,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (56,10,1,1,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (57,10,2,2,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (58,10,3,3,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (59,10,4,4,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (60,10,5,5,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (61,10,6,6,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (62,11,1,1,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (63,11,2,2,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (64,11,3,3,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (65,11,4,4,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (66,11,5,5,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (67,11,6,6,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (68,12,1,1,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (69,12,2,2,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (70,12,3,3,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (71,12,4,4,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (72,12,5,5,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (73,12,6,6,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (74,13,1,1,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (75,13,2,2,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (76,13,3,3,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (77,13,4,4,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (78,13,5,5,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
-insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (79,13,6,6,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (37,7,1,1,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (38,7,2,2,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (39,7,3,3,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (40,7,4,4,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (41,7,5,5,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (42,7,6,6,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (43,8,1,1,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (44,8,2,2,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (45,8,3,3,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (46,8,4,4,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (47,8,5,5,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (48,8,6,6,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (49,9,1,1,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (50,9,2,2,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (51,9,3,3,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (52,9,4,4,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (53,9,5,5,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (54,9,6,6,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (55,10,1,1,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (56,10,2,2,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (57,10,3,3,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (58,10,4,4,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (59,10,5,5,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (60,10,6,6,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (61,11,1,1,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (62,11,2,2,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (63,11,3,3,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (64,11,4,4,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (65,11,5,5,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (66,11,6,6,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (67,12,1,1,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (68,12,2,2,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (69,12,3,3,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (70,12,4,4,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (71,12,5,5,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (72,12,6,6,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (73,13,1,1,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (74,13,2,2,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (75,13,3,3,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (76,13,4,4,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (77,13,5,5,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+insert into form_action (id,form_id,action_id,item_order,created_by,updated_by, created_at, updated_at, is_the_rol) values (78,13,6,6,NULL,NULL,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,0);
+
 
 
 
 -- GENERATED IN EXCEL FILE
-
 insert into rol_form_action (id,created_at,created_by,form_action_id,rol_id,updated_at,updated_by) values  (1,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,1,1,NULL,NULL);
 insert into rol_form_action (id,created_at,created_by,form_action_id,rol_id,updated_at,updated_by) values  (2,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,2,1,NULL,NULL);
 insert into rol_form_action (id,created_at,created_by,form_action_id,rol_id,updated_at,updated_by) values  (3,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,3,1,NULL,NULL);
@@ -265,7 +264,7 @@ insert into rol_form_action (id,created_at,created_by,form_action_id,rol_id,upda
 insert into rol_form_action (id,created_at,created_by,form_action_id,rol_id,updated_at,updated_by) values  (76,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,76,1,NULL,NULL);
 insert into rol_form_action (id,created_at,created_by,form_action_id,rol_id,updated_at,updated_by) values  (77,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,77,1,NULL,NULL);
 insert into rol_form_action (id,created_at,created_by,form_action_id,rol_id,updated_at,updated_by) values  (78,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,78,1,NULL,NULL);
-insert into rol_form_action (id,created_at,created_by,form_action_id,rol_id,updated_at,updated_by) values  (79,TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),NULL,79,1,NULL,NULL);
+
 
 insert into users (id,email,email_verified, image_url,name,password,provider,provider_id,rol_id, created_by, updated_by,created_at,is_cancel) 
 values(1,'netneill@hotmail.com',0,null,'jorge','$2a$10$EJJ2s.XTKxWkwDaprqJdTuglXEhUdBOOARDKexBNQdX8lHfyOB5M.','local',null,1,0,0, TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),0);
@@ -303,8 +302,10 @@ select distinct f.*, fg.item_order
 			where  rfa.rol_id = 1 and s.name= 'TRAZA_APP'
       ORDER BY fg.item_order ASC
       
-select * from form      
-select * from form_group
+select distinct f.*, fg.item_order 
+inner join form_group fg on f.form_group_id=fg.id from form f inner join system s on f.system_id=s.id inner join form_action fa on f.id= fa.form_id inner join action a on a.id=fa.action_id inner join rol_form_action rfa on fa.id=rfa.form_action_id 
+where  rfa.rol_id = 1 and s.name= 'TRAZA_APP'
+ORDER BY fg.item_order ASC 
 /*VALIDACIONES*/
 delete from element;
 delete from element_type;

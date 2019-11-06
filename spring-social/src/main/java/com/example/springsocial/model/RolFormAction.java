@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Table(name = "rol_form_action")
 public class RolFormAction {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
 	@ManyToOne

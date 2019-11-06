@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Table(name = "form")
 public class Form {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
 	@Column(nullable = false)

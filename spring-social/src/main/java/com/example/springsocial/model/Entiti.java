@@ -13,7 +13,7 @@ import javax.persistence.Version;
 @Table(name="entiti")
 public class Entiti {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer id;
 	@Version
 	private Integer version;

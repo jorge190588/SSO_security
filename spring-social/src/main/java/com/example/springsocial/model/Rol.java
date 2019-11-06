@@ -16,7 +16,7 @@ import javax.persistence.UniqueConstraint;
 })
 public class Rol {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
 	@Column(nullable = false)

@@ -63,7 +63,8 @@ export default function Table(props) {
         });
     }
    
-  return (
+  if (props.data===[]) return(null) 
+  else return (
     <div>
         <MaterialTable
             localization={{

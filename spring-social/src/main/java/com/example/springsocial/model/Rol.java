@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -15,7 +16,8 @@ import javax.persistence.UniqueConstraint;
 })
 public class Rol {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="rol_sequence")
+    @SequenceGenerator(name="rol_sequence", sequenceName="rol_sequence", allocationSize=1)
 	private Long id;
 	
 	@Column(nullable = false)

@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -15,7 +16,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Table(name = "rol_form_action")
 public class RolFormAction {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="rol_form_action_sequence")
+    @SequenceGenerator(name="rol_form_action_sequence", sequenceName="rol_form_action_sequence", allocationSize=1)
 	private Long id;
 	
 	@ManyToOne

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -14,7 +15,8 @@ import javax.persistence.Version;
 @Table(name="elementType")
 public class ElementType {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="elementType_sequence")
+    @SequenceGenerator(name="elementType_sequence", sequenceName="elementType_sequence", allocationSize=1)
 	private Integer id;
 	@Version
 	private Integer version;

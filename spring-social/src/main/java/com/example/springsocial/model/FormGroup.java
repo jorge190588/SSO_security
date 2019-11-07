@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -15,7 +16,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Table(name = "form_group")
 public class FormGroup {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="form_group_sequence")
+    @SequenceGenerator(name="form_group_sequence", sequenceName="form_group_sequence", allocationSize=1)
 	private Long id;
 	
 	@Column(nullable = false)

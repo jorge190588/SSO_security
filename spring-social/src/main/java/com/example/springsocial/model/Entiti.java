@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -13,7 +14,8 @@ import javax.persistence.Version;
 @Table(name="entiti")
 public class Entiti {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="entiti_sequence")
+    @SequenceGenerator(name="entiti_sequence", sequenceName="entiti_sequence", allocationSize=1)
 	private Integer id;
 	@Version
 	private Integer version;

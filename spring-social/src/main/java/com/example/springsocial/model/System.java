@@ -13,7 +13,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "system", uniqueConstraints = { @UniqueConstraint(columnNames = "name")})
 public class System {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	@Column(nullable = false)

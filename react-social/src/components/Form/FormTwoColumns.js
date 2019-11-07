@@ -128,7 +128,7 @@ export default function Table(props) {
                     <Checkbox checked={elements[key].value} name={elements[key].idelement}  onChange={handleChange} value={elements[key].value}  color="primary"
                     />
                     }
-                    label={elements[key].label + "    "}
+                    label={elements[key].label}
                 />
             )
             default: return(null);

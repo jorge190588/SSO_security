@@ -6,7 +6,7 @@ const setValuesToElements = (elements, data)=>{
 }
 
 const cleanValuesToElements= (elements)=>{
-    Object.keys(elements).map(key => elements[key].value='');
+    Object.keys(elements).map(key => (elements[key].elementType!=='checkbox') ? elements[key].value='' : elements[key].value=false);
     return elements;
 }
 

@@ -49,15 +49,16 @@ class Form extends Component {
     }
   
     async addRegister(){
-        this.setState({create:true,update:false, cancel:false, view: false, delete: false, rowData: [] });
+        this.setState({create:true }); 
     }
 
     async updateRegister(rowData){
-        this.setState({create:false,update:true, cancel:false, view: false,delete: false,  rowData: rowData});
+        this.setState({update:true,rowData: rowData}); 
     }
 
     async deleteRegister(rowData){
         try{
+            this.setState({ loading: true });
             const hasPermission = await userHasPermission(this.state.controller,'delete');    
             if (hasPermission.error)   this.setState({ authorized: false,  loading: false  });
             else{
@@ -83,27 +84,14 @@ class Form extends Component {
 
     async showList(){
         try{
+            this.setState({loading: true});
             const hasPermission = await userHasPermission(this.state.controller,'list');    
             if (hasPermission.error){
-                this.setState({
-                    authorized: false,
-                    loading: false,
-                    create: false,
-                    update: false,
-                    delete: false,
-                  });
+                this.setState({authorized: false,loading: false, create: false,update: false,delete: false}); 
             }else{
                 const response =  await getFormList();
-                this.setState({
-                    authorized: true,
-                    loading: false,
-                    data: response.data,
-                    create: false,
-                    update: false,
-                    delete: false,
-                  });
+                this.setState({authorized: true,loading: false,data: response.data, create: false,update: false,delete: false});
             }
-
         }catch(exception){
             (exception.status===404) ? Alert.error("Falla del sistema"): Alert.error("Intente de nuevo ");
             this.setState({ loading: false  });

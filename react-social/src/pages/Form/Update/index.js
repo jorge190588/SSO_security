@@ -76,8 +76,8 @@ class Update extends Component {
                 this.setState({ authorized: false,  loading: false  });
                 Alert.error("Error !, intente de nuevo");                   
             }else{
-                this.setFormGroupList();
-                this.setSystemList();
+                await this.setFormGroupList();
+                await this.setSystemList();
                 this.setState({ authorized: true,   loading: false, ...this.state.elements  });
             }
         }catch(exception){

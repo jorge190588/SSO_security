@@ -19,8 +19,9 @@ class New extends Component {
             authorized:true,
             showList: props.showList,
             clean: true,
-            elements:   props.elements
+            elements:   FormJSTools.cleanValuesToElements(props.elements)
         }
+        
         this.save = this.save.bind(this);
         this.handleShowList = this.handleShowList.bind(this);
         this.setSystemList = this.setSystemList.bind(this);
@@ -69,13 +70,14 @@ class New extends Component {
 
     async componentDidMount() {
         try{
+            this.setState({loading: true});
             const hasPermission = await userHasPermission(this.state.controller,'create');    
             if (hasPermission.error){
                 this.setState({ authorized: false,  loading: false  });
                 Alert.error("Error !, intente de nuevo");                   
             }else{
-                this.setFormGroupList();
-                this.setSystemList();
+                await this.setFormGroupList();
+                await this.setSystemList();
                 this.setState({ authorized: true,   loading: false, ...this.state.elements  });
             }
         }catch(exception){

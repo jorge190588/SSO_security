@@ -4,21 +4,29 @@ import NotAuthorized from 'commons/NotAuthorized';
 import Title from 'components/Title';
 import Form from 'components/Form/FormTwoColumns';
 import { hasPermission as userHasPermission} from 'services/User';
-import { updateRol } from 'services/Rol';
+import { updateForm } from 'services/Form';
+import { getFormGroupList } from 'services/FormGroup';
+import { getSystemList } from 'services/System';
 import Alert from 'react-s-alert';
 
 class Update extends Component {      
     constructor(props) {       
         super(props);
         this.state = {
-            controller: "rol",
+            controller: "form",
             loading: true,
             authorized:true,
             showList: props.showList,
             clean: true,
             id: props.rowData.id,
             elements:   {
-                name: {         idelement: "name", value:'', label: "Nombre del rol", pattern:"^([\\w_\\s]){4,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 4 a 20 caracteres (Ejemplo: jorgesantos1)'], isError:false, elementType:'input' },
+                name: {             idelement: "name", value:'', label: "Nombre del formulario", pattern:"^([\\w_\\s]){4,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 4 a 20 caracteres (Ejemplo: formulario 1)'], isError:false, elementType:'input' },
+                icon: {             idelement: "icon", value:'', label: "Icono", pattern:"^([\\w_\\s]){3,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 3 a 20 caracteres (Ejemplo: file)'], isError:false, elementType:'input' },
+                formGroup_id: {     idelement: "formGroup_id", value: 0, label: "Grupo", pattern:"^[1-9][0-9]*$", validators: ['required'], errorMessages:['Campo requerido'], isError:false, elementType:'dropdown', list: [] },
+                system_id: {        idelement: "system_id", value: 0, label: "Sistema", pattern:"^[1-9][0-9]*$", validators: ['required'], errorMessages:['Campo requerido'], isError:false, elementType:'dropdown', list: [] },
+                path: {             idelement: "path", value:'', label: "Ruta en web", pattern:"^([/\\w_\\s]){3,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 3 a 20 caracteres (Ejemplo: file)'], isError:false, elementType:'input' },
+                mobileScreen: {     idelement: "mobileScreen", value:'', label: "Ruta en movil", pattern:"^([/\\w_\\s]){3,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 3 a 20 caracteres (Ejemplo: Home)'], isError:false, elementType:'input' },
+                showInMenu: {       idelement: "showInMenu", value:false, label: "Mostrar en Menú ?", pattern:"^([\\w_\\s]){3,20}$", validators: ['required'], errorMessages:['Seleccione una opción'], isError:false, elementType:'checkbox' },
             }
         }
         Object.keys(props.rowData).forEach(key =>   {
@@ -40,7 +48,7 @@ class Update extends Component {
             const hasPermission = await userHasPermission(this.state.controller,'update');    
             if (hasPermission.error)   this.setState({ authorized: false,  loading: false  });
             else{
-                const newUser = await updateRol(data,this.state.elements);
+                const newUser = await updateForm(data);
                 if (newUser.error)  {
                     if(newUser.error.code===301)    this.setState({ elements:this.setErrors(newUser, this.state.elements),  authorized: true,   loading: false, clean:false });
                     else{
@@ -78,16 +86,24 @@ class Update extends Component {
 
     async componentDidMount() {
         try{
-            const hasPermission = await userHasPermission(this.state.controller,'list');    
-            this.setState({
-              authorized: (hasPermission.error) ? false : true,
-              loading: false
-            });
+            const hasPermission = await userHasPermission(this.state.controller,'create');    
+            if (hasPermission.error){
+                this.setState({ authorized: false,  loading: false  });
+                Alert.error("Error !, intente de nuevo");                   
+            }else{
+                const responseFormGroup =  await getFormGroupList();
+                if (responseFormGroup.error) this.state.elements.formGroup_id.list=[];
+                else   this.state.elements.formGroup_id.list=responseFormGroup.data.map((item,index)=>{ return {"id":item.id, "name": item.name+" - "+item.system.name} });
+                
+                const responseSystem =  await getSystemList();
+                if (responseSystem.error) this.state.elements.system_id.list=[];
+                else   this.state.elements.system_id.list=responseSystem.data
+                
+                this.setState({ authorized: true,   loading: false, ...this.state.elements  });
+            }
         }catch(exception){
-            this.setState({
-                authorized: false,
-                loading: false
-            });
+            (exception.status===404) ? Alert.error("Falla del sistema"): Alert.error("Intente de nuevo ");
+            this.setState({ authorized: false,  loading: false  });
         }
     }
     

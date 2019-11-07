@@ -40,7 +40,7 @@ class Update extends Component {
             const hasPermission = await userHasPermission(this.state.controller,'update');    
             if (hasPermission.error)   this.setState({ authorized: false,  loading: false  });
             else{
-                const newUser = await updateRol(data,this.state.elements);
+                const newUser = await updateRol(data);
                 if (newUser.error)  {
                     if(newUser.error.code===301)    this.setState({ elements:this.setErrors(newUser, this.state.elements),  authorized: true,   loading: false, clean:false });
                     else{

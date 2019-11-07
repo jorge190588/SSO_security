@@ -3,6 +3,7 @@ import LoadingIndicator  from 'commons/LoadingIndicator';
 import NotAuthorized from 'commons/NotAuthorized';
 import Title from 'components/Title';
 import Form from 'components/Form/FormTwoColumns';
+import FormJSTools from 'components/Form/JStools';
 import { hasPermission as userHasPermission} from 'services/User';
 import { updateForm } from 'services/Form';
 import { getFormGroupList } from 'services/FormGroup';
@@ -19,26 +20,13 @@ class Update extends Component {
             showList: props.showList,
             clean: true,
             id: props.rowData.id,
-            elements:   {
-                name: {             idelement: "name", value:'', label: "Nombre del formulario", pattern:"^([\\w_\\s]){4,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 4 a 20 caracteres (Ejemplo: formulario 1)'], isError:false, elementType:'input' },
-                icon: {             idelement: "icon", value:'', label: "Icono", pattern:"^([\\w_\\s]){3,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 3 a 20 caracteres (Ejemplo: file)'], isError:false, elementType:'input' },
-                formGroup_id: {     idelement: "formGroup_id", value: 0, label: "Grupo", pattern:"^[1-9][0-9]*$", validators: ['required'], errorMessages:['Campo requerido'], isError:false, elementType:'dropdown', list: [] },
-                system_id: {        idelement: "system_id", value: 0, label: "Sistema", pattern:"^[1-9][0-9]*$", validators: ['required'], errorMessages:['Campo requerido'], isError:false, elementType:'dropdown', list: [] },
-                path: {             idelement: "path", value:'', label: "Ruta en web", pattern:"^([/\\w_\\s]){3,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 3 a 20 caracteres (Ejemplo: file)'], isError:false, elementType:'input' },
-                mobileScreen: {     idelement: "mobileScreen", value:'', label: "Ruta en movil", pattern:"^([/\\w_\\s]){3,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 3 a 20 caracteres (Ejemplo: Home)'], isError:false, elementType:'input' },
-                showInMenu: {       idelement: "showInMenu", value:false, label: "Mostrar en Menú ?", pattern:"^([\\w_\\s]){3,20}$", validators: ['required'], errorMessages:['Seleccione una opción'], isError:false, elementType:'checkbox' },
-            }
+            elements:FormJSTools.setValuesToElements(props.elements, props.rowData)
         }
-        Object.keys(props.rowData).forEach(key =>   {
-            if(this.state.elements[key]!==undefined){
-                this.state.elements[key].value=props.rowData[key] ;
-            }
-        })
-
+        
         this.save = this.save.bind(this);
-        this.cleanValue = this.cleanValue.bind(this);
         this.handleShowList = this.handleShowList.bind(this);
-        this.setErrors = this.setErrors.bind(true);
+        this.setSystemList = this.setSystemList.bind(this);
+        this.setFormGroupList = this.setFormGroupList.bind(this);
     }
     
     async save(data, backToList){
@@ -50,14 +38,14 @@ class Update extends Component {
             else{
                 const newUser = await updateForm(data);
                 if (newUser.error)  {
-                    if(newUser.error.code===301)    this.setState({ elements:this.setErrors(newUser, this.state.elements),  authorized: true,   loading: false, clean:false });
+                    if(newUser.error.code===301)    this.setState({ elements:FormJSTools.setErrorsToElements(newUser, this.state.elements),  authorized: true,   loading: false, clean:false });
                     else{
                         this.setState({ authorized: true,   loading: false, clean:false });
                         Alert.error("Error !, intente de nuevo");                    
                     }
                 }else{
                     Alert.success("Registro guardado");
-                    this.setState({ elements:this.cleanValue(this.state.elements), authorized: true,   loading: false, clean:true});
+                    this.setState({ elements:FormJSTools.cleanValuesToElements(this.state.elements), authorized: true,   loading: false, clean:true});
                     if (backToList) this.handleShowList();
                 }
             }
@@ -67,21 +55,18 @@ class Update extends Component {
         }
     }
 
-    setErrors(newUser, elements){    
-        newUser.error.messageList.forEach(function(entry) {
-            elements[entry.attribute].errorMessages=entry.message;
-            elements[entry.attribute].isError=true;
-        });
-        return elements;
-    }
-
-    cleanValue(elements){
-        Object.keys(elements).map(key => elements[key].value='');
-        return elements;
-    }
-
     handleShowList(){
         this.state.showList();
+    }
+
+    async setFormGroupList(){
+        const responseFormGroup =  await getFormGroupList();
+        (responseFormGroup.error) ? this.state.elements.formGroup_id.list=[] : this.state.elements.formGroup_id.list=responseFormGroup.data.map((item,index)=>{ return {"id":item.id, "name": item.name+" - "+item.system.name} });
+    }
+
+    async setSystemList(){
+        const responseSystem =  await getSystemList();
+        (responseSystem.error) ?  this.state.elements.system_id.list=[] : this.state.elements.system_id.list=responseSystem.data;
     }
 
     async componentDidMount() {
@@ -91,14 +76,8 @@ class Update extends Component {
                 this.setState({ authorized: false,  loading: false  });
                 Alert.error("Error !, intente de nuevo");                   
             }else{
-                const responseFormGroup =  await getFormGroupList();
-                if (responseFormGroup.error) this.state.elements.formGroup_id.list=[];
-                else   this.state.elements.formGroup_id.list=responseFormGroup.data.map((item,index)=>{ return {"id":item.id, "name": item.name+" - "+item.system.name} });
-                
-                const responseSystem =  await getSystemList();
-                if (responseSystem.error) this.state.elements.system_id.list=[];
-                else   this.state.elements.system_id.list=responseSystem.data
-                
+                this.setFormGroupList();
+                this.setSystemList();
                 this.setState({ authorized: true,   loading: false, ...this.state.elements  });
             }
         }catch(exception){

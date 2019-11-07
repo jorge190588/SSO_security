@@ -71,7 +71,7 @@ class Update extends Component {
 
     async componentDidMount() {
         try{
-            const hasPermission = await userHasPermission(this.state.controller,'create');    
+            const hasPermission = await userHasPermission(this.state.controller,'update');    
             if (hasPermission.error){
                 this.setState({ authorized: false,  loading: false  });
                 Alert.error("Error !, intente de nuevo");                   

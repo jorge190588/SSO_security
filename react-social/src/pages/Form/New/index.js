@@ -37,7 +37,7 @@ class New extends Component {
             else{
                 const newUser = await createForm(data,this.state.elements);
                 if (newUser.error)  {
-                    if(newUser.error.code===301)    this.setState({ elements:this.FormJSTools.setErrorsToElements(newUser, this.state.elements),  authorized: true,   loading: false, clean:false });
+                    if(newUser.error.code===301)    this.setState({ elements: FormJSTools.setErrorsToElements(newUser, this.state.elements),  authorized: true,   loading: false, clean:false });
                     else{
                         this.setState({ authorized: true,   loading: false, clean:false });
                         Alert.error("Error !, intente de nuevo");                    

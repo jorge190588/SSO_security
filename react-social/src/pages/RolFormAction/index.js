@@ -21,16 +21,15 @@ class RolFormAction extends Component {
             add:false,
             rowData: [],
             data: [],
-            header: [
-                { title: 'ID', field: '[0]' },
-                { title: 'Formulario', field: '[5]' },
-                { title: 'Ruta de formulario', field: '[10]' },
-                { title: 'Grupo de formulario', field: '[6]' },
-                { title: 'Acción', field: '[7]' },
-                { title: 'Ruta de acción', field: '[11]' },
-                { title: 'Sistema', field: '[12]' },
-                { title: 'Tiene Permiso ?', field: '[4]', type: 'boolean'  },
-               
+            header: [               
+                { title: 'ID', field: 'formAction_id' },
+                { title: 'Formulario', field: 'form' },
+                { title: 'Ruta de formulario', field: 'formPath' },
+                { title: 'Grupo de formulario', field: 'formGroup' },
+                { title: 'Acción', field: 'action' },
+                { title: 'Ruta de acción', field: 'actionPath' },
+                { title: 'Sistema', field: 'system' },
+                { title: 'Tiene Permiso ?', field: 'isTheRol', type: 'boolean'  },
             ],
             backToRolPage: props.showList,
             customActions:[],
@@ -41,7 +40,7 @@ class RolFormAction extends Component {
     }
   
     async addRegister(rowData){
-        if (rowData[4]){
+        if (rowData.isTheRol){
             Alert.warning("El acceso ya es permitido");
             return ;
         }
@@ -51,9 +50,11 @@ class RolFormAction extends Component {
             const hasPermission = await userHasPermission(this.state.controller,'create');    
             if (hasPermission.error)    this.setState({ authorized: false,  loading: false  });
             else{
-                const response = await createRolFormAction({"rol_id":this.state.rol_id,"form_action_id":rowData[0] });
-                if (response.error)     Alert.error("Error !, intente de nuevo");
-                else{
+                const response = await createRolFormAction({"rol_id":this.state.rol_id,"form_action_id":rowData.formAction_id });
+                if (response.error) {
+                    Alert.error("Error !, intente de nuevo");
+                    this.setState({loading: false});
+                }else{
                     Alert.success("Registro guardado");
                     await this.showList();
                 }
@@ -65,7 +66,7 @@ class RolFormAction extends Component {
     }
     
     async cancelRegister(rowData){
-        if (!rowData[4]){
+        if (!rowData.isTheRol){
             Alert.warning("El acceso ya esta denegado");
             return ;
         }
@@ -75,8 +76,8 @@ class RolFormAction extends Component {
             const hasPermission = await userHasPermission(this.state.controller,'delete');    
             if (hasPermission.error)    this.setState({ authorized: false,  loading: false  });
             else{
-                const response = await deleteRolFormAction({"form_action_id":rowData[0],'rol_id': rowData[9]  });
-                if (response.error)     Alert.error("Error !, intente de nuevo");
+                const response = await deleteRolFormAction({"form_action_id":rowData.formAction_id,'rol_id': rowData.rolId  });
+                if (response.error)     Alert.error("Error !, "+ response.error.message);
                 else{
                     Alert.success("Registro eliminado");
                     await this.showList();
@@ -103,11 +104,15 @@ class RolFormAction extends Component {
                         data: [],
                       });
                 }else{
-                    this.setState({
-                        authorized: true,
-                        loading: false,
-                        data: response.data,
-                      });
+                    var dataObject = response.data.map((item,index)=>{ 
+                        return {    "formAction_id": item[0], "formAction_formId": item[1], "formAction_actionId": item[2],
+                                    "formAction_itemOrder": item[3] , "isTheRol":item[4], "form":item[5], 
+                                    "formGroup": item[6], "action": item[7], "formAction_formActioId": item[8], 
+                                    "rolId": item[9], "formPath": item[10], "actionPath":item[11], 
+                                    "system":item[12]  
+                                } 
+                    });
+                    this.setState({authorized: true,loading: false,data: dataObject});
                 }
             }
 

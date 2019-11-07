@@ -53,7 +53,11 @@ const useStyles = makeStyles(theme => ({
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
-    }
+    },
+    checkbox:{
+        marginTop:5,
+        width: 300
+    },
   }));
 
 export default function Table(props) {
@@ -65,7 +69,8 @@ export default function Table(props) {
             elements[event.target.name].isError= ((event.target.value.toString().match(elements[event.target.name].pattern))===null) ? true : false;
             elements[event.target.name].value = event.target.value;
         }  else{
-            elements[event.target.name].value = (event.target.value===elements[event.target.name].value) ? !event.target.value : event.target.value ;
+            var value= JSON.parse(event.target.value.toLowerCase());
+            elements[event.target.name].value = (value===elements[event.target.name].value) ? !value : value ;
         }
         
         setElements({ ...elements});
@@ -118,12 +123,12 @@ export default function Table(props) {
                 </Grid>
             );
             case "checkbox": return(
-                <FormControlLabel  key={key}
+                <FormControlLabel  className={classes.checkbox} key={key}
                     control={
-                    <Checkbox checked={elements[key].value} name={elements[key].idelement}  onChange={handleChange} value="checkedB" color="primary"
+                    <Checkbox checked={elements[key].value} name={elements[key].idelement}  onChange={handleChange} value={elements[key].value}  color="primary"
                     />
                     }
-                    label="Primary"
+                    label={elements[key].label + "    "}
                 />
             )
             default: return(null);

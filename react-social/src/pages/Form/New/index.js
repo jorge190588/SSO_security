@@ -6,6 +6,7 @@ import Form from 'components/Form/FormTwoColumns';
 import { hasPermission as userHasPermission } from 'services/User';
 import { createForm } from 'services/Form';
 import { getFormGroupList } from 'services/FormGroup';
+import { getSystemList } from 'services/System';
 import Alert from 'react-s-alert';
 
 class New extends Component {      
@@ -19,9 +20,11 @@ class New extends Component {
             clean: true,
             elements:   {
                 name: {             idelement: "name", value:'', label: "Nombre del formulario", pattern:"^([\\w_\\s]){4,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 4 a 20 caracteres (Ejemplo: formulario 1)'], isError:false, elementType:'input' },
-                form_group_id: {    idelement: "form_group_id", value: 0, label: "Grupo", pattern:"^[1-9][0-9]*$", validators: ['required'], errorMessages:['Campo requerido'], isError:false, elementType:'dropdown', list: [] },
                 icon: {             idelement: "icon", value:'', label: "Icono", pattern:"^([\\w_\\s]){3,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 3 a 20 caracteres (Ejemplo: file)'], isError:false, elementType:'input' },
-                path: {             idelement: "path", value:'', label: "Ruta", pattern:"^([/\\w_\\s]){3,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 3 a 20 caracteres (Ejemplo: file)'], isError:false, elementType:'input' },
+                form_group_id: {    idelement: "form_group_id", value: 0, label: "Grupo", pattern:"^[1-9][0-9]*$", validators: ['required'], errorMessages:['Campo requerido'], isError:false, elementType:'dropdown', list: [] },
+                system_id: {        idelement: "system_id", value: 0, label: "Sistema", pattern:"^[1-9][0-9]*$", validators: ['required'], errorMessages:['Campo requerido'], isError:false, elementType:'dropdown', list: [] },
+                path: {             idelement: "path", value:'', label: "Ruta en web", pattern:"^([/\\w_\\s]){3,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 3 a 20 caracteres (Ejemplo: file)'], isError:false, elementType:'input' },
+                mobile_screen: {    idelement: "mobile_screen", value:'', label: "Ruta en movil", pattern:"^([/\\w_\\s]){3,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 3 a 20 caracteres (Ejemplo: Home)'], isError:false, elementType:'input' },
                 showInMenu: {       idelement: "showInMenu", value:false, label: "Mostrar en Menú ?", pattern:"^([\\w_\\s]){3,20}$", validators: ['required'], errorMessages:['Seleccione una opción'], isError:false, elementType:'checkbox' },
             }
         }
@@ -81,9 +84,14 @@ class New extends Component {
                 this.setState({ authorized: false,  loading: false  });
                 Alert.error("Error !, intente de nuevo");                   
             }else{
-                const response =  await getFormGroupList();
-                if (response.error) this.state.elements.form_group_id.list=[];
-                else   this.state.elements.form_group_id.list=response.data;
+                const responseFormGroup =  await getFormGroupList();
+                if (responseFormGroup.error) this.state.elements.form_group_id.list=[];
+                else   this.state.elements.form_group_id.list=responseFormGroup.data.map((item,index)=>{ return {"id":item.id, "name": item.name+" - "+item.system.name} });
+                
+                const responseSystem =  await getSystemList();
+                if (responseSystem.error) this.state.elements.system_id.list=[];
+                else   this.state.elements.system_id.list=responseSystem.data
+                
                 this.setState({ authorized: true,   loading: false, ...this.state.elements  });
             }
         }catch(exception){
@@ -98,7 +106,7 @@ class New extends Component {
         return (
             <div>
                 {this.state.loading ? (<LoadingIndicator/>): null}
-                <Title title="Nuevo usuario"/>
+                <Title title="Nuevo formulario"/>
                 <Form elements= {this.state.elements} save={this.save} handleShowList={this.handleShowList} clean={this.state.clean} />
             </div>
         )

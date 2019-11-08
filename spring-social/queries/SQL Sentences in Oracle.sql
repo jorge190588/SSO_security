@@ -142,7 +142,7 @@ INSERT INTO ROL_FORM_ACTION (id,form_action_id,rol_id, created_at) values (ROL_F
 insert into users (id,email,email_verified, image_url,name,password,provider,provider_id,rol_id, created_by, updated_by,created_at,is_cancel) 
 values(1,'netneill@hotmail.com',0,null,'jorge','$2a$10$EJJ2s.XTKxWkwDaprqJdTuglXEhUdBOOARDKexBNQdX8lHfyOB5M.','local',null,1,0,0, TO_CHAR(SYSDATE,'DD/MM/YYYY hh:mm:ss'),0);
 
--- clave de jorge es jorge1919
+-- clave de jorge es jorge1919 DELETE FROM form where id=16
 select * from form_group;
 select * from form;
 select * from system;

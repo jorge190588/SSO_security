@@ -20,12 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.springsocial.error.CustomException;
 import com.example.springsocial.error.ErrorCode;
 import com.example.springsocial.model.Form;
-import com.example.springsocial.model.Rol;
-import com.example.springsocial.model.RolFormAction;
-import com.example.springsocial.model.User;
 import com.example.springsocial.repository.ElementRepositorio;
 import com.example.springsocial.repository.RolFormActionRepository;
-import com.example.springsocial.repository.RolRepository;
 import com.example.springsocial.repository.SystemRepository;
 import com.example.springsocial.repository.FormRepository;
 import com.example.springsocial.security.CurrentUser;
@@ -83,7 +79,7 @@ public class SystemController {
 	    }
 		
 		@PutMapping("update")
-		public RestResponse update(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request,@RequestBody System updateElement) {
+		public RestResponse update(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request,@RequestBody com.example.springsocial.model.System updateElement) {
 			response= new RestResponse();
 	    	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
 	    		response.setError(new CustomException("Acceso no autorizado",ErrorCode.ACCESS_DENIED, this.getClass().getSimpleName(),0));
@@ -96,7 +92,7 @@ public class SystemController {
 		
 		@PostMapping("/create")
 	    @PreAuthorize("hasRole('USER')")
-	    public RestResponse create(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request,@RequestBody System createElement) {
+	    public RestResponse create(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request,@RequestBody com.example.springsocial.model.System createElement) {
 	    	response= new RestResponse();
 	    	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
 	    		response.setError(new CustomException("Acceso no autorizado",ErrorCode.ACCESS_DENIED, this.getClass().getSimpleName(),0));

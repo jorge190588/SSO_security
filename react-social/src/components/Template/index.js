@@ -16,6 +16,7 @@ import RolFormAction from 'pages/RolFormAction/';
 import Login from 'pages/Security/Login/';
 import Signup from 'pages/Security/Signup/';
 import Profile from 'pages/Security/Profile/';
+import System from 'pages/System/';
 import {useStyles} from './Style';
 import VerticalMenu from 'components/VerticalMenu';
 
@@ -98,6 +99,7 @@ export default function Menu(props) {
           <PrivateRoute path="/rol" authenticated={authenticated} component={Rol}></PrivateRoute>
           <PrivateRoute path="/form" authenticated={authenticated} component={Form}></PrivateRoute>
           <PrivateRoute path="/rolFormAction" authenticated={authenticated} component={RolFormAction}></PrivateRoute>
+          <PrivateRoute path="/system" authenticated={authenticated} component={System}></PrivateRoute>
           <Route path="/login"    render={(props) => <Login authenticated={authenticated} onLogin={onLogin} {...props} />}></Route>
           <Route path="/signup"   render={(props) => <Signup authenticated={authenticated} {...props} />}></Route>
         </Switch>

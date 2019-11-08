@@ -17,7 +17,7 @@ class New extends Component {
             authorized:true,
             showList: props.showList,
             clean: true,
-            elements:   FormJSTools.cleanValuesToElements(props.elements)
+            elements: FormJSTools.cleanValuesToElements(props.elements)
         }
         this.save = this.save.bind(this);
         this.handleShowList = this.handleShowList.bind(this);

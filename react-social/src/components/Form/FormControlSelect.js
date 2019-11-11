@@ -19,6 +19,7 @@ const useStyles = makeStyles(theme => ({
     textField:{
         minWidth: 300,
         marginRight: theme.spacing(2),
+        paddingRight:15
     },
     button:{
         margin: theme.spacing(1),

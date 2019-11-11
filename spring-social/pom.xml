@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.example</groupId>
-	<artifactId>spring-social</artifactId>
+	<artifactId>tecun-security</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>oauth2-demo</name>
-	<description>SSO</description>
+	<description>Authentication server</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

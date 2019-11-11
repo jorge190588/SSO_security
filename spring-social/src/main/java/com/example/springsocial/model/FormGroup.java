@@ -133,4 +133,12 @@ public class FormGroup {
 	public void setSystem(System system) {
 		this.system = system;
 	}
+	
+	public Long getSystem_id() {
+		return system_id;
+	}
+	
+	public void setSystem_id(Long system_id) {
+		this.system_id = system_id;
+	}
 }

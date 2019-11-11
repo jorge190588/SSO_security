@@ -1,5 +1,7 @@
 package com.example.springsocial.repository;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
@@ -11,5 +13,5 @@ import com.example.springsocial.model.FormGroup;
 public interface  FormGroupRepository  extends 	CrudRepository<FormGroup, Integer>, 
 												PagingAndSortingRepository<FormGroup, Integer>, 
 												JpaSpecificationExecutor<FormGroup>, JpaRepository<FormGroup, Integer>{
-
+	List<FormGroup> findAllById(ArrayList<Long> ids);
 }

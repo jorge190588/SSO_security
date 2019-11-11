@@ -2,7 +2,7 @@ import React from 'react';
 import { Route,  Switch, Link } from 'react-router-dom';
 import clsx from 'clsx';
 import {  useTheme } from '@material-ui/core/styles';
-import { IconButton, Drawer, CssBaseline, AppBar , Toolbar, Typography, Button, Divider } from '@material-ui/core';
+import { IconButton, Drawer, CssBaseline, AppBar , Toolbar, Typography, Button, Divider, Icon } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -64,12 +64,20 @@ export default function Menu(props) {
           </Typography> 
           { props.authenticated ? (
             <div>
-              <Button className={classes.button} color="inherit" variant="outlined"  onClick={props.onLogout} >Cerrar sesión</Button>
+              <Button className={classes.button} color="inherit" onClick={props.onLogout} >
+                <Icon className={classes.icon}>exit_to_app</Icon>Cerrar sesión
+              </Button>
+              
             </div>
           ):(
             <div>
-            <Button className={classes.button} color="inherit" variant="outlined" to='/login' component={Link}>Iniciar sesión </Button>
-            <Button className={classes.button} color="inherit" variant="outlined" to='/signup' component={Link} >Registro </Button>
+            <Button className={classes.button} color="inherit" to='/login' component={Link}>
+              <Icon className={classes.icon}>account_circle</Icon>Iniciar sesión 
+            </Button>
+            <Button className={classes.button} color="inherit" to='/signup' component={Link} >
+              <Icon className={classes.icon}>how_to_reg</Icon>Registro
+            </Button>
+            
             </div>
           )}
         </Toolbar>

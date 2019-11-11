@@ -17,6 +17,7 @@ export const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    backgroundColor: "#1E88E5"
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -62,4 +63,8 @@ export const useStyles = makeStyles(theme => ({
     }),
     marginLeft: 0,
   },
+  icon:{
+    marginRight:5,
+    color: "#fff"
+  }
 }));

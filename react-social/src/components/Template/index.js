@@ -60,7 +60,7 @@ export default function Menu(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            <Link to="/" className="app-title">Sistema</Link>
+            <Link to="/" className="app-title">Tecún - Servidor de autenticación</Link>
           </Typography> 
           { props.authenticated ? (
             <div>

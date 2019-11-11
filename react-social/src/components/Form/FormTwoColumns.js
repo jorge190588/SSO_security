@@ -139,7 +139,7 @@ export default function Table(props) {
         
         <Grid container className={classes.root} spacing={2}>
             <Grid item xs={3}> </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={6}>
                 <Paper className={classes.paper}>
                      {html}
 

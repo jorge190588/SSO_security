@@ -3,7 +3,7 @@ import { ACCESS_TOKEN } from '../constants';
 
 const moduleName="formAction";
 
-export function getFormActionList() {
+export function getFormActionList(form_id) {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("Acceso denegado");
     }
@@ -14,5 +14,35 @@ export function getFormActionList() {
     });
 }
 
+export function createFormAction(data) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("Acceso denegado");
+    }
+    return request_security({
+        url: "/"+moduleName+"/create",
+        method: 'POST',
+        body: JSON.stringify(data)
+    });
+}
 
+export function updateFormAction(data) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("Acceso denegado");
+    }
+    return request_security({
+        url: "/"+moduleName+"/update",
+        method: 'PUT',
+        body: JSON.stringify(data)
+    });
+}
+
+export function deleteFormAction(params) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("Acceso denegado");
+    }
+    return request_security({
+        url: "/"+moduleName+"/delete/"+params.id,
+        method: 'DELETE'
+    });
+}
  

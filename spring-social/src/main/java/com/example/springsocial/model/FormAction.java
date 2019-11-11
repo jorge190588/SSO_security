@@ -83,7 +83,7 @@ public class FormAction {
 	}
 
 	public Long getAction_id() {
-		return form_id;
+		return action_id;
 	}
 
 	public void setAction_id(Long action_id) {
@@ -102,9 +102,9 @@ public class FormAction {
 		return isTheRol ;
 	}	
 	
-	/*public void setIsTheRol(boolean isTheRol) {
+	public void setIsTheRol(boolean isTheRol) {
 		this.isTheRol =isTheRol;
-	}	*/
+	}
 	
 	public Date getCreatedAt() {
 		return createdAt;

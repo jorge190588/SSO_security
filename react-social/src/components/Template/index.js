@@ -12,6 +12,7 @@ import Help from 'pages/Help/';
 import User from 'pages/User/';
 import Rol from 'pages/Rol/';
 import Form from 'pages/Form/';
+import FormAction from 'pages/FormAction/';
 import RolFormAction from 'pages/RolFormAction/';
 import Login from 'pages/Security/Login/';
 import Signup from 'pages/Security/Signup/';
@@ -99,6 +100,7 @@ export default function Menu(props) {
           <PrivateRoute path="/user" authenticated={authenticated} currentUser={props.currentUser} component={User}></PrivateRoute>
           <PrivateRoute path="/rol" authenticated={authenticated} component={Rol}></PrivateRoute>
           <PrivateRoute path="/form" authenticated={authenticated} component={Form}></PrivateRoute>
+          <PrivateRoute path="/formAction" authenticated={authenticated} component={FormAction}></PrivateRoute>
           <PrivateRoute path="/rolFormAction" authenticated={authenticated} component={RolFormAction}></PrivateRoute>
           <PrivateRoute path="/system" authenticated={authenticated} component={System}></PrivateRoute>
           <PrivateRoute path="/formGroup" authenticated={authenticated} component={FormGroup}></PrivateRoute>

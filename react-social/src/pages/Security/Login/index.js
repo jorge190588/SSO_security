@@ -40,12 +40,15 @@ class Login extends Component {
             <div className="login-container">
                 <div className="login-content">
                     <h1 className="login-title">Iniciar sesión</h1>
-                    <SocialLogin />
+                    {/* <SocialLogin />
                     <div className="or-separator">
                         <span className="or-text">o</span>
                     </div>
+                    */}
+                    
                     <LoginForm {...this.props} onLogin={this.props.onLogin}/>
-                    <span className="signup-link">Nuevo usuario ?  <Link to="/signup">Registrarse</Link></span>
+                    {/* <span className="signup-link">Nuevo usuario ?  <Link to="/signup">Registrarse</Link></span> */}
+                    
                 </div>
             </div>
         );

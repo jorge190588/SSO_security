@@ -74,9 +74,12 @@ export default function Menu(props) {
             <Button className={classes.button} color="inherit" to='/login' component={Link}>
               <Icon className={classes.icon}>account_circle</Icon>Iniciar sesión 
             </Button>
+            {/* 
             <Button className={classes.button} color="inherit" to='/signup' component={Link} >
               <Icon className={classes.icon}>how_to_reg</Icon>Registro
             </Button>
+            */}
+            
             
             </div>
           )}

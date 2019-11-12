@@ -42,8 +42,8 @@ export const useStyles = makeStyles(theme=>({
         header:{
             position: "relative!important",
             background: "linear-gradient(150deg,#7795f8 15%,#6772e5 70%,#555abf 94%)",
-            margin: -50,
-            padding: -50,
+            //margin: -50,
+            //padding: -50,
             height: 500,
             zIndex: -1,
         },

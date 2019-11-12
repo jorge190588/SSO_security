@@ -16,8 +16,11 @@ export default function FormControlInput(props) {
                         </Avatar>
                        <h6 className={classes.title}>WEB</h6>
                        <p className={classes.description}>
-                            Argon is a great free UI package based on Bootstrap 4 that includes the most important components and features.
+                            El módulo web se puede integrar con aplicación de tipo web codificadas en cualquier lenguaje de programación
                         </p>
+                        <Button variant="contained" className={classes.button}>
+                            Ver mas...
+                        </Button>
                     </Grid>
                 </Grid>
                 <Grid item xs={3}  className={classes.tab}>
@@ -27,21 +30,24 @@ export default function FormControlInput(props) {
                             </Avatar>
                             <h6 className={classes.title}>MÓVIL</h6>
                             <p className={classes.description}>
-                                Argon is a great free UI package based on Bootstrap 4 that includes the most important components and features.
+                                La integración con una aplicación para dispositivos móvil, tablet o iPad es facil y sencilla de realizar
                             </p>
+                            <Button variant="contained" className={classes.button}>
+                            Ver mas...
+                        </Button>
                     </Grid>
                 </Grid>
                 <Grid item xs={3}  className={classes.tab}>
                     <Grid container justify="left"  >
                         <Avatar className={classes.avatar}>
-                            <Icon >add</Icon>
+                            <Icon >settings_applications</Icon>
                         </Avatar>
-                        <h6 className={classes.title}>SEGURIDAD</h6>
+                        <h6 className={classes.title}>CONFIGURACIÓN</h6>
                         <p className={classes.description}>
-                            Argon is a great free UI package based on Bootstrap 4 that includes the most important components and features.
+                            El módulo provee formularios en donde un usuario administrador puede conceder o revocar los permisos para un usuarios que utiliza uno a mas sistemas de tipo web y móvil.
                         </p>
                         <Button variant="contained" className={classes.button}>
-                            Ver mas
+                            Ver mas...
                         </Button>
                     </Grid>
                 </Grid>

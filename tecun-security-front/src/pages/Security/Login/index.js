@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './style.css';
 import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, GITHUB_AUTH_URL, ACCESS_TOKEN } from '../../../constants';
 import { login } from 'services/User';
-import { Link, Redirect } from 'react-router-dom'
+import { /*Link,*/ Redirect } from 'react-router-dom'
 import fbLogo from '../../../img/fb-logo.png';
 import googleLogo from '../../../img/google-logo.png';
 import githubLogo from '../../../img/github-logo.png';
@@ -54,7 +54,7 @@ class Login extends Component {
         );
     }
 }
-
+/*
 class SocialLogin extends Component {
     render() {
         return (
@@ -69,7 +69,7 @@ class SocialLogin extends Component {
         );
     }
 }
-
+*/
 class LoginForm extends Component {
     constructor(props) {
         super(props);

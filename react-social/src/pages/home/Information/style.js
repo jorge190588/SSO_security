@@ -3,16 +3,12 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles(theme=>({
         root:{
             paddingBottom:"6rem",
-            marginTop:20,
-            zIndex : 5
+            marginTop: 20,
         },
         tab:{
-            //borderRadius: ".45rem",
             background:"#fff",
             padding: 15,
             marginRight:15,
-            //boxShadow: "0 15px 35px rgba(50,50,93,.1),0 5px 15px rgba(0,0,0,.07)!important",
-
         },
         title:{
             color: "#1AAE6F!important",
@@ -28,6 +24,11 @@ export const useStyles = makeStyles(theme=>({
         },
         icon:{
             fontSize: "3rem",
+            "&:hover":{
+                "-webkit-transform": "scale(1.3)",
+                "-o-transform": "scale(1.3)",
+                "-moz-transform": "scale(1.3)",
+            },
         },
         avatarCheck:{
             width: 40,
@@ -38,6 +39,11 @@ export const useStyles = makeStyles(theme=>({
         },
         iconCheck:{
             fontSize: "1.4rem",
+            "&:hover":{
+                "-webkit-transform": "scale(1.5)",
+                "-o-transform": "scale(1.5)",
+                "-moz-transform": "scale(1.5)",
+            },
         },
         listItem:{
             marginTop: 8,

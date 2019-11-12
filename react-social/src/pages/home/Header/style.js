@@ -5,7 +5,12 @@ export const useStyles = makeStyles(theme=>({
             fontSize: 300,
             color: "rgba(255, 255, 255, .5)",
             paddingTop: "10%",
-            paddingLeft: "15%"
+            paddingLeft: "15%",
+            "&:hover":{
+                "-webkit-transform": "scale(1.3)",
+                "-o-transform": "scale(1.3)",
+                "-moz-transform": "scale(1.3)",
+            }
         },
         footer:{
             zIndex: "unset",
@@ -42,16 +47,18 @@ export const useStyles = makeStyles(theme=>({
         header:{
             position: "relative!important",
             background: "linear-gradient(150deg,#7795f8 15%,#6772e5 70%,#555abf 94%)",
-            //margin: -50,
-            //padding: -50,
             height: 500,
-            zIndex: -1,
         },
         span:  {
             padding:50,
             background: "rgba(255, 255, 255, .1)",
             borderRadius: "50%",
             position: "absolute",
+            "&:hover":{
+                "-webkit-transform": "scale(1.3)",
+                "-o-transform": "scale(1.3)",
+                "-moz-transform": "scale(1.3)",
+            },
             "&:nth-child(0)": {
                 left: "10%",
                 bottom: "auto",

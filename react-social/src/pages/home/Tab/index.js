@@ -12,7 +12,7 @@ export default function FormControlInput(props) {
                 <Grid item xs={3}  className={classes.tab}>
                     <Grid container justify="left" >
                         <Avatar className={classes.avatar}>
-                            <Icon >web_asset</Icon>
+                            <Icon className={classes.icon}>web_asset</Icon>
                         </Avatar>
                        <h6 className={classes.title}>WEB</h6>
                        <p className={classes.description}>
@@ -26,7 +26,7 @@ export default function FormControlInput(props) {
                 <Grid item xs={3}  className={classes.tab}>
                     <Grid container justify="left"  >
                         <Avatar className={classes.avatar}>
-                                <Icon >mobile_screen_share</Icon>
+                                <Icon className={classes.icon}>mobile_screen_share</Icon>
                             </Avatar>
                             <h6 className={classes.title}>MÓVIL</h6>
                             <p className={classes.description}>
@@ -40,7 +40,7 @@ export default function FormControlInput(props) {
                 <Grid item xs={3}  className={classes.tab}>
                     <Grid container justify="left"  >
                         <Avatar className={classes.avatar}>
-                            <Icon >settings_applications</Icon>
+                            <Icon className={classes.icon}>settings_applications</Icon>
                         </Avatar>
                         <h6 className={classes.title}>CONFIGURACIÓN</h6>
                         <p className={classes.description}>

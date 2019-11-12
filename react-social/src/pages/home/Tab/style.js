@@ -4,7 +4,8 @@ export const useStyles = makeStyles(theme=>({
         root:{
             paddingBottom:"6rem",
             marginTop:-120,
-            zIndex : 5
+            //zIndex : 5
+            position: "relative",
         },
         tab:{
             borderRadius: ".45rem",
@@ -23,6 +24,13 @@ export const useStyles = makeStyles(theme=>({
         avatar:{
             color: "#ff3709",
             background: "rgba(252,140,114,.5)",
+        },
+        icon:{
+            "&:hover":{
+                "-webkit-transform": "scale(1.3)",
+                "-o-transform": "scale(1.3)",
+                "-moz-transform": "scale(1.3)",
+            },
         },
         description:{
             fontSize:".875rem",

@@ -18,7 +18,7 @@ export const useStyles = makeStyles(theme=>({
             bottom: -5,
             position :"absolute",
             width: "100%",
-            fill: "#fff",
+            fill: "#FAFAFA",
             svg:{
                 bottom: 0,
                 verticalAlign: "middle"

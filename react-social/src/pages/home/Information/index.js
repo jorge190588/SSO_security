@@ -16,7 +16,7 @@ export default function Information(props) {
                         </Avatar>
                        <h6 className={classes.title}>Descripción</h6>
                        <p className={classes.description}>
-                            Tecún es un módulo de facil integración con aplicación de software que son desarrolladas para plataformas móviles y web, su funcionamiento se basa en las tecnologias:
+                            Tecún es un módulo de facil integración con aplicaciones de software que son desarrolladas para plataformas móviles y web, su funcionamiento se basa en las tecnologias:
                         </p>
                         <Grid container justify="left" >
                             <Avatar className={classes.avatarCheck}>

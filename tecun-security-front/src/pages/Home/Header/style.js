@@ -86,22 +86,22 @@ export const useStyles = makeStyles(theme=>({
             },
             "&:nth-child(5)":{
                 top: "38%",
-                left: "1%",
+                left: "10%",
                 right: "auto",
                 background: "rgba(255, 255, 255, .05)"
             },
             "&:nth-child(6)": {
-                width: 200,
-                height: 200,
-                top: "44%",
+                width: 150,
+                height: 150,
+                top: "48%",
                 left: "10%",
                 right: "auto",
                 background: "rgba(255, 255, 255, .15)"
             },
             "&:nth-child(7)": {
                 bottom: "50%",
-                right: "36%",
-                background: "rgba(255, 255, 255, .04)"
+                right: "26%",
+                background: "rgba(255, 255, 255, .07)"
             },
             "&:nth-child(8)": {
                 bottom: 70,

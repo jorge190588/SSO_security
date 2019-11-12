@@ -11,10 +11,12 @@ export const useStyles = makeStyles(theme=>({
             marginRight:15,
         },
         title:{
-            color: "#1AAE6F!important",
+            color: "#1AAE6F !important",
             fontSize: "2rem",
             marginTop: 13,
-            marginLeft: 5
+            marginLeft: 5,
+            marginBottom: 5,
+            width:"75%"
         },
         avatar:{
             width: 80,

@@ -3,22 +3,21 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles(theme=>({
         root:{
             paddingBottom:"6rem",
-            marginTop:-120,
-            //zIndex : 5
-            position: "relative",
+            marginTop: "-120px",
+            position: "relative",            
         },
         tab:{
             borderRadius: ".45rem",
             background:"#fff",
             padding: 15,
             marginRight:15,
-            boxShadow: "0 15px 35px rgba(50,50,93,.1),0 5px 15px rgba(0,0,0,.07)!important",
-
+            boxShadow: "0 15px 35px rgba(50,50,93,.1),0 5px 15px rgba(0,0,0,.07) !important",
         },
         title:{
             color: "#fb6340!important",
-            fontSize: "1rem",
-            marginTop: 12,
+            fontSize: "1.3rem",
+            marginTop: 7,
+            marginBottom: 7,
             marginLeft: 5
         },
         avatar:{
@@ -33,7 +32,7 @@ export const useStyles = makeStyles(theme=>({
             },
         },
         description:{
-            fontSize:".875rem",
+            fontSize:"1.2rem",
             fontWeight:300,
             lineHeight:"1.7"
         },

@@ -26,6 +26,7 @@ class User extends Component {
                 { title: 'Cancelado ?', field: 'isCancel', type: 'boolean' },
                 { title: 'Correo verificado', field: 'emailVerified', type: 'boolean' },
                 { title: 'Rol',   field: 'rol.name',    },
+                { title: 'Empresa',   field: 'company.name',    },
                 { title: 'Imagen', field: 'imageUrl' },
             ]
         }

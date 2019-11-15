@@ -1,4 +1,4 @@
-export const APP_NAME = 'TRAZA_WEB';
+export const APP_NAME = 'TECUN_WEB';
 export const API_BASE_URL_DATA = 'http://localhost:8080';
 export const API_BASE_URL_SECURITY = 'http://localhost:8080';
 export const ACCESS_TOKEN = 'accessToken';

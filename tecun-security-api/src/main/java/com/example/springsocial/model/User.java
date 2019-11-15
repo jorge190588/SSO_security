@@ -41,6 +41,14 @@ public class User {
     @JsonProperty("rol_id")
     private Long rol_id;
 	
+	@ManyToOne
+    @JoinColumn(name="company_id", insertable=false, updatable=false)
+    private Company company; 
+    
+	@Column(name = "company_id")
+    @JsonProperty("company_id")
+    private Long company_id;
+	
 	private Date createdAt;
 	@Column(nullable = true)
 	private Date updatedAt;
@@ -170,4 +178,21 @@ public class User {
 	public void setIsCancel(Boolean isCancel) {
 		this.isCancel = isCancel;
 	}
+	
+    public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+	public Long getCompany_id() {
+		return company_id;
+	}
+
+	public void setCompany_id(Long company_id) {
+		this.company_id = company_id;
+	}
+
 }

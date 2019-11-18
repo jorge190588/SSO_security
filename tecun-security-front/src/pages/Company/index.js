@@ -29,7 +29,9 @@ class Company extends Component {
             ],
             customActions:[],
             elements:   {
-                name: {         idelement: "name", value:'', label: "Nombre del sistema", pattern:"^([\\w_\\s]){4,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 4 a 20 caracteres (Ejemplo: SYSTEM_WEB)'], isError:false, elementType:'input' },
+                name: {         idelement: "name", value:'', label: "Nombre", pattern:"^[\\w_\\sÑñáéíóúÁÉÍÓÚ.]{4,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 4 a 20 caracteres (Ejemplo: Añejos)'], isError:false, elementType:'input' },
+                code: {         idelement: "code", value:'', label: "Código", pattern:"^([\\w_\\s]){3}$", validators: ['required'], errorMessages:['Campo requiere un texto de 3 caracteres (Ejemplo: 001)'], isError:false, elementType:'input' },
+                description: {  idelement: "description", value:'', label: "Descripción", pattern:"^[\\w_\\sÑñáéíóúÁÉÍÓÚ.]{4,30}$", validators: ['required'], errorMessages:['Campo requiere un texto de 4 a 30 caracteres (Ejemplo: Añejamiento de barricas)'], isError:false, elementType:'input' },
             }
         }
         this.addRegister = this.addRegister.bind(this);

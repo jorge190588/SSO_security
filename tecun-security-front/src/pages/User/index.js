@@ -97,8 +97,8 @@ class User extends Component {
     render() {
         if (this.state.loading){ return <LoadingIndicator/> }
         if (!this.state.authorized){ return <NotAuthorized/> }
-        if (this.state.create){ return <New showList={this.showList}/> }
-        if (this.state.update){ return <Update rowData={this.state.rowData} showList={this.showList}/> }
+        if (this.state.create){ return <New     showList={this.showList} controller={this.state.controller}/> }
+        if (this.state.update){ return <Update  showList={this.showList} controller={this.state.controller} rowData={this.state.rowData}/> }
         return (
             <div>
                  <Title title="Usuarios"/>

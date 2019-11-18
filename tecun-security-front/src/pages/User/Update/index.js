@@ -6,6 +6,7 @@ import Form from 'components/Form/FormTwoColumns';
 import FormJSTools from 'components/Form/JStools';
 import { hasPermission as userHasPermission, updateUser } from 'services/User';
 import { getRolList } from 'services/Rol';
+import {listRegister as getCompanyList} from 'services/Company';
 import Alert from 'react-s-alert';
 
 class Update extends Component {      
@@ -15,20 +16,21 @@ class Update extends Component {
             name: {         idelement: "name", value:'', label: "Usuario", pattern:"^([\\w_]){4,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 4 a 20 caracteres (Ejemplo: jorgesantos1)'], isError:false, elementType:'input' },
             email: {        idelement: "email", value:'', label: "Correo electrónico", pattern: "^[\\w-+._%]+(\\.[\\w-]{1,25}){0,25}@[\\w-]{1,25}(\\.[\\w-]{1,10})+[\\w-]+$", validators: ['required'], errorMessages:['Campo requiere un correo válido (Ejemplo: jorge@gmail.com)'], isError:false, elementType:'input' },
             rol_id: {       idelement: "rol_id", value: 0, label: "Rol de usuario", pattern:"^[1-9][0-9]*$", validators: ['required'], errorMessages:['Campo requerido'], isError:false, elementType:'dropdown', list: [{id: 1, name:'Admin'},{id:2 , name:'Usuario'}] },
+            company_id: {   idelement: "company_id", value: 0, label: "Empresa", pattern:"^[1-9][0-9]*$", validators: ['required'], errorMessages:['Campo requerido'], isError:false, elementType:'dropdown', list: [] },
         }
         this.state = {
-            controller:'rol',
+            controller:props.controller,
             loading: true,
             authorized:true,
             showList: props.showList,
             clean: true,
             rowData: props.rowData,
             elements:FormJSTools.setValuesToElements(elements, props.rowData)
-            
         }
-
         this.save = this.save.bind(this);
         this.handleShowList = this.handleShowList.bind(this);
+        this.setCompanyList =  this.setCompanyList.bind(this);
+        this.setRolList= this.setRolList.bind(this);
     }
     
     async save(data, backToList){
@@ -61,6 +63,18 @@ class Update extends Component {
         this.state.showList();
     }
 
+    async setCompanyList(){
+        const response =  await getCompanyList();
+        if (response.error) this.state.elements.company_id.list=[];
+        else   this.state.elements.company_id.list=response.data;
+    }
+
+    async setRolList(){
+        const response =  await getRolList();
+        if (response.error) this.state.elements.rol_id.list=[];
+        else   this.state.elements.rol_id.list=response.data;
+    }
+
     async componentDidMount() {
         try{
             const hasPermission = await userHasPermission(this.state.controller,'update');    
@@ -68,9 +82,8 @@ class Update extends Component {
                 this.setState({ authorized: false,  loading: false  });
                 Alert.error("Error !, intente de nuevo");                   
             }else{
-                const response =  await getRolList();
-                if (response.error) this.state.elements.rol_id.list=[];
-                else   this.state.elements.rol_id.list=response.data;
+                await this.setCompanyList();
+                await this.setRolList();
                 this.setState({ authorized: true,   loading: false, ...this.state.elements  });
             }   
         }catch(exception){

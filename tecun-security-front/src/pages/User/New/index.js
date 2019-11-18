@@ -6,6 +6,7 @@ import Form from 'components/Form/FormTwoColumns';
 import FormJSTools from 'components/Form/JStools';
 import { hasPermission as userHasPermission, createUser } from 'services/User';
 import { getRolList } from 'services/Rol';
+import {listRegister as getCompanyList} from 'services/Company';
 import Alert from 'react-s-alert';
 
 class New extends Component {      
@@ -16,11 +17,12 @@ class New extends Component {
             email: {        idelement: "email", value:'', label: "Correo electrónico", pattern: "^[\\w-+._%]+(\\.[\\w-]{1,25}){0,25}@[\\w-]{1,25}(\\.[\\w-]{1,10})+[\\w-]+$", validators: ['required'], errorMessages:['Campo requiere un correo válido (Ejemplo: jorge@gmail.com)'], isError:false, elementType:'input' },
             password: {     idelement: "password", value:'', label: "Clave", pattern:"^([\\w-\\.]+){1,20}$", validators: ['required'], errorMessages:['Campo requerido (ejemplo: Jorge10$%)'], isError:false, elementType:'password' },
             repassword: {   idelement: "repassword", value:'', label: "Confirmar clave", pattern:"^([\\w-\\.]+){1,20}$", validators: ['required'], errorMessages:['Campo requerido (ejemplo: Jorge10$%)'], isError:false, elementType:'password' },
-            rol_id: {       idelement: "rol_id", value: 0, label: "Rol de usuario", pattern:"^[1-9][0-9]*$", validators: ['required'], errorMessages:['Campo requerido'], isError:false, elementType:'dropdown', list: [{id: 1, name:'Admin'},{id:2 , name:'Usuario'}] },
+            rol_id: {       idelement: "rol_id", value: 0, label: "Rol de usuario", pattern:"^[1-9][0-9]*$", validators: ['required'], errorMessages:['Campo requerido'], isError:false, elementType:'dropdown', list: [] },
+            company_id: {   idelement: "company_id", value: 0, label: "Empresa", pattern:"^[1-9][0-9]*$", validators: ['required'], errorMessages:['Campo requerido'], isError:false, elementType:'dropdown', list: [] },
         }
 
         this.state = {
-            controller: 'user',
+            controller: props.controller,
             loading: true,
             authorized:true,
             showList: props.showList,
@@ -29,6 +31,8 @@ class New extends Component {
         }
         this.save = this.save.bind(this);
         this.handleShowList = this.handleShowList.bind(this);
+        this.setCompanyList =  this.setCompanyList.bind(this);
+        this.setRolList= this.setRolList.bind(this);
     }
     
     async save(data, backToList){
@@ -67,6 +71,18 @@ class New extends Component {
     handleShowList(){
         this.state.showList();
     }
+    
+    async setCompanyList(){
+        const response =  await getCompanyList();
+        if (response.error) this.state.elements.company_id.list=[];
+        else   this.state.elements.company_id.list=response.data;
+    }
+
+    async setRolList(){
+        const response =  await getRolList();
+        if (response.error) this.state.elements.rol_id.list=[];
+        else   this.state.elements.rol_id.list=response.data;
+    }
 
     async componentDidMount() {
         try{
@@ -75,9 +91,8 @@ class New extends Component {
                 this.setState({ authorized: false,  loading: false  });
                 Alert.error("Error !, intente de nuevo");                   
             }else{
-                const response =  await getRolList();
-                if (response.error) this.state.elements.rol_id.list=[];
-                else   this.state.elements.rol_id.list=response.data;
+                await this.setCompanyList();
+                await this.setRolList();
                 this.setState({ authorized: true,   loading: false, ...this.state.elements  });
             }   
         }catch(exception){

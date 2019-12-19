@@ -9,7 +9,7 @@ import ListItemLink from 'components/ListItemLink';
 
 export default function ListOfGroup(props) {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
 
     function handleClick() {
         setOpen(!open);

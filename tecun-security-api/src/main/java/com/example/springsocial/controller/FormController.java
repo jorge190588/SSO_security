@@ -22,7 +22,7 @@ import com.example.springsocial.model.Form;
 import com.example.springsocial.model.FormAction;
 import com.example.springsocial.model.RolFormAction;
 import com.example.springsocial.model.User;
-import com.example.springsocial.repository.ElementRepositorio;
+import com.example.springsocial.repository.ElementRepository;
 import com.example.springsocial.repository.RolFormActionRepository;
 import com.example.springsocial.repository.FormRepository;
 import com.example.springsocial.repository.FormActionRepository;
@@ -40,7 +40,7 @@ public class FormController {
     @Autowired
     private RolFormActionRepository rolFormActionRepository;
     @Autowired
-	ElementRepositorio elementRepository;
+	ElementRepository elementRepository;
     @Autowired
 	FormActionRepository formActionRepository;
     

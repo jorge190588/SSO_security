@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.springsocial.error.CustomException;
 import com.example.springsocial.error.ErrorCode;
 import com.example.springsocial.model.Form;
-import com.example.springsocial.repository.ElementRepositorio;
+import com.example.springsocial.repository.ElementRepository;
 import com.example.springsocial.repository.RolFormActionRepository;
 import com.example.springsocial.repository.SystemRepository;
 import com.example.springsocial.repository.FormRepository;
@@ -38,7 +38,7 @@ public class SystemController {
 	    @Autowired
 	    private RolFormActionRepository rolFormActionRepository;
 	    @Autowired
-		ElementRepositorio elementRepository;
+		ElementRepository elementRepository;
 	    @Autowired
 		FormRepository formRepository;
 	    

@@ -1,6 +1,6 @@
 package com.example.springsocial.controller;
 
-import com.example.springsocial.repository.ElementRepositorio;
+import com.example.springsocial.repository.ElementRepository;
 import com.example.springsocial.tools.CrudValidations;
 import com.example.springsocial.error.CustomException;
 import com.example.springsocial.error.ErrorCode;
@@ -39,7 +39,7 @@ public class UserController {
     @Autowired
     private FormRepository formRepository;
     @Autowired
-	ElementRepositorio elementRepository;
+	ElementRepository elementRepository;
     private RestResponse response=null;
 	private CrudValidations crud = null;
 	private String moduleName="Users";

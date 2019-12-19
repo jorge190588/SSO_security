@@ -16,12 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.springsocial.error.CustomException;
 import com.example.springsocial.error.ErrorCode;
-import com.example.springsocial.model.Action;
-import com.example.springsocial.model.Rol;
+import com.example.springsocial.model.Entiti;
 import com.example.springsocial.model.RolFormAction;
 import com.example.springsocial.model.User;
-import com.example.springsocial.repository.ActionRepository;
 import com.example.springsocial.repository.ElementRepository;
+import com.example.springsocial.repository.EntitiRepository;
 import com.example.springsocial.repository.RolFormActionRepository;
 import com.example.springsocial.repository.UserRepository;
 import com.example.springsocial.security.CurrentUser;
@@ -31,10 +30,10 @@ import com.example.springsocial.tools.RestResponse;
 
 @SuppressWarnings({"unchecked","rawtypes"})
 @RestController
-@RequestMapping("action")
-public class ActionController {
+@RequestMapping("entiti")
+public class EntitiController {
     @Autowired
-    private ActionRepository repository;
+    private EntitiRepository repository;
     @Autowired
     private RolFormActionRepository rolFormActionRepository;
     @Autowired
@@ -79,7 +78,7 @@ public class ActionController {
     }
 	
 	@PutMapping("update")
-	public RestResponse update(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request,@RequestBody Action updateElement) {
+	public RestResponse update(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request,@RequestBody Entiti updateElement) {
 		response= new RestResponse();
     	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
     		response.setError(new CustomException("Acceso no autorizado",ErrorCode.ACCESS_DENIED, this.getClass().getSimpleName(),0));
@@ -92,7 +91,7 @@ public class ActionController {
 	
 	@PostMapping("/create")
     @PreAuthorize("hasRole('USER')")
-    public RestResponse create(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request,@RequestBody Action createElement) {
+    public RestResponse create(@CurrentUser UserPrincipal userPrincipal, HttpServletRequest request,@RequestBody Entiti createElement) {
     	response= new RestResponse();
     	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
     		response.setError(new CustomException("Acceso no autorizado",ErrorCode.ACCESS_DENIED, this.getClass().getSimpleName(),0));

@@ -10,7 +10,7 @@ import com.example.springsocial.model.ElementType;
 
 @Repository
 @Transactional
-public 	interface  ElementTypeRepositorio <T> 
+public 	interface  ElementTypeRepository <T> 
 		extends CrudRepository<ElementType, Integer>, 
 				PagingAndSortingRepository<ElementType, Integer>, 
 				JpaSpecificationExecutor<ElementType>, 

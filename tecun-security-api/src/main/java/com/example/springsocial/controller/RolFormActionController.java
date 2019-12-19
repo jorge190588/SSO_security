@@ -20,7 +20,7 @@ import com.example.springsocial.security.UserPrincipal;
 import com.example.springsocial.error.CustomException;
 import com.example.springsocial.error.ErrorCode;
 import com.example.springsocial.model.RolFormAction;
-import com.example.springsocial.repository.ElementRepositorio;
+import com.example.springsocial.repository.ElementRepository;
 import com.example.springsocial.repository.FormActionRepository;
 import com.example.springsocial.repository.RolFormActionRepository;
 import com.example.springsocial.security.CurrentUser;
@@ -44,7 +44,7 @@ public class RolFormActionController {
     private FormActionRepository formActionRepository;
 
 	@Autowired
-	ElementRepositorio elementRepository;
+	ElementRepository elementRepository;
 	 
 	private RestResponse response=null;
 	private Optional<String> searchCriteria;

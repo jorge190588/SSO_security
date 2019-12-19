@@ -6,12 +6,12 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import com.example.springsocial.model.Element;
+import com.example.springsocial.model.Entiti;
 
 @Repository
 @Transactional
-public interface ElementRepositorio <T> 
-	extends CrudRepository<Element, Integer>, 
-			PagingAndSortingRepository<Element, Integer>, 
-			JpaSpecificationExecutor<Element>, 
-			JpaRepository<Element, Integer>{}
+public interface EntitiRepository  <T> 
+		extends CrudRepository<Entiti, Integer>, 
+				PagingAndSortingRepository<Entiti, Integer>, 
+				JpaSpecificationExecutor<Entiti>, 
+				JpaRepository<Entiti, Integer>{}

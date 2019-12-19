@@ -1,10 +1,7 @@
 package com.example.springsocial.controller;
 
-import java.util.List;
 import java.util.Optional;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,12 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.springsocial.error.CustomException;
 import com.example.springsocial.error.ErrorCode;
 import com.example.springsocial.model.FormAction;
-import com.example.springsocial.model.RolFormAction;
-import com.example.springsocial.repository.ElementRepositorio;
+import com.example.springsocial.repository.ElementRepository;
 import com.example.springsocial.repository.FormActionRepository;
 import com.example.springsocial.repository.RolFormActionRepository;
 import com.example.springsocial.security.CurrentUser;
@@ -38,7 +33,7 @@ public class FormActionController {
     @Autowired
     private RolFormActionRepository rolFormActionRepository;
     @Autowired
-	ElementRepositorio elementRepository;
+	ElementRepository elementRepository;
     private RestResponse response=null;
 	private CrudValidations crud = null;
 	private String moduleName="formAction";

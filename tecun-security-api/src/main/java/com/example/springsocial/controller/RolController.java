@@ -19,7 +19,7 @@ import com.example.springsocial.error.ErrorCode;
 import com.example.springsocial.model.Rol;
 import com.example.springsocial.model.RolFormAction;
 import com.example.springsocial.model.User;
-import com.example.springsocial.repository.ElementRepositorio;
+import com.example.springsocial.repository.ElementRepository;
 import com.example.springsocial.repository.RolFormActionRepository;
 import com.example.springsocial.repository.RolRepository;
 import com.example.springsocial.repository.UserRepository;
@@ -37,7 +37,7 @@ public class RolController {
     @Autowired
     private RolFormActionRepository rolFormActionRepository;
     @Autowired
-	ElementRepositorio elementRepository;
+	ElementRepository elementRepository;
     @Autowired
 	UserRepository userRepository;
     

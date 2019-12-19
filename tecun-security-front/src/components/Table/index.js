@@ -1,13 +1,17 @@
 import React from 'react';
 import MaterialTable from 'material-table';
 import TablePagination from '@material-ui/core/TablePagination';
-import { IconButton } from '@material-ui/core';
+import { IconButton, Tooltip  } from '@material-ui/core';
 import Icon from '@material-ui/core/Icon';
 import ButtonBack from 'components/Table/Buttonback';
+import searchCriteriaTools  from 'services/SearchCriteriaTools';
+import orderCriteriaTools  from 'services/OrderCriteriaTools';
+import ModalConfirmation from 'components/ModalConfirmation';
 
 export default function Table(props) {
     const actionsList =[];
-    
+    const [modalParams, setModalParams] = React.useState({'open':false,'handler':null,'data':null});
+
     if (props.customActions){
         Object.keys(props.customActions).forEach(key=> 
             actionsList.push(props.customActions[key])    
@@ -47,8 +51,32 @@ export default function Table(props) {
         actionsList.push(function(rowData){ 
             return {
                 icon: 'cancel',
-                tooltip: 'Cancelar registro',
+                tooltip: 'Cancelar',
                 onClick: function() { props.cancelRegister(rowData); }
+            }
+        });
+    }
+
+    if (props.enableRegister){
+        actionsList.push(function(rowData){ 
+            return {
+                icon: 'arrow_upward',
+                tooltip: 'Habilitar',
+                onClick: function() { 
+                    setModalParams({'open':true,'data':rowData,'handler':props.enableRegister, 'message':"¿Desea habilitar el registro ?"});
+                }
+            }
+        });
+    }
+
+    if (props.disableRegister){
+        actionsList.push(function(rowData){ 
+            return {
+                icon: 'arrow_downward',
+                tooltip: 'Deshabilitar',
+                onClick: function() { 
+                    setModalParams({'open':true,'data':rowData,'handler':props.disableRegister, 'message':"¿Desea deshabilitar el registro ?"});
+                }
             }
         });
     }
@@ -58,32 +86,80 @@ export default function Table(props) {
             return {
                 icon: 'delete',
                 tooltip: 'Eliminar registro',
-                onClick: function() { props.deleteRegister(rowData); }
+                onClick: function() { 
+                    setModalParams({'open':true,'data':rowData,'handler':props.deleteRegister, 'message':"¿Desea eliminar el registro ?"});
+                }
             }
         });
     }
-   
-  if (props.data===[]) return(null) 
+
+    const closeModal=(option)=>{
+        setModalParams({'open':false});
+        if (option) modalParams.handler(modalParams.data);
+    }
+
+    const getSearchCriteria=(search, header)=>{
+        if (search.length===0) return undefined;
+        searchCriteriaTools.clear();
+        
+        header.forEach(function(item) {
+            searchCriteriaTools.addContains(item.field, search);    
+        });
+        return  searchCriteriaTools.get();
+    }
+
+    let lastSearchText = "";
+    let lastOrderBy ={"field":"", "direction":""};
+
+    const getOrderCriteria = (orderBy, orderDirection)=>{
+        if (orderBy===undefined) return orderBy;
+        orderCriteriaTools.clear();
+        orderCriteriaTools.add(orderBy.field,  orderDirection);
+        return orderCriteriaTools.get();
+    }
+
+    const getdata= async (query,header,functionList)=>{    
+        let page= (lastSearchText=== query.search) ? query.page  : 0;
+        
+        if (query.orderBy!==undefined) {
+            if (query.orderBy.field!==lastOrderBy.field || query.orderDirection !== lastOrderBy.direction){
+                page=0;
+            }
+            lastOrderBy ={"field":query.orderBy.field, "direction":query.orderDirection};
+        }else{
+            lastOrderBy ={"field":"", "direction":""};
+        }
+
+        lastSearchText= query.search;
+        
+        let searchCriteria = getSearchCriteria(query.search,header);
+        let orderCriteria  = getOrderCriteria(query.orderBy, query.orderDirection);
+        
+        let result = await functionList(page, query.pageSize, searchCriteria, orderCriteria); 
+        return new Promise((resolve, reject) => { 
+            if (result.data===null) resolve({ data: [], page: 0, totalCount: 0});// reject("Error al cargar los datos");
+            else resolve({ data: result.data.content, page: result.data.number , totalCount: result.data.totalElements});
+        })
+    }
+
+if (props.data===[]) return(null) 
   else return (
     <div>
+        <ModalConfirmation open={modalParams.open} data={modalParams.data} handler={modalParams.handler} closeModal={closeModal} message={modalParams.message}/>
         <MaterialTable
             localization={{
-            toolbar: {
-                searchPlaceholder: "Buscar",
-                searchTooltip: "Buscar "
-            },
-            pagination:{
-                labelRowsSelect:"Registros",
-                labelRowsPerPage:"Filas por pagina"
-            },
-            body: {
-                deleteTooltip: "Eliminar",
-                emptyDataSourceMessage: "No existen registros"
-            }
+                toolbar: {searchPlaceholder: "Buscar",searchTooltip: "Buscar "},
+                pagination:{labelRowsSelect:"Registros",labelRowsPerPage:"Filas por pagina", 
+                            labelDisplayedRows: 'Registros {from} al {to} de {count}',
+                            
+                            previousTooltip:'Pagina anterior', nextTooltip:'Página siguiente', lastTooltip:'Última página', firstTooltip:'Primera página'},
+                body: {deleteTooltip: "Eliminar",emptyDataSourceMessage: "No existen registros"},
+                header:{ actions: 'Opciones'}
             }}
+
             title="Listado de registros"
             columns={props.header}
-            data={props.data}
+            data = {(props.dataFunction!== undefined) ? query=>getdata(query,props.header, props.dataFunction) : props.data}
             actions={actionsList}
 
             options={{
@@ -99,17 +175,17 @@ export default function Table(props) {
                     if (typeof props.action === "function"){
                         var element= props.action(props.data);
                         return (
-                            <IconButton aria-label={element.icon} size="small"
-                                onClick={element.onClick}
-                            >
-                                <Icon>{element.icon}</Icon>
-                            </IconButton>
+                            <Tooltip title={element.tooltip} leaveDelay={150}>
+                                <IconButton aria-label={element.icon} size="small"
+                                            onClick={element.onClick} label={element.tooltip}>
+                                    <Icon>{element.icon}</Icon>
+                                </IconButton>
+                            </Tooltip>
                             )
                     }else{
                         return (
                             <ButtonBack     icon={props.action.icon} tooltip={props.action.tooltip}
-                                            onClick={props.action.onClick}
-                            >
+                                            onClick={props.action.onClick}>
                             </ButtonBack>
                         )
                     }   

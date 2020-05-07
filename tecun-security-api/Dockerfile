@@ -19,6 +19,11 @@ RUN mkdir -p /local/git
 
 RUN mkdir app
 COPY . app
+
+COPY repository/ /root/.m2/repository/
+
+#RUN mvn help:evaluate -Dexpression=settings.localRepository 
+
 WORKDIR /app
 
 #RUN mvn -N io.takari:maven:wrapper

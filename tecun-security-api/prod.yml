@@ -1,0 +1,13 @@
+version: "3.0"
+services:
+    trazabilidad_api_backend_sso:
+      container_name: trazabilidad_api_backend_sso
+      build:
+        context: .
+      image: trazabilidad_api_backend_sso
+      ports:
+      - "9750:8090"
+      environment:
+        - TRAZABILIDAD_URL=jdbc:oracle:thin:@//192.9.10.5:1521/CON1
+        - TRAZABILIDAD_USER=TRAZ_CB_ADA
+        - TRAZABILIDAD_PASSWORD=botran2019

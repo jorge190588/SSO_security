@@ -1,6 +1,6 @@
-export const APP_NAME = 'TECUN_WEB';
-export const API_BASE_URL_DATA = 'http://localhost:8080';
-export const API_BASE_URL_SECURITY = 'http://localhost:8080';
+export const APP_NAME = process.env.REACT_APP_SECRET_NAME;
+export const API_BASE_URL_DATA = process.env.REACT_APP_API_BACKEND;
+export const API_BASE_URL_SECURITY = process.env.REACT_APP_API_SSO;
 export const ACCESS_TOKEN = 'accessToken';
 export const OAUTH2_REDIRECT_URI = 'http://localhost:3000/oauth2/redirect'
 

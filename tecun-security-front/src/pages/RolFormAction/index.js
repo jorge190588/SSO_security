@@ -17,6 +17,7 @@ class RolFormAction extends Component {
             controller: "rolFormAction",
             loading: true,
             authorized:false,
+            checkAutorization:true,
             cancel:false,
             add:false,
             rowData: [],
@@ -99,6 +100,7 @@ class RolFormAction extends Component {
                 if (response.error){
                     Alert.error("Error !, intente de nuevo");
                     this.setState({
+                        checkAutorization: false,
                         authorized: true,
                         loading: false,
                         data: [],
@@ -112,13 +114,14 @@ class RolFormAction extends Component {
                                     "system":item[12]  
                                 } 
                     });
-                    this.setState({authorized: true,loading: false,data: dataObject});
+                    this.setState({checkAutorization: false,authorized: true,loading: false,data: dataObject});
                 }
             }
 
         }catch(exception){
             Alert.error("Error !, intente de nuevo");
             this.setState({
+                checkAutorization: false,
                 authorized: true,
                 loading: false
             });
@@ -145,10 +148,12 @@ class RolFormAction extends Component {
     }
     
     render() {
-        if (this.state.loading){ return <LoadingIndicator/> } 
-        if (!this.state.authorized){ return <NotAuthorized/> }
+        if (this.state.checkAutorization ) return <LoadingIndicator/>
+        if (!this.state.authorized &&  !this.state.loading){ return <NotAuthorized/>}
+
         return (
             <div>
+                 { this.state.loading ? <LoadingIndicator/> : '' }
                  <Title title="Acciones de roles"/>
                  <br/>
                  <Table pageSize={this.state.pageSize} 

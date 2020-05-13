@@ -9,7 +9,7 @@ import ListItemLink from 'components/ListItemLink';
 
 export default function ListOfGroup(props) {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
 
     function handleClick() {
         setOpen(!open);
@@ -22,18 +22,15 @@ export default function ListOfGroup(props) {
     return (
         <List component="nav" aria-labelledby="nested-list-subheader" className={classes.root}>
             <ListItem button onClick={handleClick}>
-                <Icon>{props.listOfGroup[0].icon}</Icon>
-                <ListItemText primary={props.listOfGroup[0].name} />
+                <Icon>{props.listOfGroup.icon}</Icon>
+                <ListItemText primary={props.listOfGroup.name} />
                 {open ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
         
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    {props.listOfGroup.map((option, index) => (
-                        (index>0) ? (
-                            <ListItemLink  key={index} to={option.path} primary={option.name} icon={option.icon}  isNested={true}></ListItemLink>
-                        ) :null 
-                        
+                    {props.listOfGroup.form.map((option, index) => (
+                        <ListItemLink  key={index} to={option.path} primary={option.name} icon={option.icon}  isNested={true}></ListItemLink>
                     ))}
                 </List>
             </Collapse>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getCurrentUser, getUserMenu, setMenuFormat } from 'services/User';
+import { getCurrentUser, getUserMenu } from 'services/User';
 import { ACCESS_TOKEN } from './constants';
 import Alert from 'react-s-alert';
 import './App.css';
@@ -28,11 +28,10 @@ class App extends Component {
     try{
       const currentUser = await getCurrentUser();
       const menuResponse = await getUserMenu();
-      const formatedMenu = setMenuFormat(menuResponse.data);
       this.setState({
         authenticated: true,
         currentUser: currentUser,
-        menu:formatedMenu
+        menu:JSON.parse(menuResponse.data)
       });
     }catch(exception){
       this.setState({

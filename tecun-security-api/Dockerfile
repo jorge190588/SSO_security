@@ -18,7 +18,6 @@ RUN  apt-get install -y vim wget curl git maven
 RUN mkdir -p /local/git
 RUN mkdir app
 COPY . app
-COPY repository/ /root/.m2/repository/
 WORKDIR /app
 
 # Install custom jars

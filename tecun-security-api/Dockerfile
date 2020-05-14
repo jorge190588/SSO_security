@@ -16,17 +16,15 @@ RUN  apt-get install -y vim wget curl git maven
 
 # create working directory
 RUN mkdir -p /local/git
-
 RUN mkdir app
 COPY . app
-
 COPY repository/ /root/.m2/repository/
-
-#RUN mvn help:evaluate -Dexpression=settings.localRepository 
-
 WORKDIR /app
 
-#RUN mvn -N io.takari:maven:wrapper
+# Install custom jars
+RUN mvn install:install-file -Dfile=lib/ojdbc7.jar -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1.0 -Dpackaging=jar -DgeneratePom=true
+
+# crear jar file of application
 RUN mvn package
 
 FROM openjdk:8-jdk-alpine AS builder

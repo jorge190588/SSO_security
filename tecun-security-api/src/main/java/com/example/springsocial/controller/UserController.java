@@ -95,7 +95,7 @@ public class UserController {
 		user.setPassword(user.getPassword());
 		user.setProvider(AuthProvider.local);
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		user.setIsCancel(false);
+		user.setIsActive(true);
     	response= new RestResponse();
     	if (!userPrincipal.hasPermissionToRoute(rolFormActionRepository,request.getRequestURI() )){
     		response.setError(new CustomException("Acceso no autorizado",ErrorCode.ACCESS_DENIED, this.getClass().getSimpleName(),0));
@@ -121,7 +121,7 @@ public class UserController {
     	updateElement.setEmailVerified(findedElement.getEmailVerified());
     	updateElement.setProvider(findedElement.getProvider());
     	updateElement.setCreatedAt(findedElement.getCreatedAt());
-    	updateElement.setIsCancel(findedElement.getIsCancel());
+    	updateElement.setIsActive(findedElement.getIsActive());
     	
     	instanceCrud();
     	return crud.update(updateElement);
@@ -138,12 +138,12 @@ public class UserController {
     	}
     	User findedElement = repository.findById(id);
     	
-    	if (findedElement.getIsCancel()) {
-    		response.setError(new CustomException("Usuario esta cancelado",ErrorCode.REST_UPDATE, this.getClass().getSimpleName(),0));
+    	if (findedElement.getIsActive()) {
+    		response.setError(new CustomException("Usuario no esta activo",ErrorCode.REST_UPDATE, this.getClass().getSimpleName(),0));
     		return response;	
     	}
     	
-    	findedElement.setIsCancel(true);
+    	findedElement.setIsActive(false);
     	instanceCrud();
     	return crud.update(findedElement);
     }

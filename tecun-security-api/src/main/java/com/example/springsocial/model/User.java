@@ -57,7 +57,7 @@ public class User {
 	@Column(nullable = true)
 	private Integer updatedBy;
 	
-    private Boolean isCancel = false;
+    private Boolean isActive = true;
 	
     public Rol getRol() {
 		return rol;
@@ -171,12 +171,12 @@ public class User {
 		this.updatedBy = updatedBy;
 	}
 
-	public Boolean getIsCancel() {
-		return isCancel;
+	public Boolean getIsActive() {
+		return isActive;
 	}
 
-	public void setIsCancel(Boolean isCancel) {
-		this.isCancel = isCancel;
+	public void setIsActive(Boolean isActive) {
+		this.isActive= isActive;
 	}
 	
     public Company getCompany() {

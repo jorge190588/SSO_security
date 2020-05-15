@@ -23,7 +23,7 @@ class User extends Component {
                 { title: 'ID', field: 'id' },
                 { title: 'Nombre', field: 'name' },
                 { title: 'Correo', field: 'email' },
-                { title: 'Cancelado ?', field: 'isCancel', type: 'boolean' },
+                { title: 'Esta activo ?', field: 'isActive', type: 'boolean' },
                 { title: 'Correo verificado', field: 'emailVerified', type: 'boolean' },
                 { title: 'Rol',   field: 'rol.name',    },
                 { title: 'Empresa',   field: 'company.name',    },

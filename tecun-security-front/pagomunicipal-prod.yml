@@ -1,11 +1,11 @@
 version: '3.0'
 services:
-  pagomunicipal_security_web:
-    container_name: pagomunicipal_security_web
+  pagomunicipal_sso_web_prod:
+    container_name: pagomunicipal_sso_web_prod
     build:
       context: .
       dockerfile: Dockerfile-prod
-    image: pagomunicipal_security_web
+    image: pagomunicipal_sso_web_prod
     ports:
       - '9001:80'
     environment:

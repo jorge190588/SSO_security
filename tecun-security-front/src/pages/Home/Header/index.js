@@ -17,8 +17,8 @@ export default function FormControlInput(props) {
                 <Grid item xs={5}>
                     <Grid container justify="center" >
                         <Grid key={1} item>
-                            <div className={classes.title}>Servidor de autenticación</div>
-                            <div className={classes.subtitle}>Módulo para aplicaciones web y móvil</div>
+                            <div className={classes.title}>Servidor de autenticación y autorización</div>
+                            <div className={classes.subtitle}>Módulo para aplicaciones de seguridad web y móvil</div>
                             <div className={classes.description}>El modulo de seguridad se integra con aplicación móviles y web, un usuario administrar debe conceder o revocar permisos a los formularios y sus acciones</div>
                         </Grid>
                     </Grid>

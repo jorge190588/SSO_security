@@ -1,0 +1,14 @@
+version: '3.0'
+services:
+  tasting_sso_web_prod:
+    container_name: tasting_sso_web_prod
+    build:
+      context: .
+      dockerfile: Dockerfile-prod
+    image: tasting_sso_web_prod
+    ports:
+      - '9001:80'
+    environment:
+      - NODE_ENV=prod
+      - API_SSO=http://190.143.140.122:9500
+      - API_BACKEND=http://190.143.140.122:9500

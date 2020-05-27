@@ -9,6 +9,8 @@ services:
     ports:
       - '9001:80'
     environment:
+      - SECRET_NAME=PAGOMUNICIPAL-SECURITY-WEB
       - NODE_ENV=prod
       - API_SSO=http://3.89.197.239:9760
       - API_BACKEND=http://3.89.197.239:9760
+      

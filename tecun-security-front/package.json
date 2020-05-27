@@ -21,7 +21,8 @@
   },
   "scripts": {
     "start": "set PORT=4002 && react-scripts start",
-    "build": "npm install --save file:src/commons && npm install --save file:src/components && npm install --save file:src/pages && npm install --save file:src/services && react-scripts build",
+    "build-pagomunicipal": "npm install --save file:src/commons && npm install --save file:src/components && npm install --save file:src/pages && npm install --save file:src/services && project=pagomunicipal && react-scripts build",
+    "build-tasting": "npm install --save file:src/commons && npm install --save file:src/components && npm install --save file:src/pages && npm install --save file:src/services && project=tasting && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

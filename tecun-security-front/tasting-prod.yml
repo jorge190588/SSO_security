@@ -4,7 +4,7 @@ services:
     container_name: tasting_sso_web_prod
     build:
       context: .
-      dockerfile: Dockerfile-prod
+      dockerfile: Dockerfile-tasting-prod
     image: tasting_sso_web_prod
     ports:
       - '9001:80'

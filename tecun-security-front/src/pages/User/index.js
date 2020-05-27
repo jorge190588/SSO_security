@@ -6,6 +6,7 @@ import Title from 'components/Title';
 import Table from 'components/Table';
 import New from './New/index';
 import Update from  './Update/index';
+import ChangePassword from  './ChangePassword/index';
 import Alert from 'react-s-alert';
 
 class User extends Component {
@@ -16,8 +17,10 @@ class User extends Component {
             authorized:false,
             create:false,
             update:false,
+            changePassword:false,
             rowData: [],
             data: [],
+            customActions:[],
             controller:'user',
             header: [
                 { title: 'ID', field: 'id' },
@@ -33,17 +36,14 @@ class User extends Component {
         this.addRegister = this.addRegister.bind(this);
         this.cancelRegister = this.cancelRegister.bind(this);
         this.updateRegister = this.updateRegister.bind(this);
+        this.changePasswordRegister = this.changePasswordRegister.bind(this);
         this.showList = this.showList.bind(this);
     }
   
-    async addRegister(){
-        this.setState({create: true});
-    }
-
-    async updateRegister(rowData){
-        this.setState({update: true, rowData: rowData});
-    }
-
+    async addRegister(){    this.setState({create: true});  }
+    async updateRegister(rowData){  this.setState({update: true, rowData: rowData});}
+    async changePasswordRegister(rowData){  this.setState({changePassword: true, rowData: rowData});}
+    
     async cancelRegister(rowData){
         try{
             const hasPermission = await userHasPermission(this.state.controller,'cancel');    
@@ -80,7 +80,8 @@ class User extends Component {
                     loading: false,
                     data: response.data,
                     create: false,
-                    update: false
+                    update: false,
+                    changePassword:false,
                   });
             }
 
@@ -91,6 +92,14 @@ class User extends Component {
     }
 
     async componentDidMount() {
+        let self = this;
+        this.state.customActions.push(function(rowData){ 
+            return {
+                icon: 'vpn_key',
+                tooltip: 'Cambiar clave',
+                onClick: function() {    self.changePasswordRegister(rowData); }
+            }
+        }); 
         this.showList();
     }
     
@@ -99,12 +108,19 @@ class User extends Component {
         if (!this.state.authorized){ return <NotAuthorized/> }
         if (this.state.create){ return <New     showList={this.showList} controller={this.state.controller}/> }
         if (this.state.update){ return <Update  showList={this.showList} controller={this.state.controller} rowData={this.state.rowData}/> }
+        if (this.state.changePassword){ return <ChangePassword  showList={this.showList} controller={this.state.controller} rowData={this.state.rowData}/> }
+        
         return (
             <div>
                  <Title title="Usuarios"/>
                  <br/>
-                 <Table pageSize={this.state.pageSize} header = {this.state.header} data={this.state.data} addRegister={this.addRegister} updateRegister={this.updateRegister}
-                        cancelRegister={this.cancelRegister} />
+                 <Table pageSize={this.state.pageSize} 
+                        header = {this.state.header} 
+                        data={this.state.data} 
+                        addRegister={this.addRegister} 
+                        updateRegister={this.updateRegister}
+                        cancelRegister={this.cancelRegister} 
+                        customActions={this.state.customActions}/>
             </div>
         )
     }

@@ -62,6 +62,17 @@ export function cancelUser(data) {
     });
 }
 
+export function changePassword(data) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("Acceso denegado");
+    }
+    return request_security({
+        url: "/"+moduleName+"/changePassword",
+        method: 'PATCH',
+        body: JSON.stringify(data)
+    });
+}
+
 export function updateUser(data) {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("Acceso denegado");

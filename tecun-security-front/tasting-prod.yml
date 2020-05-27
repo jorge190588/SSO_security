@@ -8,5 +8,5 @@ services:
     image: tasting_sso_web_prod
     ports:
       - '9001:80'
-      env_file:
+    env_file:
       - env.tasting.prod

@@ -52,13 +52,25 @@ export function createUser(data) {
     });
 }
 
-export function cancelUser(data) {
+export function enableRegister(params) {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("Acceso denegado");
     }
+    
     return request_security({
-        url: "/"+moduleName+"/cancel/"+data.id,
-        method: 'PUT'
+        url: "/"+moduleName+"/enable/"+params.id,
+        method: 'PATCH'
+    });
+}
+
+export function disableRegister(params) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("Acceso denegado");
+    }
+    
+    return request_security({
+        url: "/"+moduleName+"/disable/"+params.id,
+        method: 'PATCH'
     });
 }
 

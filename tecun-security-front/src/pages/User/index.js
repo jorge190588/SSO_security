@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { hasPermission as userHasPermission, getUserList, cancelUser } from 'services/User';
+import { hasPermission as userHasPermission, getUserList, enableRegister, disableRegister } from 'services/User';
 import LoadingIndicator  from 'commons/LoadingIndicator';
 import NotAuthorized from 'commons/NotAuthorized';
 import Title from 'components/Title';
@@ -34,31 +34,63 @@ class User extends Component {
             ]
         }
         this.addRegister = this.addRegister.bind(this);
-        this.cancelRegister = this.cancelRegister.bind(this);
         this.updateRegister = this.updateRegister.bind(this);
         this.changePasswordRegister = this.changePasswordRegister.bind(this);
         this.showList = this.showList.bind(this);
+        this.enableRegister =  this.enableRegister.bind(this);
+        this.disableRegister =  this.disableRegister.bind(this);
     }
   
     async addRegister(){    this.setState({create: true});  }
     async updateRegister(rowData){  this.setState({update: true, rowData: rowData});}
     async changePasswordRegister(rowData){  this.setState({changePassword: true, rowData: rowData});}
     
-    async cancelRegister(rowData){
+    async enableRegister(rowData){
+        if (rowData.isActive){
+            Alert.error("El registro esta habilitado");                    
+            return;
+        }
+            
         try{
-            const hasPermission = await userHasPermission(this.state.controller,'cancel');    
-            if (hasPermission.error){
-                this.setState({ authorized: false,  loading: false });
-            }else{
-                const response =  await cancelUser({'id':rowData.id});
+            this.setState({ loading: true });
+            const hasPermission = await userHasPermission(this.state.controller,'enable');    
+            if (hasPermission.error)   this.setState({ authorized: false,  loading: false  });
+            else{
+                const response = await enableRegister({'id':rowData.id});
                 if (response.error)  {
-                    Alert.error("Error !,"+response.error.message);                    
+                    Alert.error( (response.error.code===301) ? "Intente de nuevo" : response.error.message);
+                    this.setState({ authorized: true,   loading: false });
                 }else{
-                    Alert.success("Registro guardado");
-                    this.showList();
+                    Alert.success("Registro habilitado");
+                    await this.showList();
                 }
             }
+        }catch(exception){
+            (exception.status===404) ? Alert.error("Falla del sistema"): Alert.error("Intente de nuevo ");
+            this.setState({ loading: false  });
+        }
+    }
 
+    async disableRegister(rowData){
+        if (!rowData.isActive){
+            Alert.error("El registro esta deshabilitado");                    
+            return;
+        }   
+        
+        try{
+            this.setState({ loading: true });
+            const hasPermission = await userHasPermission(this.state.controller,'disable');    
+            if (hasPermission.error)   this.setState({ authorized: false,  loading: false  });
+            else{
+                const response = await disableRegister({'id':rowData.id});
+                if (response.error)  {
+                    Alert.error( (response.error.code===301) ? "Intente de nuevo" : response.error.message);
+                    this.setState({ authorized: true,   loading: false });
+                }else{
+                    Alert.success("Registro deshabilitado");
+                    await this.showList();
+                }
+            }
         }catch(exception){
             (exception.status===404) ? Alert.error("Falla del sistema"): Alert.error("Intente de nuevo ");
             this.setState({ loading: false  });
@@ -119,7 +151,8 @@ class User extends Component {
                         data={this.state.data} 
                         addRegister={this.addRegister} 
                         updateRegister={this.updateRegister}
-                        cancelRegister={this.cancelRegister} 
+                        enableRegister={this.enableRegister}
+                        disableRegister={this.disableRegister}
                         customActions={this.state.customActions}/>
             </div>
         )

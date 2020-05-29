@@ -85,6 +85,7 @@ class Form extends Component {
                 this.setState({authorized: false,loading: false, create: false,update: false,delete: false}); 
             }else{
                 const response =  await getFormActionList();
+                console.log("response",response);
                 this.setState({authorized: true,loading: false,data: response.data, create: false,update: false,delete: false});
             }
         }catch(exception){

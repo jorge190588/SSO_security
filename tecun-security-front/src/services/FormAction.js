@@ -3,7 +3,7 @@ import { ACCESS_TOKEN } from '../constants';
 
 const moduleName="formAction";
 
-export function getFormActionList(form_id) {
+export function getFormActionList() {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("Acceso denegado");
     }

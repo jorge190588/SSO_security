@@ -6,5 +6,6 @@ services:
       context: .
       dockerfile: Dockerfile-tasting-prod
     image: tasting_sso_web_prod
+    restart: unless-stopped
     ports:
       - '9001:80'

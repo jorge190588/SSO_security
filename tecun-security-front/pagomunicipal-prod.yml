@@ -6,6 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile-pagomunicipal-prod
     image: pagomunicipal_sso_web_prod
+    restart: unless-stopped
     ports:
       - '9001:80'
       

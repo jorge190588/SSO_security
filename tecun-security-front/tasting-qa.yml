@@ -1,0 +1,11 @@
+version: '3.0'
+services:
+  tasting_sso_web_qa:
+    container_name: tasting_sso_web_qa
+    build:
+      context: .
+      dockerfile: Dockerfile-tasting-qa
+    image: tasting_sso_web_qa
+    restart: unless-stopped
+    ports:
+      - '9002:80'

@@ -8,7 +8,7 @@
     "@material-ui/lab": "^4.0.0-alpha.26",
     "commons": "file:src/commons",
     "components": "file:src/components",
-    "material-table": "^1.50.0",
+    "material-table": "^1.57.2",
     "pages": "file:src/pages",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
@@ -23,7 +23,8 @@
     "start": "set PORT=4002 && react-scripts start",
     "build": "npm install --save file:src/commons && npm install --save file:src/components && npm install --save file:src/pages && npm install --save file:src/services && react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start_components": "npm install --save file:src/commons && npm install --save file:src/components && npm install --save file:src/pages && npm install --save file:src/services"
   },
   "eslintConfig": {
     "extends": "react-app"

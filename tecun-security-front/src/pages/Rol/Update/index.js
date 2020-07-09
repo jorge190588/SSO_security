@@ -4,40 +4,43 @@ import NotAuthorized from 'commons/NotAuthorized';
 import Title from 'components/Title';
 import Form from 'components/Form/FormTwoColumns';
 import FormJSTools from 'components/Form/JStools';
-import { hasPermission as userHasPermission} from 'services/User';
-import { updateRol } from 'services/Rol';
+import ApiServices from 'services/ApiServices';
 import Alert from 'react-s-alert';
 
 class Update extends Component {      
     constructor(props) {       
         super(props);
         this.state = {
-            controller: "rol",
+            controller: props.controller,
             loading: true,
             authorized:true,
             showList: props.showList,
             clean: true,
             id: props.rowData.id,
-            elements:FormJSTools.setValuesToElements(props.elements, props.rowData)
+            elements:FormJSTools.setValuesToElements(props.elements, props.rowData),
+            apiErrors:[]
         }
-        
-        this.save = this.save.bind(this);
+        this.saveAndBack = this.saveAndBack.bind(this);
         this.handleShowList = this.handleShowList.bind(this);
     }
     
+    saveAndBack=async(data)=>{ await this.save(data,true); }
+
     async save(data, backToList){
         data.id=this.state.id;
         this.setState({loading: true});    
         try{
-            const hasPermission = await userHasPermission(this.state.controller,'update');    
+            const hasPermission = await ApiServices.userSecurity.hasPermission(this.state.controller,'update');    
             if (hasPermission.error)   this.setState({ authorized: false,  loading: false  });
             else{
-                const newUser = await updateRol(data);
-                if (newUser.error)  {
-                    if(newUser.error.code===301)    this.setState({ elements: FormJSTools.setErrorsToElements(newUser, this.state.elements),  authorized: true,   loading: false, clean:false });
-                    else{
+                const response = await ApiServices[this.state.controller].updateRegister(data);
+                if (response.error)  {
+                    if(response.error.code===304) {
+                        Alert.error("Errores en los campos");
+                        this.setState({ apiErrors:response.error.messageList, authorized: true,   loading: false, clean:false });
+                    }else{
                         this.setState({ authorized: true,   loading: false, clean:false });
-                        Alert.error("Error !, intente de nuevo");                    
+                        Alert.error(response.error.message);
                     }
                 }else{
                     Alert.success("Registro guardado");
@@ -51,13 +54,11 @@ class Update extends Component {
         }
     }
 
-    handleShowList(){
-        this.state.showList();
-    }
-
+    handleShowList(){ this.state.showList(); }
+    
     async componentDidMount() {
         try{
-            const hasPermission = await userHasPermission(this.state.controller,'update');    
+            const hasPermission = await ApiServices.userSecurity.hasPermission(this.state.controller,'update');    
             if (hasPermission.error){
                 this.setState({ authorized: false,  loading: false  });
                 Alert.error("Error !, intente de nuevo");                   
@@ -76,8 +77,12 @@ class Update extends Component {
         return (
             <div>
                 {this.state.loading ? (<LoadingIndicator/>): null}
-                <Title title="Modificar usuario"/>
-                <Form elements= {this.state.elements} save={this.save} handleShowList={this.handleShowList} clean={this.state.clean} />
+                <Title title="Modificar registro"/>
+                <Form   elements= {this.state.elements} 
+                        saveAndBack={this.saveAndBack}
+                        handleShowList={this.handleShowList} 
+                        clean={this.state.clean} 
+                        apiErrors={this.state.apiErrors}/>
             </div>
         )
     }

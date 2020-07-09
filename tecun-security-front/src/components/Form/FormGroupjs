@@ -122,7 +122,7 @@ export default function Table(props) {
         )
     }) : "";
 
-    var htmlControls =  Object.keys(elements).map(key => {
+    var html =  Object.keys(elements).map(key => {
 
         let messageError= elements[key].errorMessages,
             isError = elements[key].isError;
@@ -183,8 +183,8 @@ export default function Table(props) {
     });
   
     return (
-        <div className={(props.hideInPrintView)===true ?classes.hideInPrintView+" "+classes.root: classes.root}>
-            {htmlControls}
+        <div className={classes.root}>
+            {html}
             {buttonListHtml}
             <Grid item xs={12}>     
                 {props.saveAndClean ? (

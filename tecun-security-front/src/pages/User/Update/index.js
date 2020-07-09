@@ -13,7 +13,7 @@ class Update extends Component {
     constructor(props) {       
         super(props);
         let elements=   {
-            name: {         idelement: "name", value:'', label: "Usuario", pattern:"^([\\w_.]){4,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 4 a 20 caracteres (Ejemplo: jorgesantos1)'], isError:false, elementType:'input' },
+            name: {         idelement: "name", value:'', label: "Usuario", pattern:"^([\\w\\sÑñáéíóúÁÉÍÓÚ_.]){4,50}$", validators: ['required'], errorMessages:['Campo requiere un texto de 4 a 20 caracteres (Ejemplo: jorgesantos1)'], isError:false, elementType:'input' },
             email: {        idelement: "email", value:'', label: "Correo electrónico", pattern: "^[\\w-+._%.]+(\\.[\\w-]{1,25}){0,25}@[\\w-]{1,25}(\\.[\\w-]{1,10})+[\\w-]+$", validators: ['required'], errorMessages:['Campo requiere un correo válido (Ejemplo: jorge@gmail.com)'], isError:false, elementType:'input' },
             rol_id: {       idelement: "rol_id", value: 0, label: "Rol de usuario", pattern:"^[1-9][0-9]*$", validators: ['required'], errorMessages:['Campo requerido'], isError:false, elementType:'dropdown', list: [{id: 1, name:'Admin'},{id:2 , name:'Usuario'}] },
             company_id: {   idelement: "company_id", value: 0, label: "Empresa", pattern:"^[1-9][0-9]*$", validators: ['required'], errorMessages:['Campo requerido'], isError:false, elementType:'dropdown', list: [] },

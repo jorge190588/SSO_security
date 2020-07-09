@@ -4,37 +4,42 @@ import NotAuthorized from 'commons/NotAuthorized';
 import Title from 'components/Title';
 import Form from 'components/Form/FormTwoColumns';
 import FormJSTools from 'components/Form/JStools';
-import { hasPermission as userHasPermission } from 'services/User';
-import { createRol } from 'services/Rol';
+import ApiServices from 'services/ApiServices';
 import Alert from 'react-s-alert';
 
 class New extends Component {      
     constructor(props) {       
         super(props);
         this.state = {
-            controller: "rol",
+            controller: props.controller,
             loading: true,
             authorized:true,
             showList: props.showList,
             clean: true,
-            elements: FormJSTools.cleanValuesToElements(props.elements)
+            elements: FormJSTools.cleanValuesToElements(props.elements),
+            apiErrors:[]
         }
-        this.save = this.save.bind(this);
+        this.saveAndClean = this.saveAndClean.bind(this);
+        this.saveAndBack = this.saveAndBack.bind(this);
         this.handleShowList = this.handleShowList.bind(this);
     }
-    
+    saveAndClean=async(data)=>{await this.save(data,false); }
+    saveAndBack=async(data)=>{ await this.save(data,true);}
+
     async save(data, backToList){
         this.setState({loading: true});    
         try{
-            const hasPermission = await userHasPermission(this.state.controller,'create');    
+            const hasPermission = await ApiServices.userSecurity.hasPermission(this.state.controller,'create');    
             if (hasPermission.error)   this.setState({ authorized: false,  loading: false  });
             else{
-                const newUser = await createRol(data,this.state.elements);
-                if (newUser.error)  {
-                    if(newUser.error.code===301)    this.setState({ elements: FormJSTools.setErrorsToElements(newUser, this.state.elements),  authorized: true,   loading: false, clean:false });
-                    else{
+                const response = await ApiServices[this.state.controller].createRegister(data,this.state.elements);
+                if (response.error)  {
+                    if(response.error.code===304) {
+                        Alert.error("Errores en los campos");
+                        this.setState({ apiErrors:response.error.messageList, authorized: true,   loading: false, clean:false });
+                    }else{
                         this.setState({ authorized: true,   loading: false, clean:false });
-                        Alert.error("Error !, intente de nuevo");                    
+                        Alert.error("Intente de nuevo");
                     }
                 }else{
                     Alert.success("Registro guardado");
@@ -47,15 +52,12 @@ class New extends Component {
             this.setState({ loading: false  });
         }
     }
-
-    handleShowList(){
-        this.state.showList();
-    }
+    handleShowList(){ this.state.showList(); }
 
     async componentDidMount() {
         try{
             this.setState({loading: true});
-            const hasPermission = await userHasPermission(this.state.controller,'create');    
+            const hasPermission = await ApiServices.userSecurity.hasPermission(this.state.controller,'create');    
             if (hasPermission.error){
                 this.setState({ authorized: false,  loading: false  });
                 Alert.error("Error !, intente de nuevo");                   
@@ -74,8 +76,13 @@ class New extends Component {
         return (
             <div>
                 {this.state.loading ? (<LoadingIndicator/>): null}
-                <Title title="Nuevo usuario"/>
-                <Form elements= {this.state.elements} save={this.save} handleShowList={this.handleShowList} clean={this.state.clean} />
+                <Title title="Nuevo rol"/>
+                <Form   elements= {this.state.elements} 
+                        saveAndClean={this.saveAndClean} 
+                        saveAndBack={this.saveAndBack}
+                        handleShowList={this.handleShowList} 
+                        clean={this.state.clean}
+                        apiErrors={this.state.apiErrors} />
             </div>
         )
     }

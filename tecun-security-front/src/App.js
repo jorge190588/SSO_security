@@ -27,9 +27,13 @@ class App extends Component {
         try{
             const currentUser = await getCurrentUser();
             const menuResponse = await getUserMenu();
+            let menuData=[];
+            if (menuResponse.error) menuData=[];
+            if (menuResponse.data!=="") menuData=menuResponse.data;
+            
             this.setState({     authenticated: true,
                                 currentUser: currentUser,
-                                menu:JSON.parse(menuResponse.data)
+                                menu:JSON.parse(menuData)
             });
         }catch(exception){
             this.setState({     authenticated: false,

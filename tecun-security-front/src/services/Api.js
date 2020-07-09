@@ -1,7 +1,7 @@
-import { ACCESS_TOKEN, API_BASE_URL_SECURITY } from '../constants';
+import { ACCESS_TOKEN, API_BASE_URL_SECURITY, API_BASE_URL_DATA } from '../constants';
 
 export const request_data = (options) => {
-    options.url= API_BASE_URL_SECURITY+ options.url;
+    options.url= API_BASE_URL_DATA+ options.url;
     return getRequest(options);
 };
 

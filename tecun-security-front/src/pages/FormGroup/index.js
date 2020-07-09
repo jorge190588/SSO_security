@@ -31,7 +31,7 @@ class FormGroup extends Component {
             customActions:[],
             elements:   {
                 name: {         idelement: "name", value:'', label: "Nombre del grupo", pattern:"^[\\w_\\sÑñáéíóúÁÉÍÓÚ.-]{4,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 4 a 20 caracteres (Ejemplo: Grupo inicial)'], isError:false, elementType:'input' },
-                icon: {         idelement: "icon", value:'', label: "Icono", pattern:"^([\\w_\\s]){3,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 3 a 20 caracteres (Ejemplo: file)'], isError:false, elementType:'input' },
+                icon: {         idelement: "icon", value:'', label: "Icono", pattern:"^[\\w_\\sÑñáéíóúÁÉÍÓÚ.-]{3,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 3 a 20 caracteres (Ejemplo: file)'], isError:false, elementType:'input' },
                 itemOrder: {    idelement: "itemOrder", value:'', label: "Orden", pattern:"^([\\w_\\s]){1,20}$", validators: ['required'], errorMessages:['Campo requiere un número (Ejemplo: 1)'], isError:false, elementType:'input' },
                 system_id: {    idelement: "system_id", value: 0, label: "Sistema", pattern:"^[1-9][0-9]*$", validators: ['required'], errorMessages:['Campo requerido'], isError:false, elementType:'dropdown', list: [] },
             }

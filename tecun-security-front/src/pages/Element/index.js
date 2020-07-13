@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { hasPermission as userHasPermission} from 'services/User';
-import { listRegister, deleteRegister  } from 'services/Element';
+import ApiServices from 'services/ApiServices';
 import LoadingIndicator  from 'commons/LoadingIndicator';
 import NotAuthorized from 'commons/NotAuthorized';
 import Title from 'components/Title';
@@ -47,24 +46,17 @@ class Rol extends Component {
         this.updateRegister = this.updateRegister.bind(this);
         this.deleteRegister = this.deleteRegister.bind(this);
         this.showList = this.showList.bind(this);   
-        
     }
-  
-    async addRegister(){
-        this.setState({create:true});
-    }
-
-    async updateRegister(rowData){
-        this.setState({update:true, rowData: rowData});
-    }
+    async addRegister(){ this.setState({create:true}); }
+    async updateRegister(rowData){ this.setState({update:true, rowData: rowData}); }
 
     async deleteRegister(rowData){
         try{
             this.setState({ loading: true });
-            const hasPermission = await userHasPermission(this.state.controller,'delete');    
+            const hasPermission = await ApiServices.userSecurity.hasPermission(this.state.controller,'delete');    
             if (hasPermission.error)   this.setState({ authorized: false,  loading: false  });
             else{
-                const response = await deleteRegister({'id':rowData.id});
+                const response = await ApiServices.element.deleteRegister({'id':rowData.id});
                 if (response.error)  {
                     Alert.error( (response.error.code===301) ? "Intente de nuevo" : response.error.message);
                     this.setState({ authorized: true,   loading: false });
@@ -82,11 +74,11 @@ class Rol extends Component {
     async showList(){
         try{
             this.setState({loading: true});
-            const hasPermission = await userHasPermission(this.state.controller,'list');    
+            const hasPermission = await ApiServices.userSecurity.hasPermission(this.state.controller,'list');    
             if (hasPermission.error){
                 this.setState({checkAutorization: false,authorized: false,loading: false,create: false,update: false,delete: false});
             }else{
-                const response =  await listRegister();
+                const response =  await ApiServices.element.listRegister();
                 this.setState({checkAutorization: false,authorized: true,loading: false,data: response.data,create: false,update: false,delete: false});
             }
         }catch(exception){
@@ -95,26 +87,28 @@ class Rol extends Component {
         }
     }
 
-    async componentDidMount() {
-        this.showList();
-    }
+    async componentDidMount() { this.showList(); }
     
     render() {
-        if (this.state.checkAutorization) return <LoadingIndicator/>
-        if (!this.state.authorized){ return <NotAuthorized/> }
-        if (this.state.create){ return <New     showList={this.showList} elements={this.state.elements}/> }
-        if (this.state.update){ return <Update  showList={this.showList} elements={this.state.elements} rowData={this.state.rowData}/> }
-    
+        if (this.state.checkAutorization ) return <LoadingIndicator/>
+        if (!this.state.authorized &&  !this.state.loading){ return <NotAuthorized/>}
+        if (this.state.create){ return <New     showList={this.showList} elements={this.state.elements} controller={this.state.controller}/> }
+        if (this.state.update){ return <Update  showList={this.showList} elements={this.state.elements} controller={this.state.controller} rowData={this.state.rowData}/> }
 
         return (
-            <div>
-                { this.state.loading ? <LoadingIndicator/> : '' }   
-                 <Title title="Elementos de formularios"/>
+            <div >
+                { this.state.loading ? <LoadingIndicator/> : '' }
+                 <Title title="Elementos de formulario"/>
                  <br/>
-                 <Table pageSize={this.state.pageSize} header = {this.state.header} data={this.state.data} 
-                        addRegister={this.addRegister} updateRegister={this.updateRegister} 
+                 <Table pageSize={this.state.pageSize} 
+                        header = {this.state.header} 
+                        data={this.state.data} 
+                        addRegister={this.addRegister} 
+                        updateRegister={this.updateRegister} 
                         deleteRegister={this.deleteRegister} 
-                        />
+                        customActions={this.state.customActions}
+                        service={ ApiServices[this.state.controller] }
+                />
             </div>
         )
     }

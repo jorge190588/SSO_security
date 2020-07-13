@@ -4,7 +4,7 @@ import NotAuthorized from 'commons/NotAuthorized';
 import Title from 'components/Title';
 import Form from 'components/Form/FormTwoColumns';
 import FormJSTools from 'components/Form/JStools';
-import { hasPermission as userHasPermission, changePassword } from 'services/User';
+import ApiServices from 'services/ApiServices';
 import Alert from 'react-s-alert';
 
 class ChangePassword extends Component {      
@@ -23,18 +23,18 @@ class ChangePassword extends Component {
             rowData: props.rowData,
             elements: elements,//FormJSTools.setValuesToElements(elements, props.rowData)
         }
-        this.save = this.save.bind(this);
+        this.saveAndBack = this.saveAndBack.bind(this);
         this.handleShowList = this.handleShowList.bind(this);
     }
     
-    async save(data, backToList){
+    async saveAndBack(data, backToList){
         data.id=this.state.rowData.id;
         this.setState({loading: true});    
         try{
-            const hasPermission = await userHasPermission(this.state.controller,'update');    
+            const hasPermission = await ApiServices.userSecurity.hasPermission(this.state.controller,'changePassword');    
             if (hasPermission.error)   this.setState({ authorized: false,  loading: false  });
             else{
-                const response = await changePassword(data);
+                const response = await await ApiServices[this.state.controller].changePassword(data);
                 if (response.error)  {
                     if(response.error.code===301)    
                         this.setState({ elements: FormJSTools.setErrorsToElements(response, this.state.elements),  authorized: true,   loading: false, clean:false });
@@ -54,14 +54,10 @@ class ChangePassword extends Component {
         }
     }
 
-    handleShowList(){
-        this.state.showList();
-    }
-
-
+    handleShowList(){ this.state.showList(); }
     async componentDidMount() {
         try{
-            const hasPermission = await userHasPermission(this.state.controller,'update');    
+            const hasPermission = await ApiServices.userSecurity.hasPermission(this.state.controller,'changePassword');    
             if (hasPermission.error){
                 this.setState({ authorized: false,  loading: false  });
                 Alert.error("Error !, intente de nuevo");                   
@@ -81,7 +77,10 @@ class ChangePassword extends Component {
             <div>
                 {this.state.loading ? (<LoadingIndicator/>): null}
                 <Title title="Cambiar clave a usuario"/>
-                <Form elements= {this.state.elements} save={this.save} handleShowList={this.handleShowList} clean={this.state.clean} />
+                <Form   elements= {this.state.elements} 
+                        saveAndBack={this.saveAndBack} 
+                        handleShowList={this.handleShowList} 
+                        clean={this.state.clean} />
             </div>
         )
     }

@@ -98,7 +98,8 @@ class System extends Component {
                 { this.state.loading ? <LoadingIndicator/> : '' }
                  <Title title="Sistemas"/>
                  <br/>
-                 <Table pageSize={this.state.pageSize} 
+                 <Table key={this.state.key}
+                        pageSize={this.state.pageSize} 
                         header = {this.state.header} 
                         data={this.state.data} 
                         addRegister={this.addRegister} 

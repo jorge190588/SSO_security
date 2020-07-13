@@ -13,6 +13,7 @@ class FormGroup extends Component {
         super(props);
         this.state = {
             controller:'formGroup',
+            key: Math.random(),
             loading: true,
             authorized:false,
             checkAutorization:true,
@@ -72,7 +73,7 @@ class FormGroup extends Component {
             if (hasPermission.error){
                 this.setState({checkAutorization: false,authorized: false,loading: false,create: false,update: false,delete: false});
             }else{
-                this.setState({checkAutorization: false, authorized: true,loading: false,data: [],create: false,update: false,delete: false});
+                this.setState({checkAutorization: false, authorized: true,loading: false,key: Math.random() ,create: false,update: false,delete: false});
             }
         }catch(exception){
             (exception.status===404) ? Alert.error("Falla del sistema"): Alert.error("Intente de nuevo ");
@@ -92,7 +93,8 @@ class FormGroup extends Component {
                 { this.state.loading ? <LoadingIndicator/> : '' }
                  <Title title="Grupo de formularios"/>
                  <br/>
-                 <Table pageSize={this.state.pageSize} 
+                 <Table key={this.state.key}
+                        pageSize={this.state.pageSize} 
                         header = {this.state.header} 
                         data={this.state.data} 
                         addRegister={this.addRegister} 

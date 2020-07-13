@@ -3,15 +3,43 @@ import { makeStyles } from '@material-ui/core/styles';
 const drawerWidth = 240;
 
 export const useStyles = makeStyles(theme => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-  root: {
-    display: 'flex',
-  },
-  title: {
-    flexGrow: 1,
-  },
+    button: {
+        '@media print':{
+            display:'none',
+        },
+        margin: theme.spacing(1),
+        ['@media (max-width:768px)']:{ //ipad
+            padding: 0
+        },
+        ['@media (max-width: 415px)']:{ //mobile   
+            marginLeft:0,
+            minWidth:10,
+            padding:0,
+            fontSize: '0.60rem',
+        },
+    },
+    root:{
+        height: '100%',
+        display: 'flex',
+	},
+    title: {
+        flexGrow: 1,
+        ['@media (max-width:2000px)']:{ //web
+            fontSize:'1.2rem',
+        },
+        ['@media (max-width:1000px)']:{ //web
+            fontSize:'1rem',
+            minWidth: 200,
+        },
+        ['@media (max-width:768px)']:{ //ipad
+            fontSize:'0.8rem',
+            minWidth: 150,
+        },
+        ['@media (max-width:415px)']:{ //mobile
+            fontSize:'0.7rem',
+            maxWidth: 230,
+        }
+    },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,

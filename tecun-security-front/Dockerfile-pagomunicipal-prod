@@ -5,7 +5,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json /app/package.json
 COPY . /app
 COPY .env.pagomunicipal.prod /app/.env
-RUN npm install # --silent
+RUN npm install material-table@1.57.2
 # RUN npm install react-scripts@3.0.1 -g --silent
 RUN npm run build
 

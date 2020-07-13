@@ -146,14 +146,15 @@ export default class ApiGenericServices{
         });
     }
 
-    customPATCH(methodName) {
+    customPATCH(methodName,data) {
         if(!localStorage.getItem(ACCESS_TOKEN)) {
             return Promise.reject("Acceso denegado");
         }
-        
+
         return this.request({
             url: "/"+this.moduleName+"/"+methodName,
-            method: 'PATCH'
+            method: 'PATCH',
+            body: JSON.stringify(data)
         });
     }
 }

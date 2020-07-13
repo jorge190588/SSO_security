@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { hasPermission as userHasPermission} from 'services/User';
-import { getRolList, deleteRol } from 'services/Rol';
 import ApiServices from 'services/ApiServices';
 import LoadingIndicator  from 'commons/LoadingIndicator';
 import NotAuthorized from 'commons/NotAuthorized';
@@ -16,6 +14,7 @@ class Rol extends Component {
         super(props);
         this.state = {
             controller:'rol',
+            key: Math.random(),
             loading: true,
             authorized:false,
             checkAutorization:true,
@@ -28,10 +27,12 @@ class Rol extends Component {
             header: [
                 { title: 'ID', field: 'id' },
                 { title: 'Nombre', field: 'name' },
+                { title: 'Es rol público predeterminado ?', field: 'isPublic', type:'boolean' },
             ],
             customActions:[],
             elements:   {
                 name: {         idelement: "name", value:'', label: "Nombre del rol", pattern:"^[\\w_\\sÑñáéíóúÁÉÍÓÚ.-]{3,50}$", validators: ['required'], errorMessages:['Campo requiere un texto de 4 a 20 caracteres (Ejemplo: jorgesantos1)'], isError:false, elementType:'input' },
+                isPublic: {     idelement: "isPublic", value:false, label: "Es rol público predeterminado ?", pattern:"^([\\w_\\s]){3,20}$", validators: ['required'], errorMessages:['Seleccione una opción'], isError:false, elementType:'checkbox' },
             }
         }
         this.addRegister = this.addRegister.bind(this);
@@ -86,7 +87,7 @@ class Rol extends Component {
             if (hasPermission.error){
                 this.setState({checkAutorization: false,authorized: false,loading: false,create: false,update: false,delete: false, formAccess:false});
             }else{
-                this.setState({checkAutorization: false, authorized: true,loading: false,data: [],create: false,update: false,delete: false, formAccess:false});
+                this.setState({checkAutorization: false, authorized: true,loading: false,key: Math.random(),create: false,update: false,delete: false, formAccess:false});
             }
         }catch(exception){
             (exception.status===404) ? Alert.error("Falla del sistema"): Alert.error("Intente de nuevo ");
@@ -117,7 +118,8 @@ class Rol extends Component {
                 { this.state.loading ? <LoadingIndicator/> : '' }
                  <Title title="Roles de usuario"/>
                  <br/>
-                 <Table pageSize={this.state.pageSize} 
+                 <Table key={this.state.key}
+                        pageSize={this.state.pageSize} 
                         header = {this.state.header} 
                         data={this.state.data} 
                         addRegister={this.addRegister} 

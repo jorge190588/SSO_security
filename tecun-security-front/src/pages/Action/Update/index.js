@@ -5,9 +5,6 @@ import Title from 'components/Title';
 import Form from 'components/Form/FormTwoColumns';
 import FormJSTools from 'components/Form/JStools';
 import ApiServices from 'services/ApiServices';
-import { hasPermission as userHasPermission} from 'services/User';
-import { updateAction } from 'services/Action';
-import { getMethodList } from 'services/Method';
 import Alert from 'react-s-alert';
 
 class Update extends Component {      
@@ -29,7 +26,7 @@ class Update extends Component {
     }
     
     async setMethodList(){
-        const response =  await getMethodList();
+        const response =  await ApiServices.method.listRegister();
         (response.error) ?  this.state.elements.method_id.list=[] : this.state.elements.method_id.list=response.data;
     }
 

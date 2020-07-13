@@ -1,5 +1,6 @@
 import ApiGenericServicesData from 'services/ApiGenericServicesData';
 import UserSecurity from 'services/UserSecurity';
+import User from 'services/User';
 
 class ApiServices{
     constructor(){
@@ -11,8 +12,12 @@ class ApiServices{
         this.method = new ApiGenericServicesData("method");
         this.formAction = new ApiGenericServicesData("formAction");
         this.rol= new ApiGenericServicesData("rol");
+        this.user= new User();
         this.rolFormAction= new ApiGenericServicesData("rolFormAction");
         this.userSecurity=new UserSecurity();
+        this.element = new ApiGenericServicesData("element");
+        this.elementType = new ApiGenericServicesData("elementType");
+        this.entiti = new ApiGenericServicesData("entiti");
     }
 }
  

@@ -1,59 +1,49 @@
 import React, { Component } from 'react';
-import { getCurrentUser, getUserMenu } from 'services/User';
-import { ACCESS_TOKEN } from './constants';
 import Alert from 'react-s-alert';
 import './App.css';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 import {Template} from 'components';
+import UserAccount from 'pages/Security/Login/FormElements/UserAccount';
+import LoadingIndicator  from 'commons/LoadingIndicator';
+import {connect } from "react-redux";
+import mapStateToProps from './mapStateToProps';
+import mapDispatchToProps from './mapDispatchToProps';
 
 class App extends Component {
     constructor(props) {
         super(props);
-        this.handleLogout = this.handleLogout.bind(this);
-        this.handleLogin = this.handleLogin.bind(this);
-    }
-
-    handleLogout() {
-        localStorage.removeItem(ACCESS_TOKEN);
-        this.setState({ authenticated: false,
-                        currentUser: null,
-                        menu:[] 
-        });
-        Alert.success("Sesión cerrada!");
-    }
-
-    async handleLogin(){
-        try{
-            const currentUser = await getCurrentUser();
-            const menuResponse = await getUserMenu();
-            let menuData=[];
-            if (menuResponse.error) menuData=[];
-            if (menuResponse.data!=="") menuData=menuResponse.data;
-            
-            this.setState({     authenticated: true,
-                                currentUser: currentUser,
-                                menu:JSON.parse(menuData)
-            });
-        }catch(exception){
-            this.setState({     authenticated: false,
-                                currentUser: null,
-                                menu:null
-            });
+        this.state = {
+            authenticated : false,
+            loading: false,
+            userAccount:new UserAccount(),
         }
+        
     }
 
     async componentDidMount() {
-        this.handleLogin();
+        this.setState({ loading: true  });
+        try{
+            await this.state.userAccount.setCurrentUser();
+            await this.state.userAccount.setMenu();
+            if (this.state.userAccount.getIsError()){
+                Alert.error(this.state.userAccount.getErrorMessage());
+                this.setState({ loading: false  });
+            }else{
+                this.props.SET_MENU(this.state.userAccount.getMenu());
+                this.props.SET_CURRENT_USER(this.state.userAccount.getCurrentUser());
+                this.setState({authenticated:this.state.userAccount.getIsAuthenticated, loading:false});
+            }
+        }catch(error){
+            this.setState({ loading: false, authenticated: false  });
+        }
     }
 
     render() {
-        if (this.state===undefined || this.state===null)    return <div></div>
+        if (this.state.loading) return (<LoadingIndicator/>);
         return (
             <div>
                 <Template   authenticated={this.state.authenticated}  
-                            onLogout={this.handleLogout} 
-                            onLogin={this.handleLogin}
                             menu = {this.state.menu}
                             currentUser = {this.state.currentUser}
                 ></Template>
@@ -64,4 +54,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

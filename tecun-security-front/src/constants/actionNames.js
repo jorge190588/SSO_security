@@ -1,0 +1,11 @@
+export const actionNames={  
+    // MENU SELECTED ITEMS
+    SET_MENU_ITEM_GROUP:"SET_MENU_ITEM_GROUP",
+    SET_MENU_ITEM:"SET_MENU_ITEM",
+
+    //security
+    SET_CURRENT_USER:"SET_CURRENT_USER",
+    SET_MENU:"SET_MENU",
+    LOGOUT:"LOGOUT",
+    REGISTER:"REGISTER",
+};

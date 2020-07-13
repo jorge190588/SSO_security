@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { hasPermission as userHasPermission} from 'services/User';
+import ApiServices from 'services/ApiServices';
 import { createRolFormAction, deleteRolFormAction, getRolFormActionListByRolId } from 'services/RolFormAction';
 import LoadingIndicator  from 'commons/LoadingIndicator';
 import NotAuthorized from 'commons/NotAuthorized';
 import Title from 'components/Title';
 import Table from 'components/Table';
-//import New from './New/index';
-//import Update from  './Update/index';
 import Alert from 'react-s-alert';
 
 class RolFormAction extends Component {
@@ -48,7 +46,7 @@ class RolFormAction extends Component {
 
         this.setState({ loading: true   });
         try{
-            const hasPermission = await userHasPermission(this.state.controller,'create');    
+            const hasPermission = await ApiServices.userSecurity.hasPermission(this.state.controller,'create');      
             if (hasPermission.error)    this.setState({ authorized: false,  loading: false  });
             else{
                 const response = await createRolFormAction({"rol_id":this.state.rol_id,"form_action_id":rowData.formAction_id });
@@ -74,7 +72,7 @@ class RolFormAction extends Component {
 
         this.setState({ loading: true   });
         try{
-            const hasPermission = await userHasPermission(this.state.controller,'delete');    
+            const hasPermission = await ApiServices.userSecurity.hasPermission(this.state.controller,'delete');       
             if (hasPermission.error)    this.setState({ authorized: false,  loading: false  });
             else{
                 const response = await deleteRolFormAction({"form_action_id":rowData.formAction_id,'rol_id': rowData.rolId  });
@@ -93,7 +91,7 @@ class RolFormAction extends Component {
 
     async showList(){
         try{
-            const hasPermission = await userHasPermission(this.state.controller,'list');    
+            const hasPermission = await ApiServices.userSecurity.hasPermission(this.state.controller,'list');      
             if (hasPermission.error)    this.setState({ authorized: false,  loading: false  });
             else{
                 const response =  await getRolFormActionListByRolId(this.state.rol_id);

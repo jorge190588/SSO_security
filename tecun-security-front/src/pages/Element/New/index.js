@@ -4,7 +4,7 @@ import NotAuthorized from 'commons/NotAuthorized';
 import Title from 'components/Title';
 import Form from 'components/Form/FormTwoColumns';
 import FormJSTools from 'components/Form/JStools';
-import { hasPermission as userHasPermission } from 'services/User';
+import ApiServices from 'services/ApiServices';
 import { createRol } from 'services/Rol';
 import Alert from 'react-s-alert';
 
@@ -26,7 +26,7 @@ class New extends Component {
     async save(data, backToList){
         this.setState({loading: true});    
         try{
-            const hasPermission = await userHasPermission(this.state.controller,'create');    
+            const hasPermission = await ApiServices.userSecurity.hasPermission(this.state.controller,'create');     
             if (hasPermission.error)   this.setState({ authorized: false,  loading: false  });
             else{
                 const newUser = await createRol(data,this.state.elements);
@@ -55,7 +55,7 @@ class New extends Component {
     async componentDidMount() {
         try{
             this.setState({loading: true});
-            const hasPermission = await userHasPermission(this.state.controller,'create');    
+            const hasPermission = await ApiServices.userSecurity.hasPermission(this.state.controller,'create');     
             if (hasPermission.error){
                 this.setState({ authorized: false,  loading: false  });
                 Alert.error("Error !, intente de nuevo");                   

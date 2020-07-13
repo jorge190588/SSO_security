@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { hasPermission as userHasPermission, getUserList, enableRegister, disableRegister } from 'services/User';
+import ApiServices from 'services/ApiServices';
 import LoadingIndicator  from 'commons/LoadingIndicator';
 import NotAuthorized from 'commons/NotAuthorized';
 import Title from 'components/Title';
@@ -15,6 +15,7 @@ class User extends Component {
         this.state = {
             loading: true,
             authorized:false,
+            checkAutorization:true,
             create:false,
             update:false,
             changePassword:false,
@@ -22,6 +23,7 @@ class User extends Component {
             data: [],
             customActions:[],
             controller:'user',
+            key: Math.random(),
             header: [
                 { title: 'ID', field: 'id' },
                 { title: 'Nombre', field: 'name' },
@@ -41,8 +43,8 @@ class User extends Component {
         this.disableRegister =  this.disableRegister.bind(this);
     }
   
-    async addRegister(){    this.setState({create: true});  }
-    async updateRegister(rowData){  this.setState({update: true, rowData: rowData});}
+    async addRegister(){ this.setState({create:true}); }
+    async updateRegister(rowData){ this.setState({update:true, rowData: rowData}); }
     async changePasswordRegister(rowData){  this.setState({changePassword: true, rowData: rowData});}
     
     async enableRegister(rowData){
@@ -53,10 +55,10 @@ class User extends Component {
             
         try{
             this.setState({ loading: true });
-            const hasPermission = await userHasPermission(this.state.controller,'enable');    
+            const hasPermission = await ApiServices.userSecurity.hasPermission(this.state.controller,'enable');
             if (hasPermission.error)   this.setState({ authorized: false,  loading: false  });
             else{
-                const response = await enableRegister({'id':rowData.id});
+                const response = await ApiServices[this.state.controller].enableRegister({'id':rowData.id});
                 if (response.error)  {
                     Alert.error( (response.error.code===301) ? "Intente de nuevo" : response.error.message);
                     this.setState({ authorized: true,   loading: false });
@@ -79,10 +81,10 @@ class User extends Component {
         
         try{
             this.setState({ loading: true });
-            const hasPermission = await userHasPermission(this.state.controller,'disable');    
+            const hasPermission = await ApiServices.userSecurity.hasPermission(this.state.controller,'disable');
             if (hasPermission.error)   this.setState({ authorized: false,  loading: false  });
             else{
-                const response = await disableRegister({'id':rowData.id});
+                const response = await ApiServices[this.state.controller].disableRegister({'id':rowData.id});
                 if (response.error)  {
                     Alert.error( (response.error.code===301) ? "Intente de nuevo" : response.error.message);
                     this.setState({ authorized: true,   loading: false });
@@ -99,27 +101,16 @@ class User extends Component {
 
     async showList(){
         try{
-            const hasPermission = await userHasPermission(this.state.controller,'list');    
+            this.setState({loading: true});
+            const hasPermission = await ApiServices.userSecurity.hasPermission(this.state.controller,'list');    
             if (hasPermission.error){
-                this.setState({
-                    authorized: (hasPermission.error) ? false : true,
-                    loading: false
-                  });
+                this.setState({checkAutorization: false,authorized: false,loading: false,create: false,update: false,delete: false, changePassword:false});
             }else{
-                const response =  await getUserList();
-                this.setState({
-                    authorized: true,
-                    loading: false,
-                    data: response.data,
-                    create: false,
-                    update: false,
-                    changePassword:false,
-                  });
+                this.setState({checkAutorization: false, authorized: true,loading: false,key: Math.random() ,create: false,update: false,delete: false, changePassword:false});
             }
-
         }catch(exception){
             (exception.status===404) ? Alert.error("Falla del sistema"): Alert.error("Intente de nuevo ");
-            this.setState({ loading: false  });
+            this.setState({checkAutorization: false, authorized: true,loading: false,data: [],create: false,update: false,delete: false, changePassword:false});
         }
     }
 
@@ -136,24 +127,28 @@ class User extends Component {
     }
     
     render() {
-        if (this.state.loading){ return <LoadingIndicator/> }
-        if (!this.state.authorized){ return <NotAuthorized/> }
-        if (this.state.create){ return <New     showList={this.showList} controller={this.state.controller}/> }
-        if (this.state.update){ return <Update  showList={this.showList} controller={this.state.controller} rowData={this.state.rowData}/> }
+        if (this.state.checkAutorization ) return <LoadingIndicator/>
+        if (!this.state.authorized &&  !this.state.loading){ return <NotAuthorized/>}
+        if (this.state.create){ return <New     showList={this.showList} elements={this.state.elements} controller={this.state.controller}/> }
+        if (this.state.update){ return <Update  showList={this.showList} elements={this.state.elements} controller={this.state.controller} rowData={this.state.rowData}/> }
         if (this.state.changePassword){ return <ChangePassword  showList={this.showList} controller={this.state.controller} rowData={this.state.rowData}/> }
         
         return (
             <div>
+                { this.state.loading ? <LoadingIndicator/> : '' }
                  <Title title="Usuarios"/>
                  <br/>
-                 <Table pageSize={this.state.pageSize} 
+                 <Table key={this.state.key}
+                        pageSize={this.state.pageSize} 
                         header = {this.state.header} 
                         data={this.state.data} 
                         addRegister={this.addRegister} 
-                        updateRegister={this.updateRegister}
-                        enableRegister={this.enableRegister}
-                        disableRegister={this.disableRegister}
-                        customActions={this.state.customActions}/>
+                        updateRegister={this.updateRegister} 
+                        enableRegister={this.enableRegister} 
+                        disableRegister={this.disableRegister} 
+                        customActions={this.state.customActions}
+                        service={ ApiServices[this.state.controller] }
+                />
             </div>
         )
     }

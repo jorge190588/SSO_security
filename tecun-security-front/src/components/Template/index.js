@@ -26,20 +26,33 @@ import Element from 'pages/Element/';
 import {useStyles} from './Style';
 import VerticalMenu from 'components/VerticalMenu';
 
-export default function Menu(props) {
+import {connect } from "react-redux";
+import mapStateToProps from './mapStateToProps';
+import mapDispatchToProps from './mapDispatchToProps';
+import UserAccount from 'pages/Security/Login/FormElements/UserAccount';
+import { useHistory } from "react-router-dom";
+
+const Menu=(props)=> {
   const classes = useStyles();
   const theme = useTheme();
-  var onLogin = props.onLogin;
   var authenticated =props.authenticated;
   const [open, setOpen] = React.useState(false);
-  
-  function handleDrawerOpen() {
-    setOpen(true);
-  }
+  let history = useHistory();
 
-  function handleDrawerClose() {
-    setOpen(false);
-  }
+  const onLogout =()=>{
+        let userAccount = new UserAccount();
+        userAccount.logout();
+        props.LOGOUT();
+        history.push("/login",{})
+    }
+
+    const handleDrawerClose=()=> {
+        setOpen(false);
+    }
+
+    const handleDrawerOpen=()=> {
+        setOpen(true);
+    }
     
   return (
 
@@ -62,11 +75,11 @@ export default function Menu(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            <Link to="/" className="app-title">Tecún v1 - Servidor de autenticación y autorización</Link>
+            <Link to="/" className="app-title">Tecún v1</Link>
           </Typography> 
-          { props.authenticated ? (
+          { authenticated ? (
             <div>
-              <Button className={classes.button} color="inherit" onClick={props.onLogout} >
+              <Button className={classes.button} color="inherit"  onClick={onLogout} >
                 <Icon className={classes.icon}>exit_to_app</Icon>Cerrar sesión
               </Button>
               
@@ -102,7 +115,7 @@ export default function Menu(props) {
           </IconButton>
         </div>
         <Divider />
-        <VerticalMenu menu={props.menu}></VerticalMenu>
+        <VerticalMenu/>
         <Divider />
        
        </Drawer>
@@ -123,7 +136,7 @@ export default function Menu(props) {
           <PrivateRoute path="/formGroup" authenticated={authenticated} component={FormGroup}></PrivateRoute>
           <PrivateRoute path="/company" authenticated={authenticated} component={Company}></PrivateRoute>
           <PrivateRoute path="/element" authenticated={authenticated} component={Element}></PrivateRoute>
-          <Route path="/login"    render={(props) => <Login authenticated={authenticated} onLogin={onLogin} {...props} />}></Route>
+          <Route path="/login"    render={() => <Login/>}></Route>
           <Route path="/signup"   render={(props) => <Signup authenticated={authenticated} {...props} />}></Route>
         </Switch>
 
@@ -131,3 +144,5 @@ export default function Menu(props) {
     </div>
   );
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);

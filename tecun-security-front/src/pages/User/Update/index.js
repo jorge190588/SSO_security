@@ -4,9 +4,7 @@ import NotAuthorized from 'commons/NotAuthorized';
 import Title from 'components/Title';
 import Form from 'components/Form/FormTwoColumns';
 import FormJSTools from 'components/Form/JStools';
-import { hasPermission as userHasPermission, updateUser } from 'services/User';
-import { getRolList } from 'services/Rol';
-import {listRegister as getCompanyList} from 'services/Company';
+import ApiServices from 'services/ApiServices';
 import Alert from 'react-s-alert';
 
 class Update extends Component {      
@@ -27,20 +25,22 @@ class Update extends Component {
             rowData: props.rowData,
             elements:FormJSTools.setValuesToElements(elements, props.rowData)
         }
-        this.save = this.save.bind(this);
+        this.saveAndBack = this.saveAndBack.bind(this);
         this.handleShowList = this.handleShowList.bind(this);
         this.setCompanyList =  this.setCompanyList.bind(this);
         this.setRolList= this.setRolList.bind(this);
     }
     
+    saveAndBack=async(data)=>{ await this.save(data,true); }
+
     async save(data, backToList){
         data.id=this.state.rowData.id;
         this.setState({loading: true});    
         try{
-            const hasPermission = await userHasPermission(this.state.controller,'update');    
+            const hasPermission = await ApiServices.userSecurity.hasPermission(this.state.controller,'update');     
             if (hasPermission.error)   this.setState({ authorized: false,  loading: false  });
             else{
-                const newUser = await updateUser(data,this.state.elements);
+                const newUser = await ApiServices.user.updateRegister(data,this.state.elements);
                 if (newUser.error)  {
                     if(newUser.error.code===301)    this.setState({ elements: FormJSTools.setErrorsToElements(newUser, this.state.elements),  authorized: true,   loading: false, clean:false });
                     else{
@@ -64,20 +64,20 @@ class Update extends Component {
     }
 
     async setCompanyList(){
-        const response =  await getCompanyList();
+        const response =  await ApiServices.company.listRegister();
         if (response.error) this.state.elements.company_id.list=[];
         else   this.state.elements.company_id.list=response.data;
     }
 
     async setRolList(){
-        const response =  await getRolList();
+        const response =  await ApiServices.rol.listRegister();
         if (response.error) this.state.elements.rol_id.list=[];
         else   this.state.elements.rol_id.list=response.data;
     }
 
     async componentDidMount() {
         try{
-            const hasPermission = await userHasPermission(this.state.controller,'update');    
+            const hasPermission = await ApiServices.userSecurity.hasPermission(this.state.controller,'update');       
             if (hasPermission.error){
                 this.setState({ authorized: false,  loading: false  });
                 Alert.error("Error !, intente de nuevo");                   
@@ -99,7 +99,11 @@ class Update extends Component {
             <div>
                 {this.state.loading ? (<LoadingIndicator/>): null}
                 <Title title="Modificar usuario"/>
-                <Form elements= {this.state.elements} save={this.save} handleShowList={this.handleShowList} clean={this.state.clean} />
+                <Form   elements= {this.state.elements} 
+                        saveAndBack={this.saveAndBack}
+                        handleShowList={this.handleShowList} 
+                        clean={this.state.clean} 
+                        apiErrors={this.state.apiErrors}/>
             </div>
         )
     }

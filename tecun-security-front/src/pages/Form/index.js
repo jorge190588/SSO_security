@@ -34,7 +34,7 @@ class Form extends Component {
             customActions:[],
             elements:   {
                 name: {             idelement: "name", value:'', label: "Nombre del formulario", pattern:"^[\\w_\\sÑñáéíóúÁÉÍÓÚ.-]{3,30}$", validators: ['required'], errorMessages:['Campo requiere un texto de 3 a 30 caracteres (Ejemplo: formulario 1)'], isError:false, elementType:'input' },
-                icon: {             idelement: "icon", value:'', label: "Icono", pattern:"^([\\w_\\s]){3,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 3 a 20 caracteres (Ejemplo: file)'], isError:false, elementType:'input' },
+                icon: {             idelement: "icon", value:'', label: "Icono", pattern:"^([\\w_\\s.-]){3,25}$", validators: ['required'], errorMessages:['Campo requiere un texto de 3 a 25 caracteres (Ejemplo: file)'], isError:false, elementType:'input' },
                 system_id: {        idelement: "system_id", value: 0, label: "Sistema", pattern:"^[1-9][0-9]*$", validators: ['required'], errorMessages:['Campo requerido'], isError:false, elementType:'dropdown', list: [] },
                 formGroup_id: {     idelement: "formGroup_id", value: 0, label: "Grupo", pattern:"^[1-9][0-9]*$", validators: ['required'], errorMessages:['Campo requerido'], isError:false, elementType:'dropdown', list: [] },
                 path: {             idelement: "path", value:'', label: "Ruta en web", pattern:"^([/\\w_\\s]){0,30}$", validators: ['required'], errorMessages:['Campo requiere un texto de 3 a 20 caracteres (Ejemplo: file)'], isError:false, elementType:'input' },

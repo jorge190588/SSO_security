@@ -33,7 +33,7 @@ class Form extends Component {
             ],
             customActions:[],
             elements:   {
-                name: {             idelement: "name", value:'', label: "Nombre del formulario", pattern:"^[\\w_\\sÑñáéíóúÁÉÍÓÚ.-]{4,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 4 a 20 caracteres (Ejemplo: formulario 1)'], isError:false, elementType:'input' },
+                name: {             idelement: "name", value:'', label: "Nombre del formulario", pattern:"^[\\w_\\sÑñáéíóúÁÉÍÓÚ.-]{3,30}$", validators: ['required'], errorMessages:['Campo requiere un texto de 3 a 30 caracteres (Ejemplo: formulario 1)'], isError:false, elementType:'input' },
                 icon: {             idelement: "icon", value:'', label: "Icono", pattern:"^([\\w_\\s]){3,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 3 a 20 caracteres (Ejemplo: file)'], isError:false, elementType:'input' },
                 system_id: {        idelement: "system_id", value: 0, label: "Sistema", pattern:"^[1-9][0-9]*$", validators: ['required'], errorMessages:['Campo requerido'], isError:false, elementType:'dropdown', list: [] },
                 formGroup_id: {     idelement: "formGroup_id", value: 0, label: "Grupo", pattern:"^[1-9][0-9]*$", validators: ['required'], errorMessages:['Campo requerido'], isError:false, elementType:'dropdown', list: [] },

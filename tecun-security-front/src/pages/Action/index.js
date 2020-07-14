@@ -13,6 +13,7 @@ class Action extends Component {
         super(props);
         this.state = {
             controller:'action',
+            key: Math.random(),
             loading: true,
             authorized:false,
             checkAutorization:true,
@@ -70,8 +71,7 @@ class Action extends Component {
             if (hasPermission.error){
                 this.setState({checkAutorization: false,authorized: false,loading: false,create: false,update: false,delete: false});
             }else{
-                //const response =  await ApiServices[this.state.controller].listRegister();
-                this.setState({checkAutorization: false, authorized: true,loading: false,data: [],create: false,update: false,delete: false});
+                this.setState({checkAutorization: false, authorized: true,loading: false,key: Math.random(),create: false,update: false,delete: false});
             }
         }catch(exception){
             (exception.status===404) ? Alert.error("Falla del sistema"): Alert.error("Intente de nuevo ");
@@ -94,7 +94,8 @@ class Action extends Component {
                 { this.state.loading ? <LoadingIndicator/> : '' }
                  <Title title="Acciones"/>
                  <br/>
-                 <Table pageSize={this.state.pageSize} 
+                 <Table key={this.state.key}
+                        pageSize={this.state.pageSize} 
                         header = {this.state.header} 
                         data={this.state.data} 
                         addRegister={this.addRegister} 

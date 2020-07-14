@@ -1,12 +1,15 @@
 # build environment
 FROM node:12.2.0-alpine as build
+
+RUN apk update && apk upgrade && apk add --no-cache bash git openssh
+RUN npm update
+
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json /app/package.json
 COPY . /app
 COPY .env.pagomunicipal.prod /app/.env
-RUN npm install material-table@1.57.2
-# RUN npm install react-scripts@3.0.1 -g --silent
+RUN npm install
 RUN npm run build
 
 # production environment

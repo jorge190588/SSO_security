@@ -28,7 +28,7 @@ class System extends Component {
             ],
             customActions:[],
             elements:   {
-                name: {         idelement: "name", value:'', label: "Nombre del sistema", pattern:"^[\\w_\\sÑñáéíóúÁÉÍÓÚ.-]{4,20}$", validators: ['required'], errorMessages:['Campo requiere un texto de 4 a 20 caracteres (Ejemplo: SYSTEM_WEB)'], isError:false, elementType:'input' },
+                name: {         idelement: "name", value:'', label: "Nombre del sistema", pattern:"^[\\w_\\sÑñáéíóúÁÉÍÓÚ_.-]{4,50}$", validators: ['required'], errorMessages:['Campo requiere un texto de 4 a 50 caracteres (Ejemplo: SYSTEM_WEB)'], isError:false, elementType:'input' },
             }
         }
         this.addRegister = this.addRegister.bind(this);
@@ -90,8 +90,8 @@ class System extends Component {
     render() {
         if (this.state.checkAutorization ) return <LoadingIndicator/>
         if (!this.state.authorized &&  !this.state.loading){ return <NotAuthorized/>}
-        if (this.state.create){ return <New     showList={this.showList} elements={this.state.elements}/> }
-        if (this.state.update){ return <Update  showList={this.showList} elements={this.state.elements} rowData={this.state.rowData}/> }
+        if (this.state.create){ return <New     showList={this.showList} elements={this.state.elements} controller={this.state.controller}/> }
+        if (this.state.update){ return <Update  showList={this.showList} elements={this.state.elements} controller={this.state.controller} rowData={this.state.rowData}/> }
 
         return (
             <div>

@@ -28,6 +28,7 @@ class Form extends Component {
                 { title: 'Sistema', field: 'form.system.name' },
                 { title: 'Grupo de Formulario', field: 'form.formGroup.name' },
                 { title: 'Formulario', field: 'form.name' },
+                { title: 'Ruta de formulario', field: 'form.path' },
                 { title: 'Acción', field: 'action.name' },
                 { title: 'Orden', field:'itemOrder'},
             ],

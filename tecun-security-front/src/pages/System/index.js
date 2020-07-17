@@ -37,14 +37,8 @@ class System extends Component {
         this.showList = this.showList.bind(this);   
         
     }
-  
-    async addRegister(){
-        this.setState({create:true});
-    }
-
-    async updateRegister(rowData){
-        this.setState({update:true, rowData: rowData});
-    }
+    async addRegister(){ this.setState({create:true}); }
+    async updateRegister(rowData){ this.setState({update:true, rowData: rowData}); }
 
     async deleteRegister(rowData){
         try{

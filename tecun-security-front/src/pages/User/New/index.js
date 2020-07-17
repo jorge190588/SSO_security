@@ -27,12 +27,17 @@ class New extends Component {
             clean: true,
             elements:   FormJSTools.cleanValuesToElements(elements)
         }
-        this.save = this.save.bind(this);
+        this.saveAndClean = this.saveAndClean.bind(this);
+        this.saveAndBack = this.saveAndBack.bind(this);
         this.handleShowList = this.handleShowList.bind(this);
         this.setCompanyList =  this.setCompanyList.bind(this);
         this.setRolList= this.setRolList.bind(this);
     }
     
+    
+    saveAndClean=async(data)=>{ await this.save(data,false); }
+    saveAndBack=async(data)=>{ await this.save(data,true); }
+
     async save(data, backToList){
         if (data.password !== data.repassword){
             this.state.elements["password"].isError=true;
@@ -101,13 +106,17 @@ class New extends Component {
     
     render() {
         if (!this.state.authorized){    return <NotAuthorized/> }
-
         return (
             <div>
                 {this.state.loading ? (<LoadingIndicator/>): null}
                 <Title title="Nuevo usuario"/>
-                <Form elements= {this.state.elements} 
-                save={this.save} handleShowList={this.handleShowList} clean={this.state.clean} />
+                
+                <Form   elements= {this.state.elements} 
+                        saveAndClean={this.saveAndClean} 
+                        saveAndBack={this.saveAndBack}
+                        handleShowList={this.handleShowList} 
+                        clean={this.state.clean}
+                        apiErrors={this.state.apiErrors} />
             </div>
         )
     }

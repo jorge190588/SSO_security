@@ -46,12 +46,12 @@ class Update extends Component {
             const hasPermission = await userHasPermission('user','create');    
             if (hasPermission.error)   this.setState({ authorized: false,  loading: false  });
             else{
-                const newUser = await getUserCreate(data,this.state.elements);
-                if (newUser.error)  {
-                    if(newUser.error.code===301)    this.setState({ elements:this.setErrors(newUser, this.state.elements),  authorized: true,   loading: false, clean:false });
+                const response = await getUserCreate(data,this.state.elements);
+                if (response.error)  {
+                    if(response.error.code===301)    this.setState({ elements:this.setErrors(response, this.state.elements),  authorized: true,   loading: false, clean:false });
                     else{
+                        Alert.error(response.error.message);  
                         this.setState({ authorized: true,   loading: false, clean:false });
-                        Alert.error("Error !, intente de nuevo");                    
                     }
                 }else{
                     Alert.success("Registro guardado");

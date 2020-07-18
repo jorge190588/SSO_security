@@ -52,12 +52,12 @@ class New extends Component {
             const hasPermission = await ApiServices.userSecurity.hasPermission(this.state.controller,'create');    
             if (hasPermission.error)   this.setState({ authorized: false,  loading: false  });
             else{
-                const newUser = await ApiServices.user.createRegister(data,this.state.elements);
-                if (newUser.error)  {
-                    if(newUser.error.code===301)    this.setState({ elements: FormJSTools.setErrorsToElements(newUser, this.state.elements),  authorized: true,   loading: false, clean:false });
+                const response = await ApiServices.user.createRegister(data,this.state.elements);
+                if (response.error)  {
+                    if(response.error.code===301)    this.setState({ elements: FormJSTools.setErrorsToElements(response, this.state.elements),  authorized: true,   loading: false, clean:false });
                     else{
+                        Alert.error(response.error.message);  
                         this.setState({ authorized: true,   loading: false, clean:false });
-                        Alert.error("Error !, intente de nuevo");                    
                     }
                 }else{
                     Alert.success("Registro guardado");

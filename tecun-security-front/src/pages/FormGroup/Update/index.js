@@ -39,8 +39,8 @@ class Update extends Component {
                         Alert.error("Errores en los campos");
                         this.setState({ apiErrors:response.error.messageList, authorized: true,   loading: false, clean:false });
                     }else{
+                        Alert.error(response.error.message);  
                         this.setState({ authorized: true,   loading: false, clean:false });
-                        Alert.error(response.error.message);
                     }
                 }else{
                     Alert.success("Registro guardado");

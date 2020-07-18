@@ -1,0 +1,12 @@
+version: '3.0'
+services:
+  pagomunicipal_internal_sso_web_prod:
+    container_name: pagomunicipal_internal_sso_web_prod
+    build:
+      context: .
+      dockerfile: Dockerfile-pagomunicipal-internal-prod
+    image: pagomunicipal_internal_sso_web_prod
+    restart: unless-stopped
+    ports:
+      - '9001:80'
+      

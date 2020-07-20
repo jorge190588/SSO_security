@@ -8,5 +8,5 @@ services:
     image: pagomunicipal_external_sso_web_prod
     restart: unless-stopped
     ports:
-      - '9001:80'
+      - '9011:80'
       

@@ -32,7 +32,7 @@ class RolFormAction extends Component {
             ],
             backToRolPage: props.showList,
             customActions:[],
-            rol_id: props.rowData.id
+            rol_id: (props.rowData===undefined) ? 0: props.rowData.id
         }
         this.addRegister = this.addRegister.bind(this);       
         this.cancelRegister = this.cancelRegister.bind(this);
@@ -127,22 +127,27 @@ class RolFormAction extends Component {
     }
 
     componentDidMount() {
-        var self =  this;
-        this.state.customActions.push({
-            icon: 'keyboard_backspace',
-            tooltip: 'Regresar',
-            isFreeAction: true,
-            onClick: self.state.backToRolPage
-        });
-    
-        this.state.customActions.push(function(rowData){ 
-            return {
-                icon: 'add',
-                tooltip: 'Agregar',
-                onClick: function() { self.addRegister(rowData); }
-            }
-        });
-        this.showList();
+        if (this.state.rol_id===0) {
+            this.state.backToRolPage();
+        }else{
+            var self =  this;
+            this.state.customActions.push({
+                icon: 'keyboard_backspace',
+                tooltip: 'Regresar',
+                isFreeAction: true,
+                onClick: self.state.backToRolPage
+            });
+        
+            this.state.customActions.push(function(rowData){ 
+                return {
+                    icon: 'add',
+                    tooltip: 'Agregar',
+                    onClick: function() { self.addRegister(rowData); }
+                }
+            });
+            this.showList();
+        }
+        
     }
     
     render() {

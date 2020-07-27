@@ -26,6 +26,7 @@ class User extends Component {
             key: Math.random(),
             header: [
                 { title: 'ID', field: 'id' },
+                { title: 'Código', field: 'code' },
                 { title: 'Nombre', field: 'name' },
                 { title: 'Correo', field: 'email' },
                 { title: 'Esta activo ?', field: 'isActive', type: 'boolean' },

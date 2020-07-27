@@ -12,6 +12,7 @@ class New extends Component {
         super(props);
         let elements={
             name: {         idelement: "name", value:'', label: "Usuario", pattern:"^([\\w\\sÑñáéíóúÁÉÍÓÚ_.]){4,50}$", validators: ['required'], errorMessages:['Campo requiere un texto de 4 a 20 caracteres (Ejemplo: jorgesantos1)'], isError:false, elementType:'input' },
+            code: {         idelement: "code", value:'', label: "Código", pattern:"^([\\w\\sÑñáéíóúÁÉÍÓÚ_.-]){4,50}$", validators: ['required'], errorMessages:['Campo requiere un texto de 4 a 20 caracteres (Ejemplo: 1669092450901)'], isError:false, elementType:'input' },
             email: {        idelement: "email", value:'', label: "Correo electrónico", pattern: "^[\\w-+._%.]+(\\.[\\w-]{1,25}){0,25}@[\\w-]{1,25}(\\.[\\w-]{1,10})+[\\w-]+$", validators: ['required'], errorMessages:['Campo requiere un correo válido (Ejemplo: jorge@gmail.com)'], isError:false, elementType:'input' },
             password: {     idelement: "password", value:'', label: "Clave", pattern:"^[\\w_\\sÑñáéíóúÁÉÍÓÚ().%$#/-]{6,20}$", validators: ['required'], errorMessages:['Campo requerido (ejemplo: Jorge10$%)'], isError:false, elementType:'password' },
             repassword: {   idelement: "repassword", value:'', label: "Confirmar clave", pattern:"^[\\w_\\sÑñáéíóúÁÉÍÓÚ().%$#/-]{6,20}$", validators: ['required'], errorMessages:['Campo requerido (ejemplo: Jorge10$%)'], isError:false, elementType:'password' },

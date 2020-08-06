@@ -1,0 +1,12 @@
+version: '3.0'
+services:
+  tse_external_sso_web_qa:
+    container_name: tse_external_sso_web_qa
+    build:
+      context: .
+      dockerfile: Dockerfile-tse-external-qa
+    image: tse_external_sso_web_qa
+    restart: unless-stopped
+    ports:
+      - '9001:80'
+      

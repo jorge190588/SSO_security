@@ -1,0 +1,12 @@
+version: '3.0'
+services:
+  tse_internal_sso_web_qa:
+    container_name: tse_internal_sso_web_qa
+    build:
+      context: .
+      dockerfile: Dockerfile-tse-internal-qa
+    image: tse_internal_sso_web_qa
+    restart: unless-stopped
+    ports:
+      - '9003:80'
+      

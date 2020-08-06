@@ -1,0 +1,12 @@
+version: '3.0'
+services:
+  tse_external_sso_web_prod:
+    container_name: tse_external_sso_web_prod
+    build:
+      context: .
+      dockerfile: Dockerfile-tse-external-prod
+    image: tse_external_sso_web_prod
+    restart: unless-stopped
+    ports:
+      - '9000:80'
+      

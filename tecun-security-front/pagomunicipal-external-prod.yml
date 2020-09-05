@@ -9,4 +9,5 @@ services:
     restart: unless-stopped
     ports:
       - '9001:80'
-      
+    environment:
+      - NAME=jorge santos

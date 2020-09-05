@@ -11,3 +11,4 @@ export const FACEBOOK_AUTH_URL = API_BASE_URL_SECURITY + '/oauth2/authorize/face
 export const GITHUB_AUTH_URL = API_BASE_URL_SECURITY + '/oauth2/authorize/github?redirect_uri=' + OAUTH2_REDIRECT_URI;
 
 export {actionNames};
+console.log("NAME environment "+ process.env.NAME);

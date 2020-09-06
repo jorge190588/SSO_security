@@ -4,7 +4,11 @@ services:
     container_name: tse_external_sso_web_prod
     build:
       context: .
-      dockerfile: Dockerfile-tse-external-prod
+      dockerfile: Dockerfile
+      args:
+        - REACT_APP_SECRET_NAME=TSE-SECURITY-WEB
+        - REACT_APP_API_SSO=http://192.168.79.67:9760
+        - REACT_APP_API_BACKEND=http://192.168.79.67:9760
     image: tse_external_sso_web_prod
     restart: unless-stopped
     ports:

@@ -8,7 +8,21 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json /app/package.json
 COPY . /app
-COPY .env.tasting.prod /app/.env
+
+ARG REACT_APP_API_BACKEND
+ARG REACT_APP_API_SSO
+ARG REACT_APP_SECRET_NAME
+
+RUN rm /app/.env
+RUN printf '#.env file \n\
+    REACT_APP_SECRET_NAME=%s \n\
+    REACT_APP_NODE_ENV="prod" \n\
+    REACT_APP_PORT=4002 \n\
+    REACT_APP_API_BACKEND=%s \n\
+    REACT_APP_API_SSO=%s \n' "$REACT_APP_SECRET_NAME"     "$REACT_APP_API_BACKEND"     "$REACT_APP_API_SSO" >> /app/.env
+
+RUN cat /app/.env
+# COPY .env.tasting.prod /app/.env
 RUN npm install
 RUN npm run build
 

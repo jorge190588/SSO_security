@@ -4,10 +4,12 @@ services:
     container_name: pagomunicipal_external_sso_web_prod
     build:
       context: .
-      dockerfile: Dockerfile-pagomunicipal-external-prod
+      dockerfile: Dockerfile
+      args:
+        - REACT_APP_SECRET_NAME=PAGOMUNICIPAL-SECURITY-WEB
+        - REACT_APP_API_SSO=https://sso.pagomunicipal.com
+        - REACT_APP_API_BACKEND=https://sso.pagomunicipal.com
     image: pagomunicipal_external_sso_web_prod
     restart: unless-stopped
     ports:
       - '9001:80'
-    environment:
-      - NAME=jorge santos
